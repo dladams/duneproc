@@ -1,0 +1,597 @@
+#!/bin/sh
+#
+# David Adams
+# June 2018
+#
+#
+# Script to process event data and create calibration histograms.
+
+if [ "$1" = "-H" ]; then
+  echo Usage: $0 FCL RUNPAT [NEVT] [NSKIP] [FLAG]
+  echo "       FLAG=clean to remove existing run directory"
+  echo "       FLAG=output to save event output"
+  echo "       FLAG=val to run with valgrind log mixed with process log"
+  echo "       FLAG=valout to run with valgrind logged to valgrind.out"
+  echo "       FLAG=valgdb to run to memcheck error and then wait for gdb"
+  echo "       FLAG=valstop to stop at first memcheck error"
+  echo
+  echo Runs a lar job in a dedicated directory.
+  echo
+  echo FCL is the base name for the top level fcl file or a sequence
+  echo of such names separated with slashes.
+  echo
+  echo In addition to any file on the current fcl path, these names
+  echo may be any of the following:
+  echo "  fembFFF - Module dataprep only processes FEMB number FFF"
+  echo "  dpcr_CR - Module dataprep only processes channel range CR"
+  echo "            May also be  sequence of channel ranges: CR1_CR2_CR3, etc."
+  echo "  cdcr_CR - Module caldata only processes channel range CR"
+  echo "  chanCCC - Module dataprep only processes channel CCC"
+  echo "  fftsizeSSS - Set LArFFT size to SSS."
+  echo "  winsizeSSS - Set # ticks in detector props. Used by LArFFT if its size is 0."
+  echo "  wftickTTT - The channel range for waveforms drawn with tools"
+  echo "              adcPlotRaw and adcPlotRaw is [TTT, TTT+1000)"
+  echo "  wfranSSS - The signal range for these tools is (-SSS, SSS)"
+  echo "  trigT - Select events with trigger index TT."
+  echo "  eventEEE - Process event EEE"
+  echo "  eventEE1-EE2 - Process events in range [EE1, EE2)"
+  echo "  tickTTT - Tick range for channel-tick plots is [TTT, TTTT+1000)"
+  echo "  tickTT1-TT2 - Tick range for channel-tick plots is [TT1, TT2)"
+  echo "  roithreshTTT - Threshold for ROI finding is TTT"
+  echo "  roibinsBBB_AAA - Bins before (BB) and after (AAA) for ROI finding."
+  echo "  roineg - Find negative ROIs an set flag in ROI fitter."
+  echo "  tickphasePP - Tick phase offset is PP. Should be in range (0,24)"
+  echo "  tickmodPhaseFemb - Add plots of phase vs. peak to tickmod tool"
+  echo "  drawTickmodMax - Add plots of tickmod ADC near max to tickmod tool"
+  echo "  nroiNNN - Draw max of NNN ROI's with AdcRoiViwer (e.g. roifit.fcl)"
+  echo "  roicrCCC - Use and plot channel range CCC with AdcRoiViwer (e.g. roifit.fcl)"
+  echo "  roitrcVVV - Use FEMB302 tick rate correction 0.VVVVVVV (e.g. 999293). VVV=one means 1.0"
+  echo "  tmitRRR-OOO - Set FEMB302 timing mitigation rate factor to RRR and offset to OOO"
+  echo "  pdchtzmaxMMM - Set upper signal limit for pdcht (channel vs. tick) plots"
+  echo "  pdchtrebinRR - Set rebin to RR for protDUNE cht (channel vs. tick) plots"
+  echo "  pdchtsizexSS - Set horizontal plot size to SS pixels for protDUNE cht (channel vs. tick) plots"
+  echo "  usctdecTTTT - Set USC TDecayConst to 0.TTTT"
+  echo "  uscfsubFFFF - Set USC FSubConst to 0.FFFF"
+  echo "  exptdecTTTT - Set ExpTailRemover decay tiome to TTTT ticks"
+  echo
+  echo "Some of the primary fcl files provided here:"
+  echo "  dqm - Make standard dqm plots."
+  echo "  evtview - Make plots showing the number of FEMBs with data."
+  echo "  dataprepCal - Run dataprep though trivial calibration."
+  echo "  dataprepMit - Run dataprep though mitigation."
+  echo "  adcDist - Create ADC distribution (i.e. code frequency) plots."
+  echo "  tickmod - Run the tickmod tool."
+  echo "  roifit - Run the ROI viewer fitting for pulser signals."
+  echo
+  echo "Some of the secondary fcl files provided here:"
+  echo "  beamtrig - ONly process events with beam triggers"
+  echo "  addChannelTickRaw - Add raw channel-tick plots to the end of dataprep"
+  echo "  addChannelTickPrep - Add prepared channel-tick plots to the end of dataprep"
+  echo "  addDetdispPrep - Add prepared detector display to the end of dataprep."
+  echo "  alltick - Set tick range to all ticks for channel-tick and detector displays."
+  echo "  wfRaw100 - Draw raw waveforms for signal range (-50, 50)."
+  echo "  wfMit100 - Draw raw and mitigated waveforms for signal rrange (-50, 50)."
+  echo
+  echo "RUNPAT is RUN or RUN_PAT"
+  echo "where RUN is a run number and PAT is a pattern as follows."
+  echo "If PAT = evtsEE-FF, then events [EE,FF) are processed."
+  echo "Otherwise _PAT is required in the file names, e.g. _SSSS to select time name slice SSSS = 0001, 0002, ..."
+  exit 0
+fi
+
+makeFcl() {
+  FCLNAME=$1
+  FCLFILE=$FCLNAME.fcl
+  if [ -r $FCLFILE ]; then
+    echo makeFcl: File already exists: $FCLFILE
+    return 2
+  fi
+  # Copy from submit directory.
+  if [ -r $SUBDIR/$FCLNAME.fcl ]; then
+    echo makeFcl: Copying $FCLNAME.fcl from submission directry.
+    cp $SUBDIR/$FCLNAME.fcl .
+  # Run dataprep for a single FEMB identified by number.
+  elif [ ${FCLNAME:0:4} = femb ]; then
+    NUM=${FCLNAME:4}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "physics.producers.dataprep.KeepFembs: [$NUM]" >$FCLFILE
+  # Run dataprep for a single channel range indentified by name.
+  elif [ ${FCLNAME:0:5} = dpcr_ ]; then    # data prep channel ranges
+    CRS=`echo ${FCLNAME:5} | sed 's/_/, /g'`
+    echo "physics.producers.dataprep.ChannelGroups: [${CRS}]" >$FCLFILE
+    for TOOL in adcRoiViewer adcRoiFitter; do
+      echo "tools.$TOOL.ChannelRanges: [${CRS}]" >>$FCLFILE
+      if [ ${FCLNAME:5:3} = "apa" -o ${FCLNAME:5:3} = "tps" ]; then
+        echo "tools.$TOOL.ChannelLineModulus: 2560" >>$FCLFILE
+        echo "tools.$TOOL.ChannelLinePattern: [" >>$FCLFILE
+        echo "    0,   40,   80,  120,  160,  200,  240,  280,  320,  360,  400,  440,  480,  520,  560,  600,  640,  680,  720,  760," >>$FCLFILE
+        echo "  800,  840,  880,  920,  960, 1000, 1040, 1080, 1120, 1160, 1200, 1240, 1280, 1320, 1360, 1400, 1440, 1480, 1520, 1560," >>$FCLFILE
+        echo " 1600, 1648, 1696, 1744, 1792, 1840, 1888, 1936, 1984, 2032," >>$FCLFILE
+        echo " 2080, 2128, 2176, 2224, 2272, 2320, 2368, 2416, 2464, 2512]" >>$FCLFILE
+      fi
+    done
+  # Run caldata for a single channel range indentified by name.
+  elif [ ${FCLNAME:0:5} = cdcr_ ]; then    # data prep channel ranges
+    CRS=`echo ${FCLNAME:5} | sed 's/_/, /g'`
+    echo "physics.producers.caldata.ChannelRanges: [${CRS}]" >$FCLFILE
+  elif [ ${FCLNAME:0:4} = chan ]; then
+    NUM=${FCLNAME:4}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "physics.producers.dataprep.KeepChannelBegin: $NUM" >$FCLFILE
+    echo "physics.producers.dataprep.KeepChannelEnd: $((NUM+1))" >>$FCLFILE
+    echo "physics.producers.dataprep.KeepChannels: [$NUM]" >>$FCLFILE
+  # FFT size
+  elif [ ${FCLNAME:0:7} = fftsize ]; then
+    SIZE=${FCLNAME:7}
+    echo "services.LArFFT.FFTSize: $SIZE" >>$FCLFILE
+  # Detector window size.
+  elif [ ${FCLNAME:0:7} = winsize ]; then
+    SIZE=${FCLNAME:7}
+    echo "services.DetectorPropertiesService.ReadOutWindowSize: $SIZE" >>$FCLFILE
+  # wftickTTT: Show waveform ticks from TTT to TTT+1000
+  elif [ ${FCLNAME:0:6} = wftick -a ${#FCLNAME} -gt 6 ]; then
+    NUM1=${FCLNAME:6}
+    while [ ${NUM1:0:1} = 0 -a ${#NUM1} -gt 1 ]; do NUM1=${NUM1:1}; done
+    NUM2=$((NUM1+1000))
+    echo "tools.adcPlotRaw.PlotSamMin: $NUM1" >>$FCLFILE
+    echo "tools.adcPlotRaw.PlotSamMax: $NUM2" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSamMin: $NUM1" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSamMax: $NUM2" >>$FCLFILE
+  # wfranSSS: Show waveforms signals from -SSS to SSS
+  elif [ ${FCLNAME:0:5} = wfran -a ${#FCLNAME} -gt 5 ]; then
+    MAX=${FCLNAME:5}
+    echo "tools.adcPlotRaw.PlotSigMin: -$MAX" >>$FCLFILE
+    echo "tools.adcPlotRaw.PlotSigMax:  $MAX" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSigMin: -$MAX" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSigMax:  $MAX" >>$FCLFILE
+  elif [ ${FCLNAME:0:4} = trig ]; then
+    NUM=${FCLNAME:4}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "physics.filters.trigfilter.TimingFlagSelectList: [$NUM]" >$FCLFILE
+  elif [ ${FCLNAME:0:5} = event ]; then
+    RAN=${FCLNAME:5}  # I or I-J
+    FNUM1=${RAN%%-*}
+    NUM1=$FNUM1
+    while [ ${NUM1:0:1} = 0 -a ${#NUM1} -gt 1 ]; do NUM1=${NUM1:1}; done
+    if [ $FNUM1 = $RAN ]; then
+      NUM2=$((NUM1+1))
+    else
+      NUM2=${RAN##*-}
+    fi
+    while [ ${NUM2:0:1} = 0 -a ${#NUM2} -gt 1 ]; do NUM2=${NUM2:1}; done
+    touch $FCLFILE
+    #echo "physics.filters.eventfilter.EventBegin: $NUM1" >>$FCLFILE
+    #echo "physics.filters.eventfilter.EventEnd: $NUM2" >>$FCLFILE
+    echo "tools.jobRanges.events.begin: $NUM1" >>$FCLFILE
+    echo "tools.jobRanges.events.end:   $NUM2" >>$FCLFILE
+    touch events.fcl      # So input file string won't override
+  # Set tick offset phase.
+  elif [ ${FCLNAME:0:9} = tickphase ]; then
+    NUM=${FCLNAME:9}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pd_tickOffset.TpcTickPhase: $NUM" >$FCLFILE
+    echo "tools.pd_tickOffsetCorr.TpcTickPhase: $NUM" >$FCLFILE
+  # Set tick range for channel-tick plots, e.g. tick1000 or tick1000-1500
+  elif [ ${FCLNAME:0:4} = tick ]; then
+    RAN=${FCLNAME:4}  # I or I-J
+    NUM1=${RAN%%-*}
+    if [ $NUM1 = $RAN ]; then
+      NUM2=$((NUM1+1000))
+    else
+      NUM2=${RAN##*-}
+    fi
+    while [ ${NUM1:0:1} = 0 -a ${#NUM1} -gt 1 ]; do NUM1=${NUM1:1}; done
+    while [ ${NUM2:0:1} = 0 -a ${#NUM2} -gt 1 ]; do NUM2=${NUM2:1}; done
+    echo "tools.tickRanges.plotTicks.begin: $NUM1" >$FCLFILE
+    echo "tools.tickRanges.plotTicks.end:   $NUM2" >>$FCLFILE
+  # ADC ROI threshold
+  elif [ ${FCLNAME:0:9} = roithresh ]; then
+    NUM=${FCLNAME:9}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.adcThresholdSignalFinder.Threshold: $NUM" >$FCLFILE
+  # ADC ROI bins before and after
+  elif [ ${FCLNAME:0:7} = roibins ]; then
+    NUMS=${FCLNAME:7}
+    NUMB=`echo $NUMS | sed 's/_.*//g'`
+    NUMA=`echo $NUMS | sed 's/.*_//g'`
+    while [ ${NUMB:0:1} = 0 -a ${#NUMB} -gt 1 ]; do NUMB=${NUMB:1}; done
+    while [ ${NUMA:0:1} = 0 -a ${#NUMA} -gt 1 ]; do NUMA=${NUMA:1}; done
+    echo "tools.adcThresholdSignalFinder.BinsBefore: $NUMB" >$FCLFILE
+    echo "tools.adcThresholdSignalFinder.BinsAfter: $NUMA" >$FCLFILE
+  # Positive ROIs.
+  elif [ ${FCLNAME:0:6} = roipos ]; then
+    echo "tools.adcThresholdSignalFinder.FlagPositive: true" >$FCLFILE
+    echo "tools.adcThresholdSignalFinder.FlagNegative: false" >>$FCLFILE
+    echo "tools.adcRoiFitter.SumNegate: false" >>$FCLFILE
+    echo "tools.adcRoiFitter.SumNegate: false" >>$FCLFILE
+    echo "tools.adcRoiFitter.PlotLabels: [\"Q>0\"]" >>$FCLFILE
+    NUM=${FCLNAME:6}
+    if [ -n "$NUM" ]; then
+      while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+      echo "tools.adcThresholdSignalFinder.Threshold: $NUM" >>$FCLFILE
+    fi
+  # Negative ROIs.
+  elif [ ${FCLNAME:0:6} = roineg ]; then
+    echo "tools.adcThresholdSignalFinder.FlagPositive: false" >$FCLFILE
+    echo "tools.adcThresholdSignalFinder.FlagNegative: true" >>$FCLFILE
+    echo "tools.adcRoiFitter.SumNegate: true" >>$FCLFILE
+    echo "tools.adcRoiFitter.PlotLabels: [\"Q<0\"]" >>$FCLFILE
+    NUM=${FCLNAME:6}
+    if [ -n "$NUM" ]; then
+      while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+      echo "tools.adcThresholdSignalFinder.Threshold: $NUM" >>$FCLFILE
+    fi
+  # # ROIs to draw with ROI fitter.
+  elif [ ${FCLNAME:0:4} = "nroi" ]; then
+    NROI=${FCLNAME:4}
+    echo "tools.adcRoiFitter.MaxRoiPlots: $NROI" >$FCLFILE
+    echo "tools.adcRoiViewer.MaxRoiPlots: $NROI" >>$FCLFILE
+  # Channel range for ROI fitter.
+  elif [ ${FCLNAME:0:5} = "roicr" ]; then
+    CR=${FCLNAME:5}
+    echo "physics.producers.dataprep.ChannelRanges: [${CR}]" >$FCLFILE
+    echo "tools.adcRoiFitter.ChannelRanges: [$CR]" >>$FCLFILE
+  elif [ ${FCLNAME:0:6} = "roitrc" ]; then
+    VVV=${FCLNAME:6}
+    if [ $VVV = one ]; then
+      COR=1.0
+    else
+      COR=0.$VVV
+    fi
+    echo "tools.pd_tickOffsetCorr.FembScaleValues: [${COR}]" >$FCLFILE
+  elif [ ${FCLNAME:0:4} = "tmit" ]; then
+    VALS=${FCLNAME:4}  # RRR-OOO
+    NUM1=${VALS%%-*}
+    NUM2=${VALS##*-}
+    echo "tools.pdsp_timingMitigate.SamplingRatio: $NUM1" >$FCLFILE
+    echo "tools.pdsp_timingMitigate.SamplingOffset: $NUM2" >>$FCLFILE
+  elif [ ${FCLNAME:0:9} = "pdchtzmax" ]; then
+    NUM=${FCLNAME:9}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pdcht_Apa3z.MaxSignal: $NUM"     >$FCLFILE
+    echo "tools.pdcht_Apas.MaxSignal: $NUM"     >>$FCLFILE
+    echo "tools.pdcht_Zplanes.MaxSignal: $NUM"  >>$FCLFILE
+    echo "tools.pdchtp_Apa3z.MaxSignal: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Apas.MaxSignal: $NUM"    >>$FCLFILE
+    echo "tools.pdchtp_Zplanes.MaxSignal: $NUM" >>$FCLFILE
+  elif [ ${FCLNAME:0:9} = "pdchtimax" ]; then
+    NUM=${FCLNAME:9}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pdcht_Apa3u.MaxSignal: $NUM"     >$FCLFILE
+    echo "tools.pdcht_Apa3v.MaxSignal: $NUM"    >>$FCLFILE
+    echo "tools.pdcht_Iplanes.MaxSignal: $NUM"  >>$FCLFILE
+    echo "tools.pdchtp_Apa3u.MaxSignal: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Apa3v.MaxSignal: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Iplanes.MaxSignal: $NUM" >>$FCLFILE
+  elif [ ${FCLNAME:0:10} = "pdchtrebin" ]; then
+    NUM=${FCLNAME:10}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pdcht_Apa3z.TickRebin: $NUM"     >$FCLFILE
+    echo "tools.pdcht_Apas.TickRebin: $NUM"     >>$FCLFILE
+    echo "tools.pdcht_Zplanes.TickRebin: $NUM"  >>$FCLFILE
+    echo "tools.pdcht_Cplanes.TickRebin: $NUM"  >>$FCLFILE
+    echo "tools.pdcht_Iplanes.TickRebin: $NUM"  >>$FCLFILE
+    echo "tools.pdchtp_Apa3z.TickRebin: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Apas.TickRebin: $NUM"    >>$FCLFILE
+    echo "tools.pdchtp_Zplanes.TickRebin: $NUM" >>$FCLFILE
+    echo "tools.pdchtp_Cplanes.TickRebin: $NUM" >>$FCLFILE
+    echo "tools.pdchtp_Iplanes.TickRebin: $NUM" >>$FCLFILE
+  elif [ ${FCLNAME:0:10} = "pdchtsizex" ]; then
+    NUM=${FCLNAME:10}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pdcht_Apa3z.PlotSizeX: $NUM"     >$FCLFILE
+    echo "tools.pdcht_Apas.PlotSizeX: $NUM"     >>$FCLFILE
+    echo "tools.pdcht_Zplanes.PlotSizeX: $NUM"  >>$FCLFILE
+    echo "tools.pdcht_Cplanes.PlotSizeX: $NUM"  >>$FCLFILE
+    echo "tools.pdcht_Iplanes.PlotSizeX: $NUM"  >>$FCLFILE
+    echo "tools.pdchtp_Apa3z.PlotSizeX: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Apas.PlotSizeX: $NUM"    >>$FCLFILE
+    echo "tools.pdchtp_Zplanes.PlotSizeX: $NUM" >>$FCLFILE
+    echo "tools.pdchtp_Cplanes.PlotSizeX: $NUM" >>$FCLFILE
+    echo "tools.pdchtp_Iplanes.PlotSizeX: $NUM" >>$FCLFILE
+  elif [ ${FCLNAME:0:7} = "usctdec" ]; then
+    VAL=0.${FCLNAME:7}
+    echo "tools.adcCorrectUndershootAdc.TDecayConst:  [ $VAL, $VAL, $VAL ]" >$FCLFILE
+    echo "tools.adcCorrectUndershootKe.TDecayConst:   [ $VAL, $VAL, $VAL ]" >>$FCLFILE
+    echo "tools.adcCorrectUndershoot.TDecayConst:     [ $VAL, $VAL, $VAL ]" >>$FCLFILE
+  elif [ ${FCLNAME:0:7} = "uscfsub" ]; then
+    VAL=0.${FCLNAME:7}
+    echo "tools.adcCorrectUndershootAdc.FSubConst:  [ $VAL, $VAL, $VAL ]" >$FCLFILE
+    echo "tools.adcCorrectUndershootKe.FSubConst:   [ $VAL, $VAL, $VAL ]" >>$FCLFILE
+    echo "tools.adcCorrectUndershoot.FSubConst:     [ $VAL, $VAL, $VAL ]" >>$FCLFILE
+  elif [ ${FCLNAME:0:7} = "exptdec" ]; then
+    VAL=${FCLNAME:7}
+    echo "tools.adcTailRemovalAdc.DecayTime: $VAL" >$FCLFILE
+    echo "tools.adcTailRemovalKe.DecayTime: $VAL" >>$FCLFILE
+  fi
+  if [ ! -r $FCLFILE ]; then
+    echo makeFcl: Unable to create $FCLFILE
+    return 1
+  fi
+  echo makeFcl: Created $FCLFILE
+}
+
+FCLPATH=run
+NEVT=0
+SEVT=    # # events to proc padded with zeroes
+NSKP=0   # # events to skip
+SSKP=    # # events to skip padded with zeroes
+OUTPUT=0
+VALOPT=
+CLEAN=
+#RUN=run001191
+if [ -n "$1" ]; then
+  FCLPATH=$1
+fi
+if [ -n "$3" -a "$3" != "." ]; then
+  NEVT=$3
+  if [ $3 = clean ]; then CLEAN=true; fi
+fi
+if [ $NEVT -gt 0 ]; then
+  SEVT=$NEVT
+  while [ ${#SEVT} -lt 6 ]; do SEVT=0$SEVT; done
+  SEVT=proc$SEVT
+fi
+if [ -n "$4" -a "$4" != "." ]; then
+  NSKP=$4
+  SSKP=$4
+  while [ ${#SSKP} -lt 6 ]; do SSKP=0$SSKP; done
+  SSKP=skip$SSKP
+fi
+if [ -n "$2" ]; then
+  IRUN=$2
+else
+  echo Usage: $0 FCL RUN [NEVT] [NSKIP]
+  echo "Use option -H for details"
+  exit 0
+fi
+USEXROOTD=
+for ARG in $5 $6; do
+  if   [ $ARG = clean ]; then CLEAN=true
+  elif [ $ARG = output ]; then OUTPUT=1
+  elif [ $ARG = val ]; then VALOPT=val
+  elif [ $ARG = valout ]; then VALOPT=valout
+  elif [ $ARG = valgdb ]; then VALOPT=valgdb
+  elif [ $ARG = valstop ]; then VALOPT=valstop
+  elif [ $ARG = xrootd ]; then USEXROOTD=true
+  elif [ $ARG = noxrootd ]; then USEXROOTD=
+  else
+    echo "Invalid flag: $ARG"
+    exit 1
+  fi
+done
+FRUN=$IRUN
+RUNSUF=
+RUNPAT=
+RAWINFILELIST=
+EXTRAFCL=                  # Fcl dervied fron run specifier
+# Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
+# restricts processing to events in range [EE, FF).
+if ls -ls $HOME/data/dune/datasets/$FRUN.txt 1>/dev/null; then
+  RAWINFILELIST=$HOME/data/dune/datasets/$FRUN.txt
+  echo FOUND input file list: $RAWINFILELIST
+elif echo $IRUN | grep evts 1>/dev/null; then
+  FRUN=`echo $IRUN | sed 's/evts.*//'`
+  echo Using event range file list.
+  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+  EVTS=`echo $IRUN | sed 's/.*evts//'`
+  FEV1=${EVTS%%-*}
+  FEV2=${EVTS##*-}
+  while [ ${#FEV1} -lt 6 ]; do FEV1=0$FEV1; done
+  while [ ${#FEV2} -lt 6 ]; do FEV2=0$FEV2; done
+  RAWINFILELIST=$HOME/data/dune/np04/run_slices/files/run${FRUN}/np04_run${FRUN}_evts${FEV1}-${FEV2}_files.txt
+  if [ ! -r $RAWINFILELIST ]; then
+    echo Not found: $RAWINFILELIST
+    echo Create with "duneEventFileList RUN EVT1 EVT2"
+    exit 3
+  fi
+  EXTRAFCL=event${FEV1}-${FEV2}
+  FRUN=${FRUN}evts${EVTS}
+# Input run specifier in form RRRR_PP means only include file that have _PP in their names.
+elif echo $IRUN | grep _ 1>/dev/null; then
+  FRUN=`echo $IRUN | sed 's/_.*//'`
+  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+  RUNPAT=`echo $IRUN | sed 's/.*_/_/'`
+  echo Using file pattern $RUNPAT
+  if [ -n "$EVTS" ]; then
+    FRUN=${FRUN}evts${EVTS}
+  fi
+# Input run specifier is just the run number.
+elif [ $FRUN -eq $FRUN ]; then
+  echo Using unadorned run number $FRUN
+  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+# Any thing else is taken to a be file name pattern indicator.
+else
+  echo Using data fil pattern $FRUN
+fi
+RUNNAME0=$FRUN
+RUNNAME=run${FRUN}${SEVT}${SSKP}
+if [ -n "$VALOPT" ]; then
+  RUNNAME=$RUNNAME-$VALOPT
+fi
+if [ $OUTPUT -eq 1 ]; then RUNNAME=${RUNNAME}output; fi
+echo runname: $RUNNAME
+
+DIR=`echo ${FCLPATH}/$RUNNAME | sed 's#:#/#g'`
+if [ -n "$CLEAN" ]; then
+  echo Removing $DIR
+  rm -rf $DIR
+  exit 0
+fi
+echo Run directory: $DIR
+if [ -r $DIR ]; then
+  echo Run directory already exists. Remove with
+  echo 'rm -rf '$DIR
+  exit 1
+fi
+mkdir -p $DIR
+SUBDIR=`pwd`
+cd $DIR
+
+INSPEC=
+if [ -z "$RAWINFILELIST" ]; then
+  RAWINFILELIST=$HOME/data/dune/np04/np04_cryostat_commissioning/np04_run${FRUN}_files.txt
+  if [ ! -r "$RAWINFILELIST" ]; then
+    echo File list not found: $RAWINFILELIST
+  fi
+fi
+INFILELIST=infiles.txt
+if [ -r "$RAWINFILELIST" ]; then
+  if [ -z "$USEXROOTD" ]; then
+    # Direct access to dcache
+    echo Taking input files from $RAWINFILELIST
+    cp $RAWINFILELIST $INFILELIST
+  else
+    # xrootd (need grid proxy)
+    for BASE in `cat $RAWINFILELIST`; do
+      echo $BASE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g' >>$INFILELIST
+    done
+  fi
+  if [ -n "$RUNPAT" ]; then
+    echo Selecting input files with pattern $RUNPAT
+    mv $INFILELIST $INFILELIST.tmp
+    if grep $RUNPAT $INFILELIST.tmp > $INFILELIST; then
+      NFILE=`wc -l $INFILELIST`
+      NFILERAW=`wc -l $RAWINFILELIST`
+      echo Selected $NFILE of $NFILERAW files
+    else
+      echo No files selected
+      exit 2
+    fi
+  fi
+  INSPEC="-S $INFILELIST"
+else
+  echo Did not find file lists $RAWINFILELIST
+  echo Searching directly for files...
+  INDIRS="$HOME/data/dune/np04/*"
+  echo Searching for matching files in $INDIRS
+  INNAMES="$RUNNAME0.root np04_raw_${RUNNAME}_1_dl1.root np04_raw_${RUNNAME}_0001_dl1.root"
+  INFILES=
+  for INDIR in $INDIRS; do
+    for INFILE in $INDIR/$RUNNAME0.root $INDIR/np04_raw_${RUNNAME}_*_dl?.root; do
+      if [ -r $INFILE ]; then
+        INFILES="$INFILES $INFILE"
+      fi
+    done
+  done
+  if [ -z "$INFILES" ]; then
+    echo "Input data file(s) not found:"
+    for INNAME in $INNAMES; do
+      echo "  $INNAME"
+    done
+    exit 1
+  fi
+  echo "Input file(s):"
+  for INFILE in $INFILES; do
+    echo "  $INFILE"
+  done
+  INSPEC="-s $INFILES"
+fi
+
+# Insert EXTRAFCL 2nd in the fcl list so it can be overwritten.
+FIRST=true
+for NAME in `echo $FCLPATH | sed 's#/# #g'`; do
+  if [ -r $SUBDIR/$NAME.fcl ]; then
+    echo Copying $NAME.fcl from submission directory.
+    cp $SUBDIR/$NAME.fcl .
+  fi
+  # Process the primary fcl.
+  if [ -n "$FIRST" ]; then
+    FIRST=
+    if ! fcldump $NAME.fcl 2>&1 1>/dev/null; then 
+      echo Primary FCL not found: $NAME.fcl
+      fclpath
+      exit 2
+    fi
+    echo "#include \"$NAME.fcl\"" >run.fcl
+    # If there is extra fcl, add it here so it can be overwritten.
+    if [ -z "$EXTRAFCL" ]; then continue; fi
+    NAME=$EXTRAFCL
+  fi
+  if ! fcldump $NAME.fcl 2>&1 1>/dev/null; then 
+    if ! makeFcl $NAME; then
+      echo FCL not found: $NAME.fcl
+      exit 2
+    fi
+  fi
+  echo "#include \"$NAME.fcl\"" >>run.fcl
+done
+# If the submit dir includes local.fcl or dbg.fcl, append
+# copy it to the run area. In the case of local.fcl, add
+# it to configuration.
+for FFILE in local dbg; do
+  SUBFCL=$SUBDIR/$FFILE.fcl
+  if [ -r $SUBFCL ]; then
+    echo Copying $SUBFCL
+    cp $SUBFCL .
+    if [ $FFILE = local ]; then
+      echo "#include \"local.fcl\"" >>run.fcl
+    fi
+  else
+    echo Not found: $SUBFCL
+  fi
+done
+FCLFILE=run.fcl
+
+FW_SEARCH_PATH="..:$FW_SEARCH_PATH"
+FHICL_FILE_PATH=".:$SUBDIR:$FHICL_FILE_PATH"
+if true; then
+  if ! fcldump $FCLFILE 5 >${FCLFILE}dump 2>fcldumperr.txt; then
+    echo Ignoring fcldump errors.
+  fi
+else
+  if ! fcldump $FCLFILE 5 >${FCLFILE}dump; then
+    exit 3
+  fi
+fi
+OPTNEVT=
+if [ "$NEVT" -gt 0 ]; then
+  OPTNEVT="-n $NEVT"
+fi
+COMBASE="lar -c $FCLFILE $INSPEC $OPTNEVT --nskip $NSKP"
+if [ $OUTPUT -eq 1 ]; then
+  COM=$COMBASE
+else
+  COM="$COMBASE --no-output"
+fi
+VALBASE="valgrind --tool=memcheck --leak-check=no --track-origins=yes --num-callers=20 --error-limit=no --suppressions=${ROOTSYS}/etc/valgrind-root.supp"
+SUPFILES="$DUNETPC_INC/valgrind_dune.sup"
+for SUPFILE in $SUPFILES; do
+  if [ -r $SUPFILE ]; then
+    VALBASE="$VALBASE --suppressions=$SUPFILE"
+  fi
+done
+echo $COM >run
+echo $VALBASE $COM >runval
+echo $VALBASE --log-file=valgrind.out $COM >runvalout
+echo $VALBASE --vgdb-error=1 $COM >runvalgdb
+echo $VALBASE --error-exitcode=5 --exit-on-first-error=yes $COM >runvalstop
+
+chmod +x run
+chmod +x runval
+chmod +x runvalout
+chmod +x runvalgdb
+chmod +x runvalstop
+RUNCOM=./run$VALOPT
+if [ $IRUN != '0' ]; then
+  ulimit -c unlimited
+  $RUNCOM 2>&1 | tee run.log
+  STAT=$?
+  if [ $STAT -ne 0 ]; then
+    echo "Job failed with error $STAT"
+  else
+    echo "Job succeeded."
+  fi
+  grep ERROR: run.log >errors.log
+  head -10 errors.log
+  echo Error count: `wc -l errors.log | awk '{print $1}'`
+  grep WARNING: run.log >warnings.log
+  echo Warning count: `wc -l warnings.log | awk '{print $1}'`
+  head -10 warnings.log
+  if [ -r valgrind.out ]; then
+    tail -1 valgrind.out
+  fi
+fi
+echo Run directory: $DIR
+echo ARGS: '-c' $FCLFILE '-s' $INFILES $OPTNEVT '--nskip' $NSKP
+echo Command: `cat run`
