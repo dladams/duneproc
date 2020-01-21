@@ -15,3 +15,5 @@ detector data by APA. Alone, it does not run any tools but these may be added
 in the usual fashion, e.g. by adding  
 `services.RawDigitPrepService.AdcChannelToolNames: @local::protodune_dataprep_tools_calib_noiserem`  
 to `local.fcl` in the job submission directory.
+This runs the standard processing up to the point where the ROIs and energy calibration
+are dropped in preparation for wirecell processing.
