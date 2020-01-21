@@ -1,0 +1,8 @@
+#include "dqm.fcl"
+
+tools.pdcht_All.TickRebin: 5
+tools.pdcht_Apas.TickRebin: 5
+tools.pdcht_Zplanes.TickRebin: 5
+tools.pdcht_Cplanes.TickRebin: 5
+tools.pdcht_Iplanes.TickRebin: 5
+tools.tickRanges.plotTicks: @local::tools.tickRanges.allTicks

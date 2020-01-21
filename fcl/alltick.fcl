@@ -1,0 +1,50 @@
+# alltick.fcl
+#
+# David Adams
+# October 2018
+#
+# Modifies channel-tick and detector display tools to show all ticks.
+
+tools.pdcht_Apa3z.TickRebin:  5
+tools.pdcht_Cplanes.TickRebin:  5
+tools.pdcht_Iplanes.TickRebin:  5
+tools.pdcht_Zplanes.TickRebin:  5
+
+tools.pdchtp_Apa3z.TickRebin:  5
+tools.pdchtp_Cplanes.TickRebin:  5
+tools.pdchtp_Iplanes.TickRebin:  5
+tools.pdchtp_Zplanes.TickRebin:  5
+
+tools.tickRanges.plotTicks.begin: 0
+tools.tickRanges.plotTicks.end:   0
+
+tools.rawAdcDetectorPlotColl.Tick0: -200
+tools.rawAdcDetectorPlotColl.DriftSpeed: 0.05
+tools.rawAdcDetectorPlotColl.ShowAllTicks: true
+tools.rawAdcDetectorPlotColl.Title: "All-tick raw ADC collection view."
+
+tools.rawAdcDetectorPlotInd1.Tick0: -200
+tools.rawAdcDetectorPlotInd1.DriftSpeed: 0.05
+tools.rawAdcDetectorPlotInd1.ShowAllTicks: true
+tools.rawAdcDetectorPlotInd1.Title: "All-tick raw ADC induction view 1."
+
+tools.rawAdcDetectorPlotInd2.Tick0: -200
+tools.rawAdcDetectorPlotInd2.DriftSpeed: 0.05
+tools.rawAdcDetectorPlotInd2.ShowAllTicks: true
+tools.rawAdcDetectorPlotInd2.Title: "All-tick raw ADC induction view 2."
+
+tools.preparedAdcDetectorPlotColl.Tick0: -200
+tools.preparedAdcDetectorPlotColl.DriftSpeed: 0.05
+tools.preparedAdcDetectorPlotColl.ShowAllTicks: true
+tools.preparedAdcDetectorPlotColl.Title: "All-tick prepared ADC collection view"
+
+tools.preparedAdcDetectorPlotInd1.Tick0: -200
+tools.preparedAdcDetectorPlotInd1.DriftSpeed: 0.05
+tools.preparedAdcDetectorPlotInd1.ShowAllTicks: true
+tools.preparedAdcDetectorPlotInd1.Title: "All-tick prepared ADC induction view 1"
+
+tools.preparedAdcDetectorPlotInd2.Tick0: -200
+tools.preparedAdcDetectorPlotInd2.DriftSpeed: 0.05
+tools.preparedAdcDetectorPlotInd2.ShowAllTicks: true
+tools.preparedAdcDetectorPlotInd2.Title: "All-tick prepared ADC induction view 2"
+

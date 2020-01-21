@@ -1,0 +1,15 @@
+# pdcht.fcl
+#
+# David Adams
+# November 2018
+#
+# Add protoDUNE raw channel-tick plots to the end of
+# the dataprep tools.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "pdcht_Zplanes",
+  "pdcht_Cplanes",
+  "pdcht_Iplanes"
+]
+

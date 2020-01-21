@@ -1,0 +1,11 @@
+# evtview.fcl
+#
+# Top-level fcl to make plots show the the FEMB multiplicity
+# (# FEMBS/event) and graphs of the same vs. event number.
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",
+  "pd_evtviewNfemb"
+]

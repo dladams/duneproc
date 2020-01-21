@@ -1,0 +1,15 @@
+# addDetdispPrep.fcl
+#
+# David Adams
+# November 2018
+#
+# Add protoDUNE detector display plots to the end of
+# the dataprep tools.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  rawAdcDetectorPlotColl,
+  rawAdcDetectorPlotInd1,
+  rawAdcDetectorPlotInd2
+]
+
