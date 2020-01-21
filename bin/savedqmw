@@ -1,0 +1,50 @@
+#!/bin/sh
+
+RUN=$1
+EVT=$2
+if [ -z "$2" -o "$1" = "-h" ]; then
+  echo Usage: $0 RUN EVENT
+  exit 0
+fi
+SRUN=$RUN
+SEVT=$EVT
+EVT1=$(( 1000*($EVT/1000) ))
+EVT2=$(( $EVT1 + 1000 ))
+SEVT1=$EVT1
+SEVT2=$EVT2
+while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
+while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
+while [ ${#SEVT1} -lt 6 ]; do SEVT1="0"$SEVT1; done
+while [ ${#SEVT2} -lt 6 ]; do SEVT2="0"$SEVT2; done
+#echo ${SRUN}
+RUNDIR=dqmw/event$SEVT/run${SRUN}evts${SEVT1}-${SEVT2}
+if [ ! -r $RUNDIR ]; then
+  RUNDIR=dqmw/*/event$SEVT/run${SRUN}evts${SEVT1}-${SEVT2}
+  if [ ! -r $RUNDIR ]; then
+    RUNDIR=dqmw/event$SEVT/run${SRUN}*
+    if [ ! -r $RUNDIR ]; then
+      echo Run directory not found: $RUNDIR
+      exit 1
+    fi
+  fi
+fi
+echo Taking plots from $RUNDIR
+OUTBASEDIR=$HOME/wwwdune/protodune/data/dqmw
+OUTRUNDIR=$OUTBASEDIR/run$SRUN
+if [ ! -r $OUTRUNDIR ]; then
+  echo Creating $OUTRUNDIR
+  mkdir $OUTRUNDIR
+fi
+OUTDIR=$OUTRUNDIR/event$SEVT
+if [ ! -r $OUTDIR ]; then
+  echo Creating $OUTDIR
+  mkdir $OUTDIR
+fi
+echo Copying from $RUNDIR to $OUTDIR
+cp $RUNDIR/* $OUTDIR
+makeIndex $OUTDIR k
+makeIndex $OUTRUNDIR k
+makeIndex $OUTBASEDIR k
+
+exit 0
+
