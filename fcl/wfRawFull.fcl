@@ -1,0 +1,18 @@
+# wfRawFull.fcl
+#
+# David Adams
+# January 2020
+#
+# Produces raw waveform plots for ticks (0, 1000) showing the full
+# ADC range.
+#
+# With processData, wfrran can be used to change the signal range and
+# wftick to change the tick range.
+
+#include "wfRaw.fcl"
+
+tools.adcPlotRaw.PlotSigOpt: fixed
+tools.adcPlotRaw.PlotSigMin: 0.0
+tools.adcPlotRaw.PlotSigMax:  4096.0
+tools.adcPlotRaw.PlotFileName: "wfraw_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
+#tools.adcPlotRaw.RootFileName: "wf.root"

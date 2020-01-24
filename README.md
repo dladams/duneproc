@@ -7,7 +7,8 @@ Package to facilitate the running of `lar` jobs with `dunetpc`.
 
 The command `processData` runs a `lar` job with the first argument
 specifying the fcl configuration and the second the data to be processed.
-For detailed help, use `processData -H`.
+For detailed help, use `processData -H`. Example:
+  processData wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
 
 Fcl configuration files are also provided. The top-level `run_dataprep.fcl`
 runs the event and trigger filters and dataprep configured to read

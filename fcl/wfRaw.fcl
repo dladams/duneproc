@@ -1,9 +1,12 @@
-# wfRaw100.fcl
+# wfRaw.fcl
 #
 # David Adams
-# October 2018
+# January 2020
 #
-# Produce raw waveform plots showing +/50 around pedestal.
+# Produces raw waveform plots for ticks (0, 1000) showing +/50 around pedestal.
+#
+# With processData, wfrran can be used to change the signal range and
+# wftick to change the tick range.
 
 #include "run_dataprep.fcl"
 

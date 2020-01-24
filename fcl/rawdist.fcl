@@ -1,0 +1,21 @@
+# wfRaw100.fcl
+#
+# David Adams
+# October 2018
+#
+# Produce raw waveform plots showing +/50 around pedestal.
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",
+  "adcPlotRawDist"
+]
+
+tools.adcPlotRawDist.HistTypes: ["rawdistlog"]
+tools.adcPlotRawDist.PlotFileName: "rawdist_run%0RUN%"
+tools.adcPlotRawDist.PlotFileName: "rawdist_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
+tools.adcPlotRawDist.PlotSigOpt: "fixed"
+tools.adcPlotRawDist.PlotDistMin: 0.5
+tools.adcPlotRawDist.PlotDistMax: 1.e4
+#tools.adcPlotRaw.RootFileName: "rawdist.root"

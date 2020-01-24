@@ -31,7 +31,9 @@ if [ "$1" = "-H" ]; then
   echo "  winsizeSSS - Set # ticks in detector props. Used by LArFFT if its size is 0."
   echo "  wftickTTT - The channel range for waveforms drawn with tools"
   echo "              adcPlotRaw and adcPlotRaw is [TTT, TTT+1000)"
-  echo "  wfranSSS - The signal range for these tools is (-SSS, SSS)"
+  echo "  wfrran0SSS - The signal range for these tools is (0, SSS)"
+  echo "  wfrranSSS - The signal range for adcPlotRaw tools is (-SSS, SSS) around pedestal"
+  echo "  wfrranSS1:SS2 - The signal range for adcPlotRaw tools is (SS1, SS2)"
   echo "  trigT - Select events with trigger index TT."
   echo "  eventEEE - Process event EEE"
   echo "  eventEE1-EE2 - Process events in range [EE1, EE2)"
@@ -47,7 +49,9 @@ if [ "$1" = "-H" ]; then
   echo "  roicrCCC - Use and plot channel range CCC with AdcRoiViwer (e.g. roifit.fcl)"
   echo "  roitrcVVV - Use FEMB302 tick rate correction 0.VVVVVVV (e.g. 999293). VVV=one means 1.0"
   echo "  tmitRRR-OOO - Set FEMB302 timing mitigation rate factor to RRR and offset to OOO"
-  echo "  pdchtzmaxMMM - Set upper signal limit for pdcht (channel vs. tick) plots"
+  echo "  pdchtzmaxMMM - Set upper signal limit for pdcht (channel vs. tick) Z plots"
+  echo "  pdchtcmaxMMM - Set upper signal limit for pdcht (channel vs. tick) C plots"
+  echo "  pdchtimaxMMM - Set upper signal limit for pdcht (channel vs. tick) I plots"
   echo "  pdchtrebinRR - Set rebin to RR for protDUNE cht (channel vs. tick) plots"
   echo "  pdchtsizexSS - Set horizontal plot size to SS pixels for protDUNE cht (channel vs. tick) plots"
   echo "  usctdecTTTT - Set USC TDecayConst to 0.TTTT"
@@ -59,8 +63,8 @@ if [ "$1" = "-H" ]; then
   echo "  dqm - Make standard dqm plots."
   echo "  dqmw - Make standard dqm plots except channel-tick plots include all ticks."
   echo "  evtview - Make plots showing the number of FEMBs with data."
-  echo "  wfRaw - Draw raw-pedestal waveforms. Use wfran and wftick to control displayed ranges."
-  echo "  wfMit - Draw raw and mitigated waveforms. Use wfran and wftick to control displayed ranges."
+  echo "  wfRaw - Draw raw-pedestal waveforms. Use wfrran and wftick to control displayed ranges."
+  echo "  wfMit - Draw raw and mitigated waveforms. Use wfrran, wfpran and wftick to control displayed ranges."
   echo
   echo "Some of the secondary fcl files provided here:"
   echo "  addChannelTickRaw - Add raw channel-tick plots to the end of dataprep"
@@ -133,13 +137,40 @@ makeFcl() {
     echo "tools.adcPlotRaw.PlotSamMax: $NUM2" >>$FCLFILE
     echo "tools.adcPlotPrepared.PlotSamMin: $NUM1" >>$FCLFILE
     echo "tools.adcPlotPrepared.PlotSamMax: $NUM2" >>$FCLFILE
-  # wfranSSS: Show waveforms signals from -SSS to SSS
-  elif [ ${FCLNAME:0:5} = wfran -a ${#FCLNAME} -gt 5 ]; then
-    MAX=${FCLNAME:5}
-    echo "tools.adcPlotRaw.PlotSigMin: -$MAX" >>$FCLFILE
+  # wfran0SSS: Show waveforms signals from 0 to SSS
+  elif [ ${FCLNAME:0:6} = wfran0 -a ${#FCLNAME} -gt 6 ]; then
+    MAX=${FCLNAME:6}
+    echo "tools.adcPlotRaw.PlotSigMin: 0"     >>$FCLFILE
     echo "tools.adcPlotRaw.PlotSigMax:  $MAX" >>$FCLFILE
-    echo "tools.adcPlotPrepared.PlotSigMin: -$MAX" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSigMin: 0"     >>$FCLFILE
     echo "tools.adcPlotPrepared.PlotSigMax:  $MAX" >>$FCLFILE
+  # wfrranSSS: Show raw waveforms signals from -SSS to SSS around pedestal
+  # wfrranSS1:SS2: Show raw waveforms signals from SS1 to SS2
+  elif [ ${FCLNAME:0:6} = wfrran -a ${#FCLNAME} -gt 6 ]; then
+    REM=${FCLNAME:6}
+    MAX=$(echo $REM | sed 's/.*://g')
+    if [ $MAX = $REM ]; then    # wfrranSSS
+      MIN="-$MAX"
+      OPT=pedestal
+    else
+      MIN=$(echo $REM | sed 's/:.*//g')
+      OPT=fixed
+    fi
+    echo "tools.adcPlotRaw.PlotSigMin: $MIN" >>$FCLFILE
+    echo "tools.adcPlotRaw.PlotSigMax: $MAX" >>$FCLFILE
+    echo "tools.adcPlotRaw.PlotSigOpt: $OPT" >>$FCLFILE
+  # wfpranSSS: Show prepared waveforms signals from -SSS to SSS
+  # wfpranSS1:SS2: Show prepared waveforms signals from SS1 to SS2
+  elif [ ${FCLNAME:0:6} = wfpran -a ${#FCLNAME} -gt 6 ]; then
+    REM=${FCLNAME:6}
+    MAX=$(echo $REM | sed 's/.*://g')
+    if [ $MAX = $REM ]; then    # wfrranSSS
+      MIN="-$MAX"
+    else
+      MIN=$(echo $REM | sed 's/:.*//g')
+    fi
+    echo "tools.adcPlotPrepared.PlotSigMin: $MIN" >>$FCLFILE
+    echo "tools.adcPlotPrepared.PlotSigMax: $MAX" >>$FCLFILE
   elif [ ${FCLNAME:0:4} = trig ]; then
     NUM=${FCLNAME:4}
     while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
@@ -250,6 +281,13 @@ makeFcl() {
     echo "tools.pdchtp_Apa3z.MaxSignal: $NUM"   >>$FCLFILE
     echo "tools.pdchtp_Apas.MaxSignal: $NUM"    >>$FCLFILE
     echo "tools.pdchtp_Zplanes.MaxSignal: $NUM" >>$FCLFILE
+  elif [ ${FCLNAME:0:9} = "pdchtcmax" ]; then
+    NUM=${FCLNAME:9}
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
+    echo "tools.pdcht_Apa3c.MaxSignal: $NUM"     >$FCLFILE
+    echo "tools.pdcht_Cplanes.MaxSignal: $NUM"  >>$FCLFILE
+    echo "tools.pdchtp_Apa3c.MaxSignal: $NUM"   >>$FCLFILE
+    echo "tools.pdchtp_Cplanes.MaxSignal: $NUM" >>$FCLFILE
   elif [ ${FCLNAME:0:9} = "pdchtimax" ]; then
     NUM=${FCLNAME:9}
     while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
