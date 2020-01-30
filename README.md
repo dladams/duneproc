@@ -11,7 +11,7 @@ For detailed help, use `processData -H`. Example:
   processData wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
 
 To gain access to this command, first set up a recent version of dunetpc or protoduneana e.g.
-following the instructions on the [DUNE LAr SW page][https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases].
+following the instructions on the [DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
 The clone this package and source setup.sh in the top-level directory.
 
 Fcl configuration files are also provided. The top-level `run_dataprep.fcl`
