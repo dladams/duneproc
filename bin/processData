@@ -379,7 +379,7 @@ else
   echo "Use option -H for details"
   exit 0
 fi
-USEXROOTD=
+USEXROOTD=true
 for ARG in $5 $6; do
   if   [ $ARG = clean ]; then CLEAN=true
   elif [ $ARG = output ]; then OUTPUT=1

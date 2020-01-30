@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# David Adams
+# February 2019
+
+COUNT=0
+RUNFIL=runjobs.txt
+PRCFIL=$RUNFIL.prc
+OUTFIL=$RUNFIL.out
+
+if [ ! -r local.fcl ]; then
+  echo Please add local.fcl
+  exit 1
+fi
+
+while true; do
+  if [ -x .runjobsScript ]; then ./.runjobsScript; fi
+  if ! mv $RUNFIL $PRCFIL 2>/dev/null; then
+    echo `date` `hostname` Waiting for $RUNFIL in `pwd`
+    sleep 20
+  else
+    echo
+    COM=
+    rm -f $OUTFIL
+    while read -r LINE; do
+      if [ -z "$COM" ]; then
+        COM="$LINE"
+        if [ "$COM" = done ]; then
+          echo done >>$OUTFIL
+        fi
+      else
+        echo $LINE >>$OUTFIL
+      fi
+    done <$PRCFIL
+    rm $PRCFIL
+
+    # Write the new run request file.
+    mv $OUTFIL $RUNFIL
+
+    # Exit if done.
+    if [ "$COM" = done ]; then
+      echo
+      echo `date` No more job requests.
+      exit 0
+    fi
+
+    # Run the job.
+    if [ -r $OUTFIL ]; then
+      mv $OUTFIL $RUNFIL
+    fi
+    COUNT=$((COUNT+1))
+    echo `date` `hostname` Running job $COUNT: $COM
+    echo `date` `hostname` $COM >>rjstarted.log
+    LOG=$HOME/logs/runjobs_${HOSTNAME}.log
+    echo "--------------------------------------------------------------"
+    $COM | tee $LOG
+    STAT=$?
+    echo "--------------------------------------------------------------"
+    if [ $STAT -ne 0 ]; then
+      echo `date` `hostname` $COM >>rjfailed.log
+    fi
+    echo `date` `hostname` $COM >>rjfinished.log
+  fi
+done
