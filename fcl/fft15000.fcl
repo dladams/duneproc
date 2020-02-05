@@ -1,0 +1,2 @@
+# Make this big enough for 15k ticks to avoid crash.
+services.LArFFT.FFTSize: 16384

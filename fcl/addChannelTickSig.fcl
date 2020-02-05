@@ -1,0 +1,23 @@
+# addChannelTickSig.fcl
+#
+# David Adams
+# January 2020
+#
+# Add protoDUNE raw channel-tick plots to the end of
+# the dataprep tools.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "pdchtp_Zplanes",
+  "pdchtp_Cplanes",
+  "pdchtp_Iplanes"
+]
+
+tools.pdchtp_Zplanes.DataType: 2
+tools.pdchtp_Cplanes.DataType: 2
+tools.pdchtp_Iplanes.DataType: 2
+
+# 50 ADC counts --> 1.25 ke
+tools.pdchtp_Zplanes.MaxSignal: 1.25
+tools.pdchtp_Cplanes.MaxSignal: 1.25
+tools.pdchtp_Iplanes.MaxSignal: 1.25

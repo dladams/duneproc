@@ -1,0 +1,11 @@
+# rawapa3z.fcl
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",
+  "pd_adcPedestalFit",
+  "pdcht_Zplanes"
+]
+
+tools.pdcht_Zplanes.PlotFileName: "adcraw_%CRNAME%_run%0RUN%_evt%0EVENT%.{png,tpad}"

@@ -1,0 +1,11 @@
+# load_dataprep.fcl
+#
+# David Adams
+# January 2019
+#
+# Load protoDUNE services and tools for interactive running.
+
+#include "run_dataprep.fcl"
+
+services.LArFFT: @erase
+services.TFileService: @erase
