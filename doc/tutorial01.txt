@@ -4,6 +4,8 @@
 # February 2020
 #
 # This is a tutuorial on using DA's analysis packages.
+# For more information on getting started with DUNE computing, see
+# [https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial]
 
 # Log in and create a new directory.
 ssh -Y -K dunegpv05.fnal.gov
