@@ -12,7 +12,7 @@ elif [ -z "$DUNETPC_VERSION" ]; then
 
 else
 
-echo Setting up duneproc.
+echo Setting up duneproc
 DUNEPROC_DIR=$(dirname $(readlink -f $BASH_SOURCE))
 PATH=$DUNEPROC_DIR/bin:$PATH
 TMPPATH=.:./job:
