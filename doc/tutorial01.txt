@@ -1,0 +1,56 @@
+# tutorial01.txt
+
+# David Adams
+# February 2020
+#
+# This is a tutuorial on using DA's analysis packages.
+# For more information on getting started with DUNE computing, see
+# [https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial]
+
+# Log in and create a new directory.
+ssh -Y -K dunegpv05.fnal.gov
+mkdir /dune/data/users/$USER/tutorial
+cd /dune/data/users/$USER/tutorial
+
+# Set up a release of dunetpc.
+# See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+setup dunetpc v08_41_00 -q e19:prof
+
+# Get kerberos and grid certificates.
+# Latter is needed for xrootd file access.
+kx509 --minhours 12
+voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
+
+# List some of the commands available in dunetpc.
+duneHelp
+
+# Check out DA's analysis packages.
+mkdir pkgs
+cd pkgs
+git clone https://github.com/dladams/duneproc
+git clone https://github.com/dladams/dunenoise
+cd ..
+
+# Set up those analysis packages.
+source pkgs/duneproc/setup.sh
+source pkgs/dunenoise/setup.sh
+
+# Example list files for a run.
+samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240"
+
+# Add name to path conversion 
+
+# Run dataprep with no tools
+mkdir job01
+cd job01
+lar -c run_dataprep.fcl -n 1 \
+    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+cd ..
+
+# Run DQM (data quality monitoring) with wide display
+cd job01
+lar -c dqmw.fcl -n 1 \
+    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+
+
