@@ -23,8 +23,8 @@ services:
   ChannelStatusService:         @local::pdsp_channel_status
   TFileService: { 
    closeFileFast: true  # default
-   fileName:  "RunRawDecoderTFile.root"
-   tmpDir: "<parent-path-of-filename>"  # default
+   fileName:  "/dev/null"
+   tmpDir: "/dev/null"  # default
   }
   #soon PdspChannelMapService:   @local::pdspchannelmap
   PdspChannelMapService: {
