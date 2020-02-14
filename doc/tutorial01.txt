@@ -49,8 +49,14 @@ lar -c run_dataprep.fcl -n 1 \
 cd ..
 
 # Run DQM (data quality monitoring) with wide display
-cd job01
+mkdir job02
+cd job02
 lar -c dqmw.fcl -n 1 \
     -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+cd ..
 
+# Run dataprep with no tools for APA 7
+cd job01
+lar -c run_dataprep_apa7.fcl -n 1 \
+    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/test/None/00/01/00/79/np04_raw_run010079_0001_dl1.root
 

@@ -1,0 +1,123 @@
+#include "services_dune.fcl"
+#include "ProtoDUNETriggerFilter.fcl"
+#include "BeamEvent.fcl"
+#include "dataprep_dune.fcl"
+#include "RawDecoder.fcl"
+
+#include "channelstatus_apa7.fcl"
+
+# This must come after all prologs.
+#include "protodune_tools_dune.fcl"
+#include "stickycodes_apa7warm.fcl"
+#include "stickycodes_apa7cold.fcl"
+
+services:
+{
+  TimeTracker:       {}
+  RandomNumberGenerator: {} 
+  ExptGeoHelperInterface:       @local::dune_geometry_helper
+  Geometry:                     @local::protodune_geo
+  DetectorClocksService:        @local::dunefd_detectorclocks
+  DetectorPropertiesService:    @local::protodune_detproperties
+  LArPropertiesService:         @local::dunefd_properties
+  LArFFT:                       @local::dunefd_larfft  
+  DatabaseUtil:                 @local::dunefd_database
+  SignalShapingServiceDUNE:     @local::protodunesp_signalshapingservice
+  ChannelStatusService:         @local::apa7cold_channel_status
+  TFileService: { 
+   closeFileFast: true  # default
+   fileName:  "/dev/null"
+   tmpDir: "/dev/null"
+  }
+  #soon PdspChannelMapService:   @local::pdspchannelmap
+  PdspChannelMapService: {
+    FileName:         "protoDUNETPCChannelMap_RCE_v4.txt"
+    FELIXFileName:    "protoDUNETPCChannelMap_FELIX_v4.txt"
+    SSPFileName:      "protoDUNESSPChannelMap_v1.txt"
+    LogLevel:         1
+  }
+  #RawDigitPrepService: @local::adcprep_readraw
+  #RawDigitExtractService: @local::rdx_std
+  RawDigitPrepService: {
+    service_provider: ToolBasedRawDigitPrepService
+    LogLevel: 3
+    DoWires: false
+    AdcChannelToolNames: []
+  }
+  IFBeam: {}  # Needed for the beamevent producer
+}
+
+outputs: {
+  out1: {
+    compressionLevel: 1
+    module_type: RootOutput
+    fileName: "DataprepEventOutput.root"
+    SelectEvents: [freco]
+  }
+}
+
+physics: {
+
+  filters: {
+    trigfilter:  @local::pdsp_trigfilter_all
+    eventfilter: {
+      LogLevel: 2
+      module_type: DuneEventFilter
+      SelectEvents: []
+      RejectEvents: []
+      EventBegin: 0
+      EventEnd:   0
+      EventModFreq: 0
+      EventModVal:  0
+      JobIndexRangeTool: jobRanges
+      SkipEventTool: ""
+    }
+  }
+
+  producers: {
+    timingrawdecoder: @local::timing_raw_decoder   
+    #ctbrawdecoder: @local::ctb_raw_decoder
+    beamevent: @local::proto_beamevent
+    dataprep: {
+      module_type: DataPrepByApaModule
+      LogLevel: 2
+      DecoderTool: "pdsp_decoder"
+      BeamEventLabel: "beamevent"
+      OutputTimeStampName: dataprep
+      OutputDigitName: ""
+      OutputWireName: ""
+      ChannelGroups: ["apa7"]
+      OnlineChannelMapTool: pd_onlineChannelMapByFemb
+      KeepChannels: []
+      SkipChannels: []
+      SkipEmptyChannels: true
+      DeltaTickCount: 0.005
+      ApaChannelCounts: [2560]
+    }
+  }
+
+  #Create path to run module
+  #nfreco: [ timingrawdecoder, ssprawdecoder, tpcrawdecoder, dataprep ] 
+  #freco: [ eventfilter, timingrawdecoder, trigfilter, ssprawdecoder, tpcrawdecoder, ctbrawdecoder, beamevent, dataprep ] 
+  freco: [ eventfilter, timingrawdecoder, beamevent, dataprep ] 
+  output: [ out1 ]
+  #trigger_paths : [ produce ]
+  end_paths: [ output ]
+}
+
+source:
+{
+  module_type: RootInput
+  fileNames: [ "/home/dladams/data/dune/np04/np04_coldbox_test/np04_raw_run000720_1_dl1.root" ]
+  maxEvents : -1
+}
+
+physics.filters.trigfilter.LogLevel: 2
+physics.filters.trigfilter.LogLevel: 2
+
+process_name: processNp04Apa7Data
+ 
+tools.channelRanges: @local::tools.channelRangesApa7
+
+# To allow 100 ms readout
+tools.pdsp_decoder.FELIXBufferSizeCheckLimit: 100000000
