@@ -16,6 +16,9 @@ cd /dune/data/users/$USER/tutorial
 # See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup dunetpc v08_41_00 -q e19:prof
+# or to use my private (annd presumably newer and better) build,
+source ~dladams/proc/build/dev01/dunesetup.sh 
+dune shell
 
 # Get kerberos and grid certificates.
 # Latter is needed for xrootd file access.
@@ -25,38 +28,48 @@ voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 # List some of the commands available in dunetpc.
 duneHelp
 
-# Check out DA's analysis packages.
+# Check out duneproc:
 mkdir pkgs
 cd pkgs
 git clone https://github.com/dladams/duneproc
 git clone https://github.com/dladams/dunenoise
+git clone https://github.com/dladams/dunececalib
 cd ..
+# If already checked out, pull down any changes with
+cd pkgs/duneproc
+git pull
+cd ../..
 
 # Set up those analysis packages.
 source pkgs/duneproc/setup.sh
-source pkgs/dunenoise/setup.sh
 
-# Example list files for a run.
+# If using any other anaylsis package (dunenoise, dunececalib, ...),
+# check it out and set up in the same way
+
+# Find the files or files of interest, e.g. for a run:
 samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240"
+# or events 1000-1999 in that run:
+samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240 and last_event>=1000 and first_event<2000"
 
-# Add name to path conversion 
+# To get the full xrootd path(s) to one of these files:
+samweb get-file-access-url np04_raw_run005240_0001_dl1.root --schema=root
 
 # Run dataprep with no tools
 mkdir job01
 cd job01
 lar -c run_dataprep.fcl -n 1 \
-    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
 cd ..
 
 # Run DQM (data quality monitoring) with wide display
 mkdir job02
 cd job02
 lar -c dqmw.fcl -n 1 \
-    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
 cd ..
 
 # Run dataprep with no tools for APA 7
-cd job01
+cd job03
 lar -c run_dataprep_apa7.fcl -n 1 \
-    -s xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/test/None/00/01/00/79/np04_raw_run010079_0001_dl1.root
+    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/test/None/00/01/00/79/np04_raw_run010079_0001_dl1.root
 
