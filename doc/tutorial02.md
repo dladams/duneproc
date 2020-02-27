@@ -48,3 +48,21 @@ E.g., if all three were present
 > #include "local.fcl"  
 > #include "dbg.fcl"
 
+If present, the fcl files are taken from the usual fcl search path including
+directories from this package, dunetpc and larsoft.
+If the file is not on the path, duneproc will construct the fcl if it corresponds
+to a known pattern as described in the extended help:
+
+> duneproc -H
+
+Assumptions about the presence and naming of modules and tools are made in the construction
+of these fcl files and there may be no or disastrous effect if these assumptions are violated.
+A fcl dump file run.fcldump is created in the run directory to check the fcl is valid and
+allow the user to chech the final configuration.
+
+The input file list infiles.txt is created from the second argument DST.
+If the file file $HOME/data/dune/datasets/DST.txt exists, it is copied.
+If not, the pattern DST = RRRevtsEE1-EE2 is used to search in the run slices directory  
+  $HOME/data/dune/np04/run_slices/files  
+If DST does not match that pattern (contain "evts"),
+there are som more complicated options that are likely to be removed.
