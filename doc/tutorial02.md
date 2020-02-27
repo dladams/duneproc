@@ -30,9 +30,9 @@ The first argument is a sequence of fclnames and the top-level fcl
 file includes each of these extended with the fcl extension:
 E.g. for FCL = fcl1/fcl2/fcl3:
 
-> #include "fcl1.fcl"
-> #include "fcl2.fcl"
-> #include "fcl3.fcl"
+> #include "fcl1.fcl"  
+> #include "fcl2.fcl"  
+> #include "fcl3.fcl"  
 
 In addition, the files extra.fcl, local.fcl and dbg.fcl are also included if
 present in the submission directory.
@@ -41,10 +41,10 @@ to the following files.
 The other two appear at the end where they can can override earlier definitions.
 E.g., if all three were present
 
-> #include "fcl1.fcl"
-> #include "extra.fcl"
-> #include "fcl2.fcl"
-> #include "fcl3.fcl"
-> #include "local.fcl"
+> #include "fcl1.fcl"  
+> #include "extra.fcl"  
+> #include "fcl2.fcl"  
+> #include "fcl3.fcl"  
+> #include "local.fcl"  
 > #include "dbg.fcl"
 
