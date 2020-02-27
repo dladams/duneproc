@@ -23,4 +23,5 @@ to `local.fcl` in the job submission directory.
 This runs the standard processing up to the point where the ROIs and energy calibration
 are dropped in preparation for wirecell processing.
 
-A tutorial to get started is available [doc/tutorial01.txt](doc/tutorial01.txt).
+A tutorial to get started is available [doc/tutorial01.txt](doc/tutorial01.txt)
+and a tutorial on the duneproc command is at [doc/tutorial02.txt](doc/tutorial02.txt).
