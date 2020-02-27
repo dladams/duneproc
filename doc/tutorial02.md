@@ -85,17 +85,31 @@ or create your own file list at that location.
 > duneproc run_dataprep mydst 1
 
 2. The same using pnfs instead of xrootd to access the input files.
-First remove the run directory from the previous job.
+First remove the run directory from the previous job:
 > duneproc run_dataprep/event000001 mydst . . clean  
 > duneproc run_dataprep/event000001 mydst . . noxrootd
 
 3. Dataprep for event 1:
 > duneproc run_dataprep/event000001 mydst
 
-2. Dataprep for events 1-5, APA 3 only:
+4. Dataprep for events 1-5, APA 3 only:
 > duneproc run_dataprep/event000001-000006/dpcr_apa3 mydst 
 
+5. DQM with wide display for event 10. This includes a channel-tick
+display for each plane and many metric vs. channel plots:
+> duneproc run_dataprep/event000010 mydst
 
+6. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
+> duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
+> display wfRaw/event000001/dpcr_femb302v/wftick3000/runmydst/wfraw_run008564_evt000001_chan01536.png
+
+7. Mitigated waveforms for the same.
+> duneproc wfMit/event000001/dpcr_femb302v/wftick3000 mydst  
+> display wfMit/event000001/dpcr_femb302v/wftick3000/runmydst/wfprep_run008564_evt000001_chan01536.png
+
+8. Same with expanded ADC scale so we can see the full signal.
+> duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
+> display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
 
 
 

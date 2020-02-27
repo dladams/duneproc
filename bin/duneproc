@@ -114,7 +114,6 @@ makeFcl() {
         if [ "$VIEW" = u -o "$VIEW" = v ]; then
           #echo Induction view in $FCLNAME
           echo "tools.$TOOL.ChannelLineModulus: 10" >>$FCLFILE
-          echo "tools.$TOOL.ChannelLinePattern: [" >>$FCLFILE
         elif [ "$VIEW" = x ]; then
           echo Collection view in $FCLNAME
           echo "tools.$TOOL.ChannelLineModulus: 2560" >>$FCLFILE
