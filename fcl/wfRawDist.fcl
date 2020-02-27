@@ -1,0 +1,23 @@
+# wfRawDist.fcl
+#
+# David Adams
+# January 2020
+#
+# Produces raw ADC distribution plots for ticks (0, 1000) showing +/70 around pedestal.
+#
+# With processData, wfrran can be used to change the signal range and
+# wftick to change the tick range.
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",
+  "pd_adcPedestalFit",
+  "adcPlotRawDist"
+]
+
+tools.adcPlotRawDist.PlotSigOpt: pedestal
+tools.adcPlotRawDist.PlotSigMin: -70.0
+tools.adcPlotRawDist.PlotSigMax:  70.0
+tools.adcPlotRawDist.PlotFileName: "wfrawdist_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
+#tools.adcPlotRaw.RootFileName: "wf.root"

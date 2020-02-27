@@ -17,7 +17,7 @@ services.RawDigitPrepService.AdcChannelToolNames: [
 ]
 
 tools.adcPlotRaw.PlotSigOpt: pedestal
-tools.adcPlotRaw.PlotSigMin: -50.0
-tools.adcPlotRaw.PlotSigMax:  50.0
+tools.adcPlotRaw.PlotSigMin: -70.0
+tools.adcPlotRaw.PlotSigMax:  70.0
 tools.adcPlotRaw.PlotFileName: "wfraw_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
 #tools.adcPlotRaw.RootFileName: "wf.root"
