@@ -418,7 +418,7 @@ FRUN=$IRUN
 RUNSUF=
 RUNPAT=
 RAWINFILELIST=
-EXTRAFCL=                  # Fcl dervied fron run specifier
+EXTRAFCL=                  # Fcl derived fron run specifier
 # Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
 # restricts processing to events in range [EE, FF).
 if ls -ls $HOME/data/dune/datasets/$FRUN.txt 1>/dev/null; then

@@ -1,0 +1,4 @@
+/pnfs/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/cosmics/None/00/00/85/64/np04_raw_run008564_0001_dl5.root
+/pnfs/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/cosmics/None/00/00/85/64/np04_raw_run008564_0001_dl10.root
+/pnfs/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/cosmics/None/00/00/85/64/np04_raw_run008564_0001_dl13.root
+/pnfs/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/cosmics/None/00/00/85/64/np04_raw_run008564_0001_dl16.root

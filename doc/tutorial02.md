@@ -26,6 +26,8 @@ The syntax is:
 * NSKIP - Number of events to skip. Default of 0 means none.
 * OPT - Other options. See help. Typically this can be omitted.
 
+The value "." can be used for for NPROC or NSKIP to force use of the default.
+
 The first argument is a sequence of fclnames and the top-level fcl
 file includes each of these extended with the fcl extension:
 E.g. for FCL = fcl1/fcl2/fcl3:
@@ -62,7 +64,38 @@ allow the user to chech the final configuration.
 
 The input file list infiles.txt is created from the second argument DST.
 If the file file $HOME/data/dune/datasets/DST.txt exists, it is copied.
-If not, the pattern DST = RRRevtsEE1-EE2 is used to search in the run slices directory  
-  $HOME/data/dune/np04/run_slices/files  
+If not, the pattern DST = RRRevtsEE1-EE2 is used to search in the run slices directory
+$HOME/data/dune/np04/run_slices/files.
 If DST does not match that pattern (contain "evts"),
-there are som more complicated options that are likely to be removed.
+there are some more complicated options that are likely to be removed.
+
+The job directory is constructed from the first two options: ./FCL/DST with
+additional subdirectories if NPROC or NSKIP are set.
+
+### Examples
+
+Some examples demonstrating use of duneproc fcl files and patterns follow.
+Either copy the example [here](mydst.txt):
+
+> cp $DUNEPROC_DIR/doc/mydst.txt ~/data/dune/datasets
+
+or create your own file list at that location.
+
+1. To run dataprep (no tools) for the first event in the dataset:
+> duneproc run_dataprep mydst 1
+
+2. The same using pnfs instead of xrootd to access the input files.
+First remove the run directory from the previous job.
+> duneproc run_dataprep/event000001 mydst . . clean  
+> duneproc run_dataprep/event000001 mydst . . noxrootd
+
+3. Dataprep for event 1:
+> duneproc run_dataprep/event000001 mydst
+
+2. Dataprep for events 1-5, APA 3 only:
+> duneproc run_dataprep/event000001-000006/dpcr_apa3 mydst 
+
+
+
+
+
