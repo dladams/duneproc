@@ -28,7 +28,7 @@ voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 # List some of the commands available in dunetpc.
 duneHelp
 
-# Check out duneproc:
+# Check out duneproc (and optionally other packages):
 mkdir pkgs
 cd pkgs
 git clone https://github.com/dladams/duneproc
@@ -40,7 +40,7 @@ cd pkgs/duneproc
 git pull
 cd ../..
 
-# Set up those analysis packages.
+# Set up duneproc.
 source pkgs/duneproc/setup.sh
 
 # If using any other anaylsis package (dunenoise, dunececalib, ...),
