@@ -24,4 +24,4 @@ This runs the standard processing up to the point where the ROIs and energy cali
 are dropped in preparation for wirecell processing.
 
 A tutorial to get started is available [doc/tutorial01.txt](doc/tutorial01.txt)
-and a tutorial on the duneproc command is at [doc/tutorial02.txt](doc/tutorial02.txt).
+and a tutorial on the duneproc command is at [doc/tutorial02.md](doc/tutorial02.md).
