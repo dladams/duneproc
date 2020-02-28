@@ -57,7 +57,8 @@ if [ "$1" = "-H" ]; then
   echo "  usctdecTTTT - Set USC TDecayConst to 0.TTTT"
   echo "  uscfsubFFFF - Set USC FSubConst to 0.FFFF"
   echo "  exptdecTTTT - Set ExpTailRemover decay tiome to TTTT ticks"
-  echo
+  echo "  dptools_SSS - Set dataprep tool sequence to @local::protodune_dataprep_tools_SSS."
+  echo "                See services_dune.fcl."
   echo "Some of the primary fcl files provided here:"
   echo "  run_dataprep - Run dataprep with no tools or list provided later."
   echo "  dqm - Make standard dqm plots."
@@ -356,6 +357,9 @@ makeFcl() {
     VAL=${FCLNAME:7}
     echo "tools.adcTailRemovalAdc.DecayTime: $VAL" >$FCLFILE
     echo "tools.adcTailRemovalKe.DecayTime: $VAL" >>$FCLFILE
+  elif [ ${FCLNAME:0:8} = "dptools_" ]; then
+    VAL=${FCLNAME:8}
+    echo "services.RawDigitPrepService.AdcChannelToolNames: @local::protodune_dataprep_tools_$VAL" >$FCLFILE
   fi
   if [ ! -r $FCLFILE ]; then
     echo makeFcl: Unable to create $FCLFILE
