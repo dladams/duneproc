@@ -7,7 +7,7 @@
 # Script to process event data and create calibration histograms.
 
 if [ "$1" = "-H" ]; then
-  echo Usage: $0 FCL RUNPAT [NEVT] [NSKIP] [FLAG]
+  echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG]
   echo "       FLAG=clean to remove existing run directory"
   echo "       FLAG=output to save event output"
   echo "       FLAG=val to run with valgrind log mixed with process log"
@@ -73,7 +73,7 @@ if [ "$1" = "-H" ]; then
   echo "  addDetdispPrep - Add prepared detector display to the end of dataprep."
   echo "  alltick - Set tick range to all ticks for channel-tick and detector displays."
   echo
-  echo "RUNPAT is RUN or RUN_PAT"
+  echo "DSTPAT is RUN or RUN_PAT"
   echo "where RUN is a run number and PAT is a pattern as follows."
   echo "If PAT = evtsEE-FF, then events [EE,FF) are processed."
   echo "Otherwise _PAT is required in the file names, e.g. _SSSS to select time name slice SSSS = 0001, 0002, ..."
@@ -396,9 +396,9 @@ if [ -n "$4" -a "$4" != "." ]; then
   SSKP=skip$SSKP
 fi
 if [ -n "$2" ]; then
-  IRUN=$2
+  IDST=$2
 else
-  echo Usage: $0 FCL RUN [NEVT] [NSKIP]
+  echo Usage: $0 FCL DST [NEVT] [NSKIP] [OPT]
   echo "Use option -H for details"
   exit 0
 fi
@@ -417,52 +417,52 @@ for ARG in $5 $6; do
     exit 1
   fi
 done
-FRUN=$IRUN
+FDST=$IDST
 RUNSUF=
-RUNPAT=
+DSTPAT=
 RAWINFILELIST=
 EXTRAFCL=                  # Fcl derived fron run specifier
 # Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
 # restricts processing to events in range [EE, FF).
-if ls -ls $HOME/data/dune/datasets/$FRUN.txt 1>/dev/null; then
-  RAWINFILELIST=$HOME/data/dune/datasets/$FRUN.txt
+if ls -ls $HOME/data/dune/datasets/$FDST.txt 1>/dev/null; then
+  RAWINFILELIST=$HOME/data/dune/datasets/$FDST.txt
   echo FOUND input file list: $RAWINFILELIST
-elif echo $IRUN | grep evts 1>/dev/null; then
-  FRUN=`echo $IRUN | sed 's/evts.*//'`
+elif echo $IDST | grep evts 1>/dev/null; then
+  FDST=`echo $IDST | sed 's/evts.*//'`
   echo Using event range file list.
-  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
-  EVTS=`echo $IRUN | sed 's/.*evts//'`
+  while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
+  EVTS=`echo $IDST | sed 's/.*evts//'`
   FEV1=${EVTS%%-*}
   FEV2=${EVTS##*-}
   while [ ${#FEV1} -lt 6 ]; do FEV1=0$FEV1; done
   while [ ${#FEV2} -lt 6 ]; do FEV2=0$FEV2; done
-  RAWINFILELIST=$HOME/data/dune/np04/run_slices/files/run${FRUN}/np04_run${FRUN}_evts${FEV1}-${FEV2}_files.txt
+  RAWINFILELIST=$HOME/data/dune/np04/run_slices/files/run${FDST}/np04_run${FDST}_evts${FEV1}-${FEV2}_files.txt
   if [ ! -r $RAWINFILELIST ]; then
     echo Not found: $RAWINFILELIST
     echo Create with "duneEventFileList RUN EVT1 EVT2"
     exit 3
   fi
   EXTRAFCL=event${FEV1}-${FEV2}
-  FRUN=${FRUN}evts${EVTS}
+  FDST=${FDST}evts${EVTS}
 # Input run specifier in form RRRR_PP means only include file that have _PP in their names.
-elif echo $IRUN | grep _ 1>/dev/null; then
-  FRUN=`echo $IRUN | sed 's/_.*//'`
-  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
-  RUNPAT=`echo $IRUN | sed 's/.*_/_/'`
-  echo Using file pattern $RUNPAT
+elif echo $IDST | grep _ 1>/dev/null; then
+  FDST=`echo $IDST | sed 's/_.*//'`
+  while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
+  DSTPAT=`echo $IDST | sed 's/.*_/_/'`
+  echo Using file pattern $DSTPAT
   if [ -n "$EVTS" ]; then
-    FRUN=${FRUN}evts${EVTS}
+    FDST=${FDST}evts${EVTS}
   fi
 # Input run specifier is just the run number.
-elif [ $FRUN -eq $FRUN ]; then
-  echo Using unadorned run number $FRUN
-  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+elif [ $FDST -eq $FDST ]; then
+  echo Using unadorned run number $FDST
+  while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
 # Any thing else is taken to a be file name pattern indicator.
 else
-  echo Using data fil pattern $FRUN
+  echo Using data fil pattern $FDST
 fi
-RUNNAME0=$FRUN
-RUNNAME=run${FRUN}${SEVT}${SSKP}
+RUNNAME0=$FDST
+RUNNAME=run${FDST}${SEVT}${SSKP}
 if [ -n "$VALOPT" ]; then
   RUNNAME=$RUNNAME-$VALOPT
 fi
@@ -487,7 +487,7 @@ cd $DIR
 
 INSPEC=
 if [ -z "$RAWINFILELIST" ]; then
-  RAWINFILELIST=$HOME/data/dune/np04/np04_cryostat_commissioning/np04_run${FRUN}_files.txt
+  RAWINFILELIST=$HOME/data/dune/np04/np04_cryostat_commissioning/np04_run${FDST}_files.txt
   if [ ! -r "$RAWINFILELIST" ]; then
     echo File list not found: $RAWINFILELIST
   fi
@@ -504,10 +504,10 @@ if [ -r "$RAWINFILELIST" ]; then
       echo $BASE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g' >>$INFILELIST
     done
   fi
-  if [ -n "$RUNPAT" ]; then
-    echo Selecting input files with pattern $RUNPAT
+  if [ -n "$DSTPAT" ]; then
+    echo Selecting input files with pattern $DSTPAT
     mv $INFILELIST $INFILELIST.tmp
-    if grep $RUNPAT $INFILELIST.tmp > $INFILELIST; then
+    if grep $DSTPAT $INFILELIST.tmp > $INFILELIST; then
       NFILE=`wc -l $INFILELIST`
       NFILERAW=`wc -l $RAWINFILELIST`
       echo Selected $NFILE of $NFILERAW files
@@ -630,7 +630,7 @@ chmod +x runvalout
 chmod +x runvalgdb
 chmod +x runvalstop
 RUNCOM=./run$VALOPT
-if [ $IRUN != '0' ]; then
+if [ $IDST != '0' ]; then
   ulimit -c unlimited
   $RUNCOM 2>&1 | tee run.log
   STAT=$?
