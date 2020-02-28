@@ -95,9 +95,10 @@ First remove the run directory from the previous job:
 4. Dataprep for events 1-5, APA 3 only:
 > duneproc run_dataprep/event000001-000006/dpcr_apa3 mydst 
 
-5. DQM with wide display for event 10. This includes a channel-tick
+5. DQM with wide display for event 1. This includes a channel-tick
 display for each plane and many metric vs. channel plots:
-> duneproc run_dataprep/event000010 mydst
+> duneproc dqmw/event000001 mydst  
+> display dqmw/event000001/runmydst/adcraw_tpp0v_run008564_evt000001.png 
 
 6. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
 > duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
@@ -110,6 +111,18 @@ display for each plane and many metric vs. channel plots:
 8. Same with expanded ADC scale so we can see the full signal.
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
+
+9. Run standard PDSP reco through mitigation on event 1 and create channel-tick display.
+> duneproc run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep mydst  
+> display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png  
+Note that "calib" in dptools_calib and be swapped out for different stage in reco, e.g.:
+
+10. Run standard PDSP reco through noise removal on event 1 and create channel-tick display.
+> duneproc run_dataprep/event000001/dptools_calib_noiserem/dpcr_apa3z/addChannelTickPrep mydst
+> display run_dataprep/event000001/dptools_calib_noiserem/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png
+Comparison with the preceeding plot should shows the effect of the coherent noise removal.
+
+
 
 
 
