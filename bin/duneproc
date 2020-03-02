@@ -52,6 +52,7 @@ if [ "$1" = "-H" ]; then
   echo "  pdchtzmaxMMM - Set upper signal limit for pdcht (channel vs. tick) Z plots"
   echo "  pdchtcmaxMMM - Set upper signal limit for pdcht (channel vs. tick) C plots"
   echo "  pdchtimaxMMM - Set upper signal limit for pdcht (channel vs. tick) I plots"
+  echo "  pdchtamaxMMM - Set upper signal limit for pdcht (channel vs. tick) Z, C and I plots"
   echo "  pdchtrebinRR - Set rebin to RR for protDUNE cht (channel vs. tick) plots"
   echo "  pdchtsizexSS - Set horizontal plot size to SS pixels for protDUNE cht (channel vs. tick) plots"
   echo "  usctdecTTTT - Set USC TDecayConst to 0.TTTT"
@@ -292,31 +293,33 @@ makeFcl() {
     NUM2=${VALS##*-}
     echo "tools.pdsp_timingMitigate.SamplingRatio: $NUM1" >$FCLFILE
     echo "tools.pdsp_timingMitigate.SamplingOffset: $NUM2" >>$FCLFILE
-  elif [ ${FCLNAME:0:9} = "pdchtzmax" ]; then
+  elif [ ${FCLNAME:0:5} = "pdcht" -a ${FCLNAME:6:3} = "max" ]; then
+    IPL=${FCLNAME:5:1}
     NUM=${FCLNAME:9}
     while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
-    echo "tools.pdcht_Apa3z.MaxSignal: $NUM"     >$FCLFILE
-    echo "tools.pdcht_Apas.MaxSignal: $NUM"     >>$FCLFILE
-    echo "tools.pdcht_Zplanes.MaxSignal: $NUM"  >>$FCLFILE
-    echo "tools.pdchtp_Apa3z.MaxSignal: $NUM"   >>$FCLFILE
-    echo "tools.pdchtp_Apas.MaxSignal: $NUM"    >>$FCLFILE
-    echo "tools.pdchtp_Zplanes.MaxSignal: $NUM" >>$FCLFILE
-  elif [ ${FCLNAME:0:9} = "pdchtcmax" ]; then
-    NUM=${FCLNAME:9}
-    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
-    echo "tools.pdcht_Apa3c.MaxSignal: $NUM"     >$FCLFILE
-    echo "tools.pdcht_Cplanes.MaxSignal: $NUM"  >>$FCLFILE
-    echo "tools.pdchtp_Apa3c.MaxSignal: $NUM"   >>$FCLFILE
-    echo "tools.pdchtp_Cplanes.MaxSignal: $NUM" >>$FCLFILE
-  elif [ ${FCLNAME:0:9} = "pdchtimax" ]; then
-    NUM=${FCLNAME:9}
-    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
-    echo "tools.pdcht_Apa3u.MaxSignal: $NUM"     >$FCLFILE
-    echo "tools.pdcht_Apa3v.MaxSignal: $NUM"    >>$FCLFILE
-    echo "tools.pdcht_Iplanes.MaxSignal: $NUM"  >>$FCLFILE
-    echo "tools.pdchtp_Apa3u.MaxSignal: $NUM"   >>$FCLFILE
-    echo "tools.pdchtp_Apa3v.MaxSignal: $NUM"   >>$FCLFILE
-    echo "tools.pdchtp_Iplanes.MaxSignal: $NUM" >>$FCLFILE
+    touch $FCLFILE
+    if [ $IPL = a -o $IPL = z ]; then
+      echo "tools.pdcht_Apa3z.MaxSignal: $NUM"    >>$FCLFILE
+      echo "tools.pdcht_Apas.MaxSignal: $NUM"     >>$FCLFILE
+      echo "tools.pdcht_Zplanes.MaxSignal: $NUM"  >>$FCLFILE
+      echo "tools.pdchtp_Apa3z.MaxSignal: $NUM"   >>$FCLFILE
+      echo "tools.pdchtp_Apas.MaxSignal: $NUM"    >>$FCLFILE
+      echo "tools.pdchtp_Zplanes.MaxSignal: $NUM" >>$FCLFILE
+    fi
+    if [ $IPL = a -o $IPL = c ]; then
+      echo "tools.pdcht_Apa3c.MaxSignal: $NUM"    >>$FCLFILE
+      echo "tools.pdcht_Cplanes.MaxSignal: $NUM"  >>$FCLFILE
+      echo "tools.pdchtp_Apa3c.MaxSignal: $NUM"   >>$FCLFILE
+      echo "tools.pdchtp_Cplanes.MaxSignal: $NUM" >>$FCLFILE
+    fi
+    if [ $IPL = a -o $IPL = i ]; then
+      echo "tools.pdcht_Apa3u.MaxSignal: $NUM"    >>$FCLFILE
+      echo "tools.pdcht_Apa3v.MaxSignal: $NUM"    >>$FCLFILE
+      echo "tools.pdcht_Iplanes.MaxSignal: $NUM"  >>$FCLFILE
+      echo "tools.pdchtp_Apa3u.MaxSignal: $NUM"   >>$FCLFILE
+      echo "tools.pdchtp_Apa3v.MaxSignal: $NUM"   >>$FCLFILE
+      echo "tools.pdchtp_Iplanes.MaxSignal: $NUM" >>$FCLFILE
+    fi
   elif [ ${FCLNAME:0:10} = "pdchtrebin" ]; then
     NUM=${FCLNAME:10}
     while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
@@ -376,24 +379,9 @@ SSKP=    # # events to skip padded with zeroes
 OUTPUT=0
 VALOPT=
 CLEAN=
-#RUN=run001191
+EXTRAS=
 if [ -n "$1" ]; then
   FCLPATH=$1
-fi
-if [ -n "$3" -a "$3" != "." ]; then
-  NEVT=$3
-  if [ $3 = clean ]; then CLEAN=true; fi
-fi
-if [ $NEVT -gt 0 ]; then
-  SEVT=$NEVT
-  while [ ${#SEVT} -lt 6 ]; do SEVT=0$SEVT; done
-  SEVT=proc$SEVT
-fi
-if [ -n "$4" -a "$4" != "." ]; then
-  NSKP=$4
-  SSKP=$4
-  while [ ${#SSKP} -lt 6 ]; do SSKP=0$SSKP; done
-  SSKP=skip$SSKP
 fi
 if [ -n "$2" ]; then
   IDST=$2
@@ -402,8 +390,30 @@ else
   echo "Use option -H for details"
   exit 0
 fi
+if [ -n "$3" -a "$3" != "." ]; then
+  if [ "$3" -eq "$3" ] 2>/dev/null; then
+    NEVT=$3
+  else
+    EXTRAS="$EXTRAS $3"
+  fi
+fi
+if [ $NEVT -gt 0 ]; then
+  SEVT=$NEVT
+  while [ ${#SEVT} -lt 6 ]; do SEVT=0$SEVT; done
+  SEVT=_proc$SEVT
+fi
+if [ -n "$4" -a "$4" != "." ]; then
+  if [ "$4" -eq "$4" ] 2>/dev/null; then
+    NSKP=$4
+    SSKP=$4
+    while [ ${#SSKP} -lt 6 ]; do SSKP=0$SSKP; done
+    SSKP=_skip$SSKP
+  else
+    EXTRAS="$EXTRAS $4"
+  fi
+fi
 USEXROOTD=true
-for ARG in $5 $6; do
+for ARG in $EXTRAS $5 $6; do
   if   [ $ARG = clean ]; then CLEAN=true
   elif [ $ARG = output ]; then OUTPUT=1
   elif [ $ARG = val ]; then VALOPT=val
@@ -443,7 +453,7 @@ elif echo $IDST | grep evts 1>/dev/null; then
     exit 3
   fi
   EXTRAFCL=event${FEV1}-${FEV2}
-  FDST=${FDST}evts${EVTS}
+  FDST=run${FDST}evts${EVTS}
 # Input run specifier in form RRRR_PP means only include file that have _PP in their names.
 elif echo $IDST | grep _ 1>/dev/null; then
   FDST=`echo $IDST | sed 's/_.*//'`
@@ -461,15 +471,15 @@ elif [ $FDST -eq $FDST ]; then
 else
   echo Using data fil pattern $FDST
 fi
-RUNNAME0=$FDST
-RUNNAME=run${FDST}${SEVT}${SSKP}
+DSTNAME0=$FDST
+DSTNAME=${FDST}${SEVT}${SSKP}
 if [ -n "$VALOPT" ]; then
-  RUNNAME=$RUNNAME-$VALOPT
+  DSTNAME=$DSTNAME-$VALOPT
 fi
-if [ $OUTPUT -eq 1 ]; then RUNNAME=${RUNNAME}output; fi
-echo runname: $RUNNAME
+if [ $OUTPUT -eq 1 ]; then DSTNAME=${DSTNAME}output; fi
+echo DST name: $DSTNAME
 
-DIR=`echo ${FCLPATH}/$RUNNAME | sed 's#:#/#g'`
+DIR=`echo ${FCLPATH}/$DSTNAME | sed 's#:#/#g'`
 if [ -n "$CLEAN" ]; then
   echo Removing $DIR
   rm -rf $DIR
@@ -519,30 +529,7 @@ if [ -r "$RAWINFILELIST" ]; then
   INSPEC="-S $INFILELIST"
 else
   echo Did not find file lists $RAWINFILELIST
-  echo Searching directly for files...
-  INDIRS="$HOME/data/dune/np04/*"
-  echo Searching for matching files in $INDIRS
-  INNAMES="$RUNNAME0.root np04_raw_${RUNNAME}_1_dl1.root np04_raw_${RUNNAME}_0001_dl1.root"
-  INFILES=
-  for INDIR in $INDIRS; do
-    for INFILE in $INDIR/$RUNNAME0.root $INDIR/np04_raw_${RUNNAME}_*_dl?.root; do
-      if [ -r $INFILE ]; then
-        INFILES="$INFILES $INFILE"
-      fi
-    done
-  done
-  if [ -z "$INFILES" ]; then
-    echo "Input data file(s) not found:"
-    for INNAME in $INNAMES; do
-      echo "  $INNAME"
-    done
-    exit 1
-  fi
-  echo "Input file(s):"
-  for INFILE in $INFILES; do
-    echo "  $INFILE"
-  done
-  INSPEC="-s $INFILES"
+  exit 3
 fi
 
 # Insert EXTRAFCL 2nd in the fcl list so it can be overwritten.
