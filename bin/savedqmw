@@ -8,25 +8,31 @@ if [ -z "$2" -o "$1" = "-h" ]; then
 fi
 SRUN=$RUN
 SEVT=$EVT
-EVT1=$(( 1000*($EVT/1000) ))
-EVT2=$(( $EVT1 + 1000 ))
-SEVT1=$EVT1
-SEVT2=$EVT2
 while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
 while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
-while [ ${#SEVT1} -lt 6 ]; do SEVT1="0"$SEVT1; done
-while [ ${#SEVT2} -lt 6 ]; do SEVT2="0"$SEVT2; done
-#echo ${SRUN}
-RUNDIR=dqmw/event$SEVT/run${SRUN}evts${SEVT1}-${SEVT2}
-if [ ! -r $RUNDIR ]; then
-  RUNDIR=dqmw/*/event$SEVT/run${SRUN}evts${SEVT1}-${SEVT2}
-  if [ ! -r $RUNDIR ]; then
-    RUNDIR=dqmw/event$SEVT/run${SRUN}*
-    if [ ! -r $RUNDIR ]; then
-      echo Run directory not found: $RUNDIR
-      exit 1
-    fi
-  fi
+SEVTSS=
+for MOD in 10 100 1000; do
+  EVT1=$(( $MOD*($EVT/$MOD) ))
+  EVT2=$(( $EVT1 + $MOD ))
+  SEVT1=$EVT1
+  SEVT2=$EVT2
+  while [ ${#SEVT1} -lt 6 ]; do SEVT1="0"$SEVT1; done
+  while [ ${#SEVT2} -lt 6 ]; do SEVT2="0"$SEVT2; done
+  SEVTSS="$SEVTSS ${SEVT1}-${SEVT2}"
+done
+RUNDIRS=
+for SEVTS in $SEVTSS; do
+  RUNDIR=dqmw/np04_run${SRUN}_evts$SEVTS/event$SEVT
+  if [ -r $RUNDIR ]; then break; fi
+  RUNDIR=
+  RUNDIRS="$RUNDIRS $RUNDIR"
+done
+if [ -z "$RUNDIR" ]; then
+  echo Run directory not found in any of
+  for RUNDIR in $RUNDIRS; do
+    echo "  $RUNDIR"
+  done
+  exit 1
 fi
 echo Taking plots from $RUNDIR
 OUTBASEDIR=$HOME/wwwdune/protodune/data/dqmw
