@@ -125,11 +125,11 @@ Note that "calib_mit" in dptools_calib_mit can be swapped out for different stag
 The high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 
 10. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
-> duneproc reco_dataprep mydst 1
+> duneproc reco_dataprep mydst 1  
 > display reco_dataprep_sim/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
 
 11. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
-> duneproc reco_dataprep_sim mysimdst 1 
+> duneproc reco_dataprep_sim mysimdst 1  
 > display reco_dataprep_sim/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
 
 
