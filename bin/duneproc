@@ -74,10 +74,12 @@ if [ "$1" = "-H" ]; then
   echo "  addDetdispPrep - Add prepared detector display to the end of dataprep."
   echo "  alltick - Set tick range to all ticks for channel-tick and detector displays."
   echo
-  echo "DSTPAT is RUN or RUN_PAT"
-  echo "where RUN is a run number and PAT is a pattern as follows."
-  echo "If PAT = evtsEE-FF, then events [EE,FF) are processed."
-  echo "Otherwise _PAT is required in the file names, e.g. _SSSS to select time name slice SSSS = 0001, 0002, ..."
+  echo "DSTPAT is DST, DST/DSTFCL, DST_PAT or DST_PAT/DSTFCL"
+  echo "DST is a data set name used to locate a file containing an input file list: one of"
+  echo "  $HOME/data/dune/datasets/DST.txt"
+  echo "  if DST matches SSS_runRRR_evtsEE1-EE2, $HOME/data/dune/SSS/run_slices/files/runRRRRRR_evtsEEEEE1-EEEEE2_files.txt"
+  echo "If PAT is not blank, only files containing the pattern are processed."
+  echo "If DSTFCL is provided, it is appended to the FCLPATH."
   exit 0
 fi
 
@@ -380,11 +382,14 @@ OUTPUT=0
 VALOPT=
 CLEAN=
 EXTRAS=
-if [ -n "$1" ]; then
+if [ -n "$1" -a -n "$2" ]; then
   FCLPATH=$1
-fi
-if [ -n "$2" ]; then
-  IDST=$2
+  RUNDIR=$1/$2
+  IDST=$(echo $2 | sed 's#/.*##g')
+  DSTFCL=$(echo $2 | sed 's#.*/##')
+  if [ -n "$DSTFCL" ]; then
+    FCLPATH=$FCLPATH/$DSTFCL
+  fi
 else
   echo Usage: $0 FCL DST [NEVT] [NSKIP] [OPT]
   echo "Use option -H for details"
@@ -438,15 +443,22 @@ if ls -ls $HOME/data/dune/datasets/$FDST.txt 1>/dev/null; then
   RAWINFILELIST=$HOME/data/dune/datasets/$FDST.txt
   echo FOUND input file list: $RAWINFILELIST
 elif echo $IDST | grep evts 1>/dev/null; then
-  FDST=`echo $IDST | sed 's/evts.*//'`
-  echo Using event range file list.
-  while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
-  EVTS=`echo $IDST | sed 's/.*evts//'`
+  # Looking for SSS_runRRRevtsEEE1-EEE2
+  EVTS=`echo $IDST | sed 's/.*_evts//'`
+  FPRE=`echo $IDST | sed 's/_evts.*//'`
+  FRUN=`echo $FPRE | sed 's/.*run//'`
+  FSTA=`echo $FPRE | sed 's/_run.*//'`
+  if [ -z $FSTA ]; then
+    echo Invalid dataset specifier: $IDST
+    exit 4
+  fi
+  echo Using event range file list for stage $FSTA.
+  while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
   FEV1=${EVTS%%-*}
   FEV2=${EVTS##*-}
   while [ ${#FEV1} -lt 6 ]; do FEV1=0$FEV1; done
   while [ ${#FEV2} -lt 6 ]; do FEV2=0$FEV2; done
-  RAWINFILELIST=$HOME/data/dune/np04/run_slices/files/run${FDST}/np04_run${FDST}_evts${FEV1}-${FEV2}_files.txt
+  RAWINFILELIST=$HOME/data/dune/$FSTA/run_slices/files/run$FRUN/${FSTA}_run${FRUN}_evts${FEV1}-${FEV2}_files.txt
   if [ ! -r $RAWINFILELIST ]; then
     echo Not found: $RAWINFILELIST
     echo Create with "duneEventFileList RUN EVT1 EVT2"
@@ -479,7 +491,7 @@ fi
 if [ $OUTPUT -eq 1 ]; then DSTNAME=${DSTNAME}output; fi
 echo DST name: $DSTNAME
 
-DIR=`echo ${FCLPATH}/$DSTNAME | sed 's#:#/#g'`
+DIR=$(echo $RUNDIR | sed 's#:#/#g')
 if [ -n "$CLEAN" ]; then
   echo Removing $DIR
   rm -rf $DIR

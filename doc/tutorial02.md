@@ -91,14 +91,16 @@ First remove the run directory from the previous job:
 
 3. Dataprep with no tools for event 1:
 > duneproc run_dataprep/event000001 mydst
+or
+> duneproc run_dataprep mydst/event000001
 
 4. Dataprep with no tools for events 1-5, APA 3 only:
-> duneproc run_dataprep/event000001-000006/dpcr_apa3 mydst 
+> duneproc run_dataprep/dpcr_apa3 mydst/event000001-000006
 
 5. DQM with wide display for event 1. This includes a channel-tick
 display for each plane and many metric vs. channel plots:
-> duneproc dqmw/event000001 mydst  
-> display dqmw/event000001/runmydst/adcraw_tpp0v_run008564_evt000001.png 
+> duneproc dqmw mydst/event000001
+> display dqmw/mydst/event000001/adcraw_tpp0v_run008564_evt000001.png 
 
 6. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
 > duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
