@@ -112,16 +112,24 @@ display for each plane and many metric vs. channel plots:
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
 
-9. Run standard PDSP (protoDUNE single phase) reco through mitigation on event 1 and create channel-tick displays.
+9. Run PDSP (protoDUNE single phase) dataprep through mitigation on event 1 and create channel-tick displays.
 > duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
 > display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png  
-Note that "calib" in dptools_calib and be swapped out for different stage in reco including
+Note that "calib_mit" in dptools_calib_mit can be swapped out for different stages in stages in reco including
 * calib_only - Calibration but no mitigation, tail removal or noise removal.
 * calib_mit - Calibration and mitigation but no tail removal or noise removal.
 * calib_tail - Calibration, mitigation and tail removal but no noise removal.
 * calib_noiserem - Calibration, mitigation, tail removal and noise removal.
-* calib_wirecell - Above plus swich back to approximate ADC scale and zeroing of ba dchannels.
+* calib_wirecell - Above plus swich back to approximate ADC scale and zeroing of bad channels.  
+The high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 
+10. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+> duneproc reco_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst 1
+> display reco_dataprep_sim/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
+
+11. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
+> duneproc reco_dataprep_sim/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mysimdst 1 
+> display reco_dataprep_sim/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
 
 
 
