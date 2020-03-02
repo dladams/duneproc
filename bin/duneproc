@@ -386,7 +386,7 @@ if [ -n "$1" -a -n "$2" ]; then
   FCLPATH=$1
   RUNDIR=$1/$2
   IDST=$(echo $2 | sed 's#/.*##g')
-  DSTFCL=$(echo $2 | sed 's#.*/##')
+  DSTFCL=$(echo $2 | grep / | sed 's#.*/##')
   if [ -n "$DSTFCL" ]; then
     FCLPATH=$FCLPATH/$DSTFCL
   fi
