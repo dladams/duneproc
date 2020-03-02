@@ -109,7 +109,7 @@ physics: {
 source:
 {
   module_type: RootInput
-  fileNames: [ "/home/dladams/data/dune/np04/np04_coldbox_test/np04_raw_run000720_1_dl1.root" ]
+  fileNames: [ "noSuchFile.root" ]
   maxEvents : -1
 }
 

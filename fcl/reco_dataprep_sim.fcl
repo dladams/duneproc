@@ -1,0 +1,57 @@
+# reco_dataprep_sim.fcl
+#
+# David Adams
+# March 2020
+#
+# Run standard reco dataprep on sim data adding display plots.
+
+#include "RawDecoder.fcl"
+#include "BeamEvent.fcl"
+#include "protoDUNE_reco_35ms_sce_datadriven.fcl"
+
+pdsp_detplots: [
+  rawAdcDetectorPlotColl,
+  preparedAdcDetectorPlotColl,
+  preparedAdcDetectorPlotInd1,
+  preparedAdcDetectorPlotInd2,
+  #pdcht_Apa3z,
+  #pdchtp_Apa3z
+  pdcht_Iplanes,
+  pdcht_Zplanes,
+  pdcht_Cplanes,
+  pdchtp_Iplanes,
+  pdchtp_Zplanes,
+  pdchtp_Cplanes
+]
+
+# Add detector plots to dataprep.
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  @sequence::pdsp_detplots
+]
+
+# Run decoding and filtering plus full reco.
+#physics.reco: ["timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", @sequence::physics.reco]
+
+# Run just dataprep.
+physics.reco: ["eventfilter", "caldata"]
+
+services.PdspChannelMapService: {
+  FileName:         "protoDUNETPCChannelMap_RCE_v4.txt"
+  FELIXFileName:    "protoDUNETPCChannelMap_FELIX_v4.txt"
+  SSPFileName:      "protoDUNESSPChannelMap_v1.txt"
+  LogLevel:         1
+}
+
+physics.filters.eventfilter: {
+  LogLevel: 2
+  module_type: DuneEventFilter
+  SelectEvents: []
+  RejectEvents: []
+  EventBegin: 0
+  EventEnd:   0
+  EventModFreq: 0
+  EventModVal:  0
+  JobIndexRangeTool: jobRanges
+  SkipEventTool: ""
+}
