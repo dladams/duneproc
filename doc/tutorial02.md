@@ -112,15 +112,16 @@ display for each plane and many metric vs. channel plots:
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
 
-9. Run standard PDSP reco through mitigation on event 1 and create channel-tick display.
-> duneproc run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep mydst  
+9. Run standard PDSP (protoDUNE single phase) reco through mitigation on event 1 and create channel-tick displays.
+> duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
 > display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png  
-Note that "calib" in dptools_calib and be swapped out for different stage in reco, e.g.:
+Note that "calib" in dptools_calib and be swapped out for different stage in reco including
+* calib_only - Calibration but no mitigation, tail removal or noise removal.
+* calib_mit - Calibration and mitigation but no tail removal or noise removal.
+* calib_tail - Calibration, mitigation and tail removal but no noise removal.
+* calib_noiserem - Calibration, mitigation, tail removal and noise removal.
+* calib_wirecell - Above plus swich back to approximate ADC scale and zeroing of ba dchannels.
 
-10. Run standard PDSP reco through noise removal on event 1 and create channel-tick display.
-> duneproc run_dataprep/event000001/dptools_calib_noiserem/dpcr_apa3z/addChannelTickPrep mydst
-> display run_dataprep/event000001/dptools_calib_noiserem/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png
-Comparison with the preceeding plot should shows the effect of the coherent noise removal.
 
 
 
