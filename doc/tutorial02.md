@@ -1,4 +1,4 @@
-## duneproc turorial 2: Using the duneproc command.
+## duneproc tutorial 2: Using the duneproc command.
 
 David Adams   
 February 2020
