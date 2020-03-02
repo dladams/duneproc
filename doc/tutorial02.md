@@ -18,13 +18,13 @@ In addition to providing some standard fcl configurations, this package provides
 script that builds the top-level fcl and processes all files in a provided list of files.
 The syntax is:
 
-> duneproc FCL DST NPROC NSKIP OPT
+> duneproc FCL DST NPROC NSKIP OPTS
 
 * FCL - Slash (/) separated list of fcl names
 * DST - Input file list specifier
 * NPROC - Maximum number of events to process. Default of 0 means all.
 * NSKIP - Number of events to skip. Default of 0 means none.
-* OPT - Other options. See help. Typically this can be omitted.
+* OPTS - Other options. See help. Non-integer NPROC or NSKIP are added to OPTS.
 
 The value "." can be used for for NPROC or NSKIP to force use of the default.
 
@@ -89,10 +89,10 @@ First remove the run directory from the previous job:
 > duneproc run_dataprep/event000001 mydst . . clean  
 > duneproc run_dataprep/event000001 mydst . . noxrootd
 
-3. Dataprep for event 1:
+3. Dataprep with no tools for event 1:
 > duneproc run_dataprep/event000001 mydst
 
-4. Dataprep for events 1-5, APA 3 only:
+4. Dataprep with no tools for events 1-5, APA 3 only:
 > duneproc run_dataprep/event000001-000006/dpcr_apa3 mydst 
 
 5. DQM with wide display for event 1. This includes a channel-tick
@@ -132,8 +132,4 @@ Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.
 11. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 > duneproc reco_dataprep_sim mysimdst 1  
 > display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
-
-
-
-
 
