@@ -114,7 +114,8 @@ display for each plane and many metric vs. channel plots:
 
 9. Run PDSP (protoDUNE single phase) dataprep through mitigation on event 1 and create channel-tick displays.
 > duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
-> display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png  
+> display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png
+
 Note that "calib_mit" in dptools_calib_mit can be swapped out for different stages in stages in reco including
 * calib_only - Calibration but no mitigation, tail removal or noise removal.
 * calib_mit - Calibration and mitigation but no tail removal or noise removal.
