@@ -112,25 +112,26 @@ display for each plane and many metric vs. channel plots:
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
 
-9. Run PDSP (protoDUNE single phase) dataprep through mitigation on event 1 for plane 3z and create channel-tick displays
+9. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 > duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
-> display run_dataprep/event000001/dptools_calib/dpcr_apa3z/addChannelTickPrep/runmydst/adcprp_tpp0z_run008564_evt000001.png
+> display run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/adcprp_tpp0z_run008564_evt000001.png
 
-Note that "calib_mit" in dptools_calib_mit can be swapped out for different stages in stages in reco including
+Note that "calib_tail" in the FCL field can be swapped out for different stages in stages in reco including
 * calib_only - Calibration but no mitigation, tail removal or noise removal.
 * calib_mit - Calibration and mitigation but no tail removal or noise removal.
 * calib_tail - Calibration, mitigation and tail removal but no noise removal.
 * calib_noiserem - Calibration, mitigation, tail removal and noise removal.
-* calib_wirecell - Above plus swich back to approximate ADC scale and zeroing of bad channels.  
+* wirecell - Above plus switch back to approximate ADC scale and zeroing of bad channels.
+Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.
 
 10. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
 > duneproc reco_dataprep mydst 1  
-> display reco_dataprep/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
+> display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png 
 
 11. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 > duneproc reco_dataprep_sim mysimdst 1  
-> display reco_dataprep_sim/runmysimdstproc000001/adcprp_tpp0z_run22603710_evt001271.png
+> display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
 
 
 
