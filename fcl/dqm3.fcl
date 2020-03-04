@@ -1,2 +1,2 @@
 #include "run_dataprep.fcl"
-#include "protodune_dqm.fcl"
+#include "protodune_dqm3.fcl"

@@ -81,6 +81,8 @@ Either copy the example [here](mydst.txt):
 
 or create your own file list at that location.
 
+#### Getting started
+
 1. To run dataprep (no tools) for the first event in the dataset:
 > duneproc run_dataprep mydst 1
 
@@ -97,22 +99,33 @@ or
 4. Dataprep with no tools for events 1-5, APA 3 only:
 > duneproc run_dataprep/dpcr_apa3 mydst/event000001-000006
 
+#### Data quality plots
+
 5. DQM with wide display for event 1. This includes a channel-tick
 display for each plane and many metric vs. channel plots:
 > duneproc dqmw mydst/event000001
 > display dqmw/mydst/event000001/adcraw_tpp0v_run008564_evt000001.png 
 
-6. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
+6. DQM3 for events 1-5. These produces metric vs. channel plots averages
+over the events.
+> duneproc dqm3 mydst/event000001-000005
+> display dqm3/mydst/event000001-000005/chmet_pednoise_tps0_run008564.png
+
+#### Waveforms
+
+7. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
 > duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
 > display wfRaw/event000001/dpcr_femb302v/wftick3000/runmydst/wfraw_run008564_evt000001_chan01536.png
 
-7. Mitigated waveforms for the same.
+8. Mitigated waveforms for the same.
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/runmydst/wfprep_run008564_evt000001_chan01536.png
 
 8. Same with expanded ADC scale so we can see the full signal.
 > duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 > display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png 
+
+#### Reco
 
 9. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
