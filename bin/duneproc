@@ -39,7 +39,7 @@ if [ "$1" = "-H" ]; then
   echo "  eventEE1-EE2 - Process events in range [EE1, EE2)"
   echo "  tickTTT - Tick range for channel-tick plots is [TTT, TTTT+1000)"
   echo "  tickTT1-TT2 - Tick range for channel-tick plots is [TT1, TT2)"
-  echo "  roithreshTTT - Threshold for ROI finding is TTT"
+  echo "  roithreshTTT - Add ROI finding with threshold TTT"
   echo "  roibinsBBB_AAA - Bins before (BB) and after (AAA) for ROI finding."
   echo "  roineg - Find negative ROIs an set flag in ROI fitter."
   echo "  tickphasePP - Tick phase offset is PP. Should be in range (0,24)"
@@ -237,8 +237,9 @@ makeFcl() {
   # ADC ROI threshold
   elif [ ${FCLNAME:0:9} = roithresh ]; then
     NUM=${FCLNAME:9}
-    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
-    echo "tools.adcThresholdSignalFinder.Threshold: $NUM" >$FCLFILE
+    while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 -a ${NUM:1:1} != "." ]; do NUM=${NUM:1}; done
+    echo "#include \"addThresholdSignalFinder.fcl\"" >$FCLFILE
+    echo "tools.adcThresholdSignalFinder.Threshold: $NUM" >>$FCLFILE
   # ADC ROI bins before and after
   elif [ ${FCLNAME:0:7} = roibins ]; then
     NUMS=${FCLNAME:7}
@@ -405,14 +406,14 @@ fi
 if [ $NEVT -gt 0 ]; then
   SEVT=$NEVT
   while [ ${#SEVT} -lt 6 ]; do SEVT=0$SEVT; done
-  SEVT=_proc$SEVT
+  RUNDIR=${RUNDIR}_proc$SEVT
 fi
 if [ -n "$4" -a "$4" != "." ]; then
   if [ "$4" -eq "$4" ] 2>/dev/null; then
     NSKP=$4
     SSKP=$4
     while [ ${#SSKP} -lt 6 ]; do SSKP=0$SSKP; done
-    SSKP=_skip$SSKP
+    RUNDIR=${RUNDIR}_skip$SEVT
   else
     EXTRAS="$EXTRAS $4"
   fi
@@ -483,13 +484,9 @@ elif [ $FDST -eq $FDST ]; then
 else
   echo Using data fil pattern $FDST
 fi
-DSTNAME0=$FDST
-DSTNAME=${FDST}${SEVT}${SSKP}
-if [ -n "$VALOPT" ]; then
-  DSTNAME=$DSTNAME-$VALOPT
-fi
-if [ $OUTPUT -eq 1 ]; then DSTNAME=${DSTNAME}output; fi
-echo DST name: $DSTNAME
+if [ -n "$VALOPT" ]; then RUNDIR=${RUNDIR}_$VALOPT; fi
+if [ $OUTPUT -eq 1 ]; then RUNDIR=${RUNDIR}_output; fi
+echo RUNDIR = $RUNDIR
 
 DIR=$(echo $RUNDIR | sed 's#:#/#g')
 if [ -n "$CLEAN" ]; then

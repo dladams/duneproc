@@ -127,7 +127,19 @@ over the events.
 
 #### Reco
 
-9. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
+9. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+> duneproc reco_dataprep mydst 1  
+> display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png 
+Note the output here is that expected for wirecell processing: scaled to be in approximate
+ADC counts (nstead of ke) and bad channels zeroed.
+
+10. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
+> duneproc reco_dataprep_sim mysimdst 1  
+> display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
+
+#### Dataprep
+
+11. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 > duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
 > display run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/adcprp_tpp0z_run008564_evt000001.png
@@ -138,13 +150,14 @@ Note that "calib_tail" in the FCL field can be swapped out for different stages 
 * calib_tail - Calibration, mitigation and tail removal but no noise removal.
 * calib_noiserem - Calibration, mitigation, tail removal and noise removal.
 * wirecell - Above plus switch back to approximate ADC scale and zeroing of bad channels.
-Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.
+Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.  
 
-10. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
-> duneproc reco_dataprep mydst 1  
-> display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png 
+The results with the wirecell option should be the same as for reco above.
 
-11. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
-> duneproc reco_dataprep_sim mysimdst 1  
-> display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
+12. Produce ROI plots for the same dataprep for FEMB 302u using an ROI finder with threshold 0.5 ke.
+> duneproc run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer mydst 5
+> display run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer/mydst_proc000005/roi_chan000459_000.png
+
+
+
 
