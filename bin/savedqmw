@@ -24,8 +24,8 @@ RUNDIRS=
 for SEVTS in $SEVTSS; do
   RUNDIR=dqmw/np04_run${SRUN}_evts$SEVTS/event$SEVT
   if [ -r $RUNDIR ]; then break; fi
-  RUNDIR=
   RUNDIRS="$RUNDIRS $RUNDIR"
+  RUNDIR=
 done
 if [ -z "$RUNDIR" ]; then
   echo Run directory not found in any of

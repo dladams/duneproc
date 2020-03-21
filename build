@@ -1,0 +1,119 @@
+#!/bin/sh
+
+# David Adams
+# March 2020
+#
+# Script to build example DUNE project myproj.
+# Project is installed in
+#   DUNE_INSTALL_DIR          if DUNE_INSTALL_BYPKG = false
+#   DUNE_INSTALL_DIR/PROJECT  otherwise
+# Build is done at
+#   DUNE_BUILD_DIR/PROJECT
+
+ARGS="$*"
+PROJECT=duneproc
+
+# Assign source directory.
+SRCDIR=$(dirname $0)
+SRCDIR=$(readlink -f $SRCDIR)
+
+# Assign build directory.
+BLDDIR=
+BLDBASE=$DUNE_BUILD_DIR
+if [ -n "$BLDBASE" ]; then
+  BLDDIR=$BLDBASE/$PROJECT
+  mkdir -p $BLDDIR
+fi
+if [ -z "BLDDIR" -o ! -r "$BLDDIR" -o ! -d "$BLDDIR" ]; then
+  echo Please define the build directory: DUNE_BUILD_DIR
+  exit 1
+fi
+
+# Assign install directory.
+INSDIR=
+INSBASE=$DUNE_INSTALL_DIR
+if [ -z "$INSBASE" ]; then
+  echo Please define the installation directory: DUNE_INSTALL_DIR
+  exit 1
+fi
+INSBYPKG=${DUNE_INSTALL_BYPKG:-true}
+if [ $INSBYPKG = false ]; then
+  INSDIR=$INSBASE
+else
+  INSDIR=$INSBASE/$PROJECT
+fi
+mkdir -p $INSDIR
+if [ ! -r $INSDIR -o ! -d $INSDIR ]; then
+  echo Unable to create/use installation directory: $INSDIR
+  exit 1
+fi
+
+# Process arguments.
+if [ -z "$ARGS" ]; then ARGS=all; fi
+DOCLEANBUILD=
+DOCLEANINSTALL=
+DOCMAKE=
+DOBUILD=
+DOINSTALL=
+for ARG in $ARGS; do
+  if [ "$ARG" = show ]; then
+date
+  elif [ "$ARG" = cleaninstall ]; then
+    DOCLEANINSTALL=true
+  elif [ "$ARG" = cleanmake ]; then
+    DOCLEANBUILD=true
+  elif [ "$ARG" = clean ]; then
+    DOCLEANBUILD=true
+    DOCLEANINSTALL=true
+  elif [ $ARG = cmake ]; then
+    DOCMAKE=true
+  elif [ $ARG = make ]; then
+    DOBUILD=true
+  elif [ $ARG = install ]; then
+    DOINSTALL=true
+  elif [ $ARG = all ]; then
+    DOCMAKE=true
+    DOBUILD=true
+    DOINSTALL=true
+  else
+    echo Invalid option: $ARG
+    exit 1
+  fi
+done
+echo
+echo
+echo  Source: $SRCDIR
+echo   Build: $BLDDIR
+echo Install: $INSDIR
+
+if [ -n "$DOCLEANBUILD" ]; then
+  echo
+  echo Removing make area...
+  rm -rf $BLDDIR
+fi
+
+if [ -n "$DOCLEANINSTALL" ]; then
+  echo
+  echo Removing installation...
+  rm -rf $INSDIR
+fi
+
+if [ -n "$DOCMAKE" ]; then
+  echo
+  echo Running cmake in $SRCDIR...
+  cmake $SRCDIR -B $BLDDIR -DCMAKE_INSTALL_PREFIX=$INSDIR
+fi
+
+if [ -n "$DOBUILD" ]; then
+  echo
+  echo Building...
+  cd $BLDDIR
+  make
+fi
+
+if [ -n "$DOINSTALL" ]; then
+  echo
+  echo Installing...
+  cd $BLDDIR
+  make install
+fi
