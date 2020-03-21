@@ -1,14 +1,14 @@
 # duneproc
 
 David Adams  
-January 2020
+March 2020
 
 Package to facilitate the running of `lar` jobs with `dunetpc`.
 
-The command `processData` runs a `lar` job with the first argument
+The command `duneproc` runs a `lar` job with the first argument
 specifying the fcl configuration and the second the data to be processed.
-For detailed help, use `processData -H`. Example:
-  processData wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
+For detailed help, use `duneproc -H`. Example:
+  duneproc wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
 
 To gain access to this command, first set up a recent version of dunetpc or protoduneana e.g.
 following the instructions on the [DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
