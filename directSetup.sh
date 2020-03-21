@@ -1,4 +1,4 @@
-# setup.sh
+# directSetup.sh
 #
 # David Adams
 # January 2020
@@ -22,3 +22,6 @@ unset TMPPATH
 
 fi
 
+echo Package has been set up directly.
+echo It is preferable to build with ./build and then
+echo run setup from the installation directory.
