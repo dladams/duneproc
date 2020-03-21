@@ -1,0 +1,11 @@
+# addRoiViewer.fcl
+#
+# David Adams
+# March 2020
+#
+# Add ROI viewer to the end of dataprep tools.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "adcRoiViewer"
+]
