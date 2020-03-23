@@ -1,3 +1,5 @@
+# duneproc/Script/CMakeLists.txt
+
 # Install shell scripts.
 install(PROGRAMS
   duneproc
