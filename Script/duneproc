@@ -413,7 +413,7 @@ if [ -n "$4" -a "$4" != "." ]; then
     NSKP=$4
     SSKP=$4
     while [ ${#SSKP} -lt 6 ]; do SSKP=0$SSKP; done
-    RUNDIR=${RUNDIR}_skip$SEVT
+    RUNDIR=${RUNDIR}_skip$SSKP
   else
     EXTRAS="$EXTRAS $4"
   fi
