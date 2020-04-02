@@ -40,11 +40,12 @@ cd pkgs/duneproc
 git pull
 cd ../..
 
-# Set up duneproc.
-source pkgs/duneproc/setup.sh
+# Fetch, build and set up this package following the 
+[myproj instructions](https://github.com/dladams/myproj/blob/master/README.md) 
+replacing myproj with duneproc.
 
 # If using any other anaylsis package (dunenoise, dunececalib, ...),
-# check it out and set up in the same way
+# fetch, build and check it out and set up in the same way
 
 # Find the files or files of interest, e.g. for a run:
 samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240"

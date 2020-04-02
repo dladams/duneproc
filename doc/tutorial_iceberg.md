@@ -1,7 +1,13 @@
-## duneproc tutorial 2: Using the duneproc command.
+## duneproc tutorial for Iceberg
 
 David Adams   
-February 2020
+April 2020
+
+As of April 2020, duneproc provides additional help for Iceberg,
+a LAr TPC prototype constructed and run at FNAL.
+First build and set up [this package](../README.md).
+
+Ignore the following
 
 The configuration of a dune event processing (or any larsoft) job is specified in a fcl
 file, most commonly a complicated tree of such files nested with include statments
