@@ -7,7 +7,7 @@
 # studio command line.
 
 cmake_minimum_required(VERSION 3.14.0)
-project(myproj VERSION "00.01.00")
+project(duneproc VERSION "00.01.00")
 
 # Load the helpers from studio.
 list(APPEND CMAKE_MODULE_PATH $ENV{STUDIO_INC})

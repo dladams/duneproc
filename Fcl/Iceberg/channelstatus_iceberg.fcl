@@ -1,0 +1,14 @@
+# channelStatus_iceberg.fcl
+#
+# David Adams
+# March 2020
+#
+# Bad and noisy channels for Iceberg.
+
+BEGIN_PROLOG
+
+pdsp_channel_status_2018: {
+
+  # implements IChannelStatusService
+  service_provider: SimpleChannelStatusService
+`protDUNE single phase.

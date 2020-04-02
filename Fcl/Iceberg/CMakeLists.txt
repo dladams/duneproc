@@ -1,4 +1,4 @@
-# duneproc/Fcl/CMakeLists.txt
+# duneproc/Fcl/Iceberg/CMakeLists.txt
 
 # Install fcl files.
 install(
@@ -6,5 +6,3 @@ install(
   DESTINATION fcl
   FILES_MATCHING PATTERN "*.fcl"
 )
-
-add_subdirectory(Iceberg)

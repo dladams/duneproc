@@ -1,0 +1,23 @@
+# run_iceberg_rawcht.fcl
+#
+# David Adams
+# April 2020
+#
+# Make pedestal-subtractd raw ADC channel vs. tick plots
+# for the Iceberg collection planes.
+
+#include "run_dataprep_iceberg.fcl"
+
+tools.tickRanges.plotTicks.begin:    0
+tools.tickRanges.plotTicks.end:   2000
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader"
+  , "ib_adcPedestalFit"
+  , "ibcht_Apas"             # Full detector
+  #, "ibcht_Xplanes"          # Collection planes
+  #, "ibcht_Iplanes"          # Induction planes (2 plots)
+]
+
+tools.ibcht_Apas.PlotSizeX: 1400
+tools.ibcht_Apas.PlotSizeY: 1400

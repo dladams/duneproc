@@ -1,0 +1,64 @@
+# run_iceberg_rawcht.fcl
+#
+# David Adams
+# April 2020
+#
+# Make pedestal-subtractd raw ADC channel vs. tick plots
+# for the Iceberg collection planes.
+
+#include "run_dataprep_iceberg.fcl"
+
+tools.tickRanges.plotTicks.begin:    0
+tools.tickRanges.plotTicks.end:   2000
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader"
+  , "ib_adcPedestalFit"
+  , asp0400x1000
+  , asp0600x1000
+  , asp0800x1000
+  , asp1000x1000
+  , asp1000x0800
+  , asp1000x0600
+  , asp1000x0400
+]
+
+tools.asp: @local::tools.ibcht_Xplanes
+tools.asp.PlotSizeX: 1000
+tools.asp.PlotSizeY: 1000
+
+tools.asp1000x1000: @local::tools.asp
+tools.asp1000x1000.PlotSizeX : 1000
+tools.asp1000x1000.PlotSizeY : 1000
+tools.asp1000x1000.PlotFileName: "asp10001000.png"
+
+tools.asp0400x1000: @local::tools.asp
+tools.asp0400x1000.PlotSizeX :  400
+tools.asp0400x1000.PlotSizeY : 1000
+tools.asp0400x1000.PlotFileName: "asp04001000.png"
+
+tools.asp0600x1000: @local::tools.asp
+tools.asp0600x1000.PlotSizeX :  600
+tools.asp0600x1000.PlotSizeY : 1000
+tools.asp0600x1000.PlotFileName: "asp06001000.png"
+
+tools.asp0800x1000: @local::tools.asp
+tools.asp0800x1000.PlotSizeX :  800
+tools.asp0800x1000.PlotSizeY : 1000
+tools.asp0800x1000.PlotFileName: "asp08001000.png"
+
+tools.asp1000x0800: @local::tools.asp
+tools.asp1000x0800.PlotSizeX : 1000
+tools.asp1000x0800.PlotSizeY :  800
+tools.asp1000x0800.PlotFileName: "asp10000800.png"
+
+tools.asp1000x0600: @local::tools.asp
+tools.asp1000x0600.PlotSizeX : 1000
+tools.asp1000x0600.PlotSizeY :  600
+tools.asp1000x0600.PlotFileName: "asp10000600.png"
+
+tools.asp1000x0400: @local::tools.asp
+tools.asp1000x0400.PlotSizeX : 1000
+tools.asp1000x0400.PlotSizeY :  400
+tools.asp1000x0400.PlotFileName: "asp10000400.png"
+

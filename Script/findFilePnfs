@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# findFilePnfs
+#
+# David Adams
+# April 2020
+#
+# Return the pnfs location for a logical file name.
+
+FPRE=^gsiftp://fndca1.fnal.gov:2811
+
+INPATH=$1
+
+INFILE=$(basename $INPATH)
+if UFILE=$(samweb get-file-access-url $INFILE); then
+  PFILE=$(echo $UFILE | sed "s#$FPRE##g" | sed "s#/fnal.gov/usr/#/#g")
+  echo $PFILE
+fi

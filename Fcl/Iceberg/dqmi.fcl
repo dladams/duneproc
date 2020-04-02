@@ -1,0 +1,9 @@
+# dqmi.fcl
+#
+# David Adams
+# April 2020
+#
+# Make DQM plots for Iceberg.
+#
+#include "run_dataprep_iceberg.fcl"
+#include "iceberg_dqm.fcl"

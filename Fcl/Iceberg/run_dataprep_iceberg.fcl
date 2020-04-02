@@ -1,0 +1,107 @@
+#include "services_dune.fcl"
+#include "dataprep_dune.fcl"
+#include "RawDecoder.fcl"
+
+#include "IcebergDataInterfaceTool.fcl"
+#include "iceberg_bad_and_noisy_channels.fcl"
+
+# This must come after all prologs.
+#include "protodune_tools_dune.fcl"
+#include "iceberg_dataprep_tools.fcl"
+
+services: {
+  TimeTracker:       {}
+  RandomNumberGenerator: {} 
+  ExptGeoHelperInterface:       @local::dune_geometry_helper
+  Geometry:                     @local::protodune_geo
+  DetectorClocksService:        @local::dunefd_detectorclocks
+  DetectorPropertiesService:    @local::protodune_detproperties
+  LArPropertiesService:         @local::dunefd_properties
+  LArFFT:                       @local::dunefd_larfft  
+  DatabaseUtil:                 @local::dunefd_database
+  SignalShapingServiceDUNE:     @local::protodunesp_signalshapingservice
+  TFileService: { 
+   closeFileFast: true  # default
+   fileName:  "/dev/null"
+   tmpDir: "/dev/null"
+  }
+  IcebergChannelMapService: @local::icebergchannelmap 
+  PdspChannelMapService:   @local::pdspchannelmap   # Why do we need this??
+  RawDigitPrepService: {
+    service_provider: ToolBasedRawDigitPrepService
+    LogLevel: 3
+    DoWires: false
+    AdcChannelToolNames: []
+  }
+  IFBeam: {}  # Needed for the beamevent producer
+}
+
+outputs: {
+  out1: {
+    compressionLevel: 1
+    module_type: RootOutput
+    fileName: "DataprepEventOutput.root"
+    SelectEvents: [freco]
+  }
+}
+
+physics: {
+
+  filters: {
+    eventfilter: {
+      LogLevel: 2
+      module_type: DuneEventFilter
+      SelectEvents: []
+      RejectEvents: []
+      EventBegin: 0
+      EventEnd:   0
+      EventModFreq: 0
+      EventModVal:  0
+      JobIndexRangeTool: jobRanges
+      SkipEventTool: ""
+    }
+  }
+
+  producers: {
+    timingrawdecoder: @local::timing_raw_decoder   
+    dataprep: {
+      module_type: DataPrepByApaModule
+      LogLevel: 2
+      DecoderTool: "IcebergDecoder"
+      BeamEventLabel: ""
+      OutputTimeStampName: dataprep
+      OutputDigitName: ""
+      OutputWireName: ""
+      ChannelGroups: ["all"]
+      OnlineChannelMapTool: pd_onlineChannelMapByFemb
+      KeepChannels: []
+      SkipChannels: []
+      SkipEmptyChannels: true
+      DeltaTickCount: 0.005
+      ApaChannelCounts: [2560]
+    }
+  }
+
+  # Create path to run module
+  freco: [ eventfilter, timingrawdecoder, dataprep ] 
+  output: [ out1 ]
+  end_paths: [ output ]
+}
+
+source:
+{
+  module_type: RootInput
+  fileNames: [ "/home/dladams/data/dune/np04/np04_coldbox_test/replaceThisFileName.root" ]
+  maxEvents : -1
+}
+
+process_name: processIcebergData
+ 
+tools.IcebergDecoder:  @local::IcebergDataInterface_tool
+services.ChannelStatusService: {
+  service_provider: SimpleChannelStatusService
+  BadChannels: @local::iceberg_bad_channels
+  NoisyChannels: @local::iceberg_noisy_channels
+}
+
+tools.channelRanges: @local::tools.channelRangesIceberg

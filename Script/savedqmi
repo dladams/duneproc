@@ -1,0 +1,37 @@
+#!/bin/sh
+
+RUN=$1
+EVT=$2
+if [ -z "$2" -o "$1" = "-h" ]; then
+  echo Usage: $0 RUN EVENT
+  exit 0
+fi
+SRUN=$RUN
+SEVT=$EVT
+while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
+while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
+RUNDIR=dqmi/iceberg${SRUN}/event${SEVT}
+if [ ! -d $RUNDIR ]; then
+  echo Run directory not found: $RUNDIR
+  exit 1
+fi
+echo Taking plots from $RUNDIR
+OUTBASEDIR=$HOME/wwwdune/protodune/iceberg/data/dqmi
+OUTRUNDIR=$OUTBASEDIR/run$SRUN
+if [ ! -r $OUTRUNDIR ]; then
+  echo Creating $OUTRUNDIR
+  mkdir $OUTRUNDIR
+fi
+OUTDIR=$OUTRUNDIR/event$SEVT
+if [ ! -r $OUTDIR ]; then
+  echo Creating $OUTDIR
+  mkdir $OUTDIR
+fi
+echo Copying from $RUNDIR to $OUTDIR
+cp $RUNDIR/* $OUTDIR
+makeIndex $OUTDIR k
+makeIndex $OUTRUNDIR k
+makeIndex $OUTBASEDIR k
+
+exit 0
+

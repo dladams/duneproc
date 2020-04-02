@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# findFileXroot
+
+INPATH=$1
+
+PFILE=$(findFilePnfs $INPATH)
+XFILE=$(echo $PFILE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g')
+echo $XFILE

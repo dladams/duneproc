@@ -440,8 +440,8 @@ RAWINFILELIST=
 EXTRAFCL=                  # Fcl derived fron run specifier
 # Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
 # restricts processing to events in range [EE, FF).
-if ls -ls $HOME/data/dune/datasets/$FDST.txt 1>/dev/null; then
-  RAWINFILELIST=$HOME/data/dune/datasets/$FDST.txt
+RAWINFILELIST=$(find $HOME/data/dune/datasets -name $FDST.txt)
+if [ -n "$RAWINFILELIST" ]; then
   echo FOUND input file list: $RAWINFILELIST
 elif echo $IDST | grep evts 1>/dev/null; then
   # Looking for SSS_runRRRevtsEEE1-EEE2
@@ -512,17 +512,24 @@ if [ -z "$RAWINFILELIST" ]; then
   fi
 fi
 INFILELIST=infiles.txt
+rm -f $INFILELIST
+touch $INFILELIST
 if [ -r "$RAWINFILELIST" ]; then
-  if [ -z "$USEXROOTD" ]; then
-    # Direct access to dcache
-    echo Taking input files from $RAWINFILELIST
-    cp $RAWINFILELIST $INFILELIST
-  else
-    # xrootd (need grid proxy)
-    for BASE in `cat $RAWINFILELIST`; do
-      echo $BASE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g' >>$INFILELIST
-    done
-  fi
+  echo Taking input files from $RAWINFILELIST
+  for BASE in `cat $RAWINFILELIST`; do
+    if [ -n "$USEXROOTD" ]; then
+      INFILE=$(findFileXroot $BASE)
+    else
+      INFILR=$(findFilePnfs $BASE)
+    fi
+    if [ -n "$INFILE" ]; then
+      echo $INFILE >>$INFILELIST
+    else
+      echo File $BASE not found for dataset $FDST
+      echo "  $RAWINFILELIST"
+      exit 1
+    fi
+  done
   if [ -n "$DSTPAT" ]; then
     echo Selecting input files with pattern $DSTPAT
     mv $INFILELIST $INFILELIST.tmp
