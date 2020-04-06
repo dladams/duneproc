@@ -24,7 +24,7 @@ the full pnfs or xrootd path to any file.
 ### Commands
 
 The command ibFindFiles can be used to find the raw data files for a given run.
-In run 3, the runs were only 10 min log and so there is one file per run. For
+In run 3, the runs were only 10 min long and so there is one file per run. For
 example,
 <pre>
 > ibFindFiles 4481 -
