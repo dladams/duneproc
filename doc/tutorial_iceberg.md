@@ -29,7 +29,7 @@ example,
 <pre>
 > ibFindFiles 4481 -
 </pre>
-lists the file for run 4481 and (thanks to the secon argument) puts
+lists the file for run 4481 and (thanks to the second argument) puts
 a copy of that list at data/dune/datasets/iceberg/iceberg004481.txt.
 
 ### Configuration files
