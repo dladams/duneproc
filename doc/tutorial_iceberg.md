@@ -21,6 +21,19 @@ any Iceberg run and optionally populate this database.
 The command findFilePnfs and findFileXroot can be used to find
 the full pnfs or xrootd path to any file.
 
+### Commands
+
+The command ibFindFiles can be used to find the raw data files for a given run.
+In run 3, the runs were only 10 min log and so there is one file per run. For
+example,
+<pre>
+> ibFindFiles 4481 -
+</pre>
+lists the file for run 4481 and (thanks to the secon argument) puts
+a copy of that list at data/dune/datasets/iceberg/iceberg004481.txt.
+
+### Configuration files
+
 The following top-level fcl files are provided:
 
 #### run_dataprep_iceberg.fcl
