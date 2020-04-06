@@ -7,12 +7,20 @@
 #
 # Return the pnfs location for a logical file name.
 
-FPRE=^gsiftp://fndca1.fnal.gov:2811
+UPRE=^gsiftp://fndca1.fnal.gov:2811
 
 INPATH=$1
 
+# If name starts with /pnfs, assume it is valid.
+if [[ $INPATH =~ "/pnfs/" ]]; then echo $INPATH; exit; fi
+
 INFILE=$(basename $INPATH)
-if UFILE=$(samweb get-file-access-url $INFILE); then
-  PFILE=$(echo $UFILE | sed "s#$FPRE##g" | sed "s#/fnal.gov/usr/#/#g")
-  echo $PFILE
+UFILES=$(samweb get-file-access-url $INFILE)
+if [ -n "$UFILES" ]; then
+  for UFILE in $UFILES; do
+    if [[ $UFILE =~ ^$UPRE ]]; then
+      PFILE=$(echo $UFILE | sed "s#$UPRE##g" | sed "s#/fnal.gov/usr/#/#g")
+      echo $PFILE
+    fi
+  done
 fi

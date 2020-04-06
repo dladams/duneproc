@@ -98,6 +98,7 @@ source:
 process_name: processIcebergData
  
 tools.IcebergDecoder:  @local::IcebergDataInterface_tool
+tools.IcebergDecoder.RCEFIX110: false                   
 services.ChannelStatusService: {
   service_provider: SimpleChannelStatusService
   BadChannels: @local::iceberg_bad_channels

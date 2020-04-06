@@ -7,4 +7,5 @@ install(
   FILES_MATCHING PATTERN "*.fcl"
 )
 
+add_subdirectory(Protodune)
 add_subdirectory(Iceberg)
