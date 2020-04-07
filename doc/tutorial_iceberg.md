@@ -53,3 +53,6 @@ the collection planes for each event.
 #### run_iceberg_rawchtallz.fcl
 Creates a channel vs. tick plot for the pedestal-subtracted raw data
 for all channels in each event.
+
+#### ibWfRaw.fcl
+Creates a 1000-tick raw waveform plots. Eight channels are shown on each plot.
