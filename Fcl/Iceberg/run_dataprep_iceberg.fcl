@@ -69,7 +69,7 @@ physics: {
       LogLevel: 2
       DecoderTool: "IcebergDecoder"
       BeamEventLabel: ""
-      OutputTimeStampName: dataprep
+      OutputTimeStampName: ""
       OutputDigitName: ""
       OutputWireName: ""
       ChannelGroups: ["all"]
