@@ -24,7 +24,7 @@ the full pnfs or xrootd path to any file.
 ### Commands
 
 The command ibFindFiles can be used to find the raw data files for a given run.
-In run 3, the runs were only 10 min log and so there is one file per run. For
+In run 3, the runs were only 10 min long and so there is one file per run. For
 example,
 <pre>
 > ibFindFiles 4481 -
@@ -53,3 +53,6 @@ the collection planes for each event.
 #### run_iceberg_rawchtallz.fcl
 Creates a channel vs. tick plot for the pedestal-subtracted raw data
 for all channels in each event.
+
+#### ibWfRaw.fcl
+Creates a 1000-tick raw waveform plots. Eight channels are shown on each plot.

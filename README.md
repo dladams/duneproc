@@ -28,5 +28,6 @@ are dropped in preparation for wirecell processing.
 
 A tutorial to get started is available [doc/tutorial01.txt](doc/tutorial01.txt)
 and a tutorial on the duneproc command is at [doc/tutorial02.md](doc/tutorial02.md).
+The latter has some useful protoDUNE examples.
 
 There is also a [tutorial for Iceberg](doc/tutorial_iceberg.md).
