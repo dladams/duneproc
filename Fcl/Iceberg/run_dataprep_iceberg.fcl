@@ -3,11 +3,16 @@
 #include "RawDecoder.fcl"
 
 #include "IcebergDataInterfaceTool.fcl"
-#include "iceberg_bad_and_noisy_channels.fcl"
+##include "channelstatus_iceberg.fcl"
+# Local copy. Propagate to dunetpc and uncomment preceding.
+#include "local_channelstatus_iceberg.fcl"
 
 # This must come after all prologs.
 #include "protodune_tools_dune.fcl"
 #include "iceberg_dataprep_tools.fcl"
+
+# Local copy. Propagate to dunetpc.
+#include "local_stickycodes_iceberg.fcl"
 
 services: {
   TimeTracker:       {}

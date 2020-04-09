@@ -482,7 +482,7 @@ elif [ $FDST -eq $FDST ]; then
   while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
 # Any thing else is taken to a be file name pattern indicator.
 else
-  echo Using data fil pattern $FDST
+  echo Using data file pattern $FDST
 fi
 if [ -n "$VALOPT" ]; then RUNDIR=${RUNDIR}_$VALOPT; fi
 if [ $OUTPUT -eq 1 ]; then RUNDIR=${RUNDIR}_output; fi
@@ -520,7 +520,7 @@ if [ -r "$RAWINFILELIST" ]; then
     if [ -n "$USEXROOTD" ]; then
       INFILE=$(findFileXroot $BASE)
     else
-      INFILR=$(findFilePnfs $BASE)
+      INFILE=$(findFilePnfs $BASE)
     fi
     if [ -n "$INFILE" ]; then
       echo $INFILE >>$INFILELIST
