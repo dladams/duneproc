@@ -1,0 +1,35 @@
+# stickycodes_iceberg.fcl
+#
+# David Adams
+# April 2020
+#
+# Sticky codes for Iceberg run 3
+# From run.evt 3384.0001
+
+tools.ibrun3_sticky_codes_ped: {
+  tool_type: FclStickyCodeFlagger
+  LogLevel: 1
+  StickyCode: 11
+  StickyCodes: {
+    ##### u #####
+    chan00072: [2432]
+    chan00083: [2431]
+    chan00103: [2686]
+    chan00308: [2367]
+    chan00332: [2576, 2609, 2613]
+    chan00357: [2367]
+    chan00364: [2239]
+    ##### v #####
+    chan00508: [2175]
+    # wrong? chan00521: [2305]
+    ##### z1 #####
+    ##### z2 #####
+  }
+  StickyRanges: {
+    ##### u #####
+    ##### v #####
+    ##### z1 #####
+    ##### z2 #####
+  }
+}
+
