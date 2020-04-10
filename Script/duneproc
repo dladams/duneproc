@@ -477,7 +477,7 @@ elif echo $IDST | grep _ 1>/dev/null; then
     FDST=${FDST}evts${EVTS}
   fi
 # Input run specifier is just the run number.
-elif [ $FDST -eq $FDST ]; then
+elif [ $FDST -eq $FDST ] 2>/dev/null; then
   echo Using unadorned run number $FDST
   while [ ${#FDST} -lt 6 ]; do FDST=0$FDST; done
 # Any thing else is taken to a be file name pattern indicator.
