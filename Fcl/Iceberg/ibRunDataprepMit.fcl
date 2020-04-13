@@ -1,0 +1,16 @@
+# ibRunDataprepMit.fcl
+#
+# David Adams
+# April 2020
+#
+# Run datapep through mitgation
+
+#include "run_dataprep_iceberg.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",
+  "ibrun3_sticky_codes_ped",
+  "pd_adcPedestalFit",
+  "adcSampleFiller",
+  "ib_adcMitigate"
+]

@@ -8,14 +8,10 @@
 # With processData, wfrran can be used to change the signal range and
 # wftick to change the tick range.
 
-#include "run_dataprep_iceberg.fcl"
+#include "ibRunDataprepMit.fcl"
 
 services.RawDigitPrepService.AdcChannelToolNames: [
-  "digitReader",
-  "ibrun3_sticky_codes_ped",
-  "pd_adcPedestalFit",
-  "adcSampleFiller",
-  "ib_adcMitigate",
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
   "adcPlotRaw",
   "adcPlotPrepared"
 ]
