@@ -65,3 +65,9 @@ for all channels in each event.
 
 #### ibWfRaw.fcl
 Creates a 1000-tick raw waveform plots. Eight channels are shown on each plot.
+
+#### ibWfMit.fcl
+Creates a 1000-tick mitigated waveform plots. Eight channels are shown on each plot.
+
+#### ibWfRawDist.fcl
+Creates histograms of ADC code multiplicity for each channel.
