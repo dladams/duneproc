@@ -59,7 +59,7 @@ and various tail meaures.
 Creates a channel vs. tick plot for the pedestal-subtracted raw data in
 the collection planes for each event.
 
-#### run_iceberg_rawchtallz.fcl
+#### run_iceberg_rawchtall.fcl
 Creates a channel vs. tick plot for the pedestal-subtracted raw data
 for all channels in each event.
 
