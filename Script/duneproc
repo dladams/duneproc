@@ -6,6 +6,22 @@
 #
 # Script to process event data and create calibration histograms.
 
+# DSTOPT = 0 for simple dataset processing ==> only look in DSTDIR
+DSTOPT=$DUNEPROC_DSTOPT
+if [ -z "$DSTOPT" ]; then
+  if [ $USER = dladams ]; then
+    DSTOPT=1
+  else
+    DSTOPT=0
+  fi
+fi
+
+# Set DSTDIR.
+DSTDIR=$DUNEPROC_DSTDIR
+if [ -z "$DSTDIR" ]; then
+  DSTDIR=$HOME/data/dune/datasets
+fi
+
 if [ "$1" = "-H" ]; then
   echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG]
   echo "       FLAG=clean to remove existing run directory"
@@ -75,12 +91,18 @@ if [ "$1" = "-H" ]; then
   echo "  addDetdispPrep - Add prepared detector display to the end of dataprep."
   echo "  alltick - Set tick range to all ticks for channel-tick and detector displays."
   echo
-  echo "DSTPAT is DST, DST/DSTFCL, DST_PAT or DST_PAT/DSTFCL"
-  echo "DST is a data set name used to locate a file containing an input file list: one of"
-  echo "  $HOME/data/dune/datasets/DST.txt"
-  echo "  if DST matches SSS_runRRR_evtsEE1-EE2, $HOME/data/dune/SSS/run_slices/files/runRRRRRR_evtsEEEEE1-EEEEE2_files.txt"
-  echo "If PAT is not blank, only files containing the pattern are processed."
-  echo "If DSTFCL is provided, it is appended to the FCLPATH."
+  if [ $DSTOPT -eq 1 ]; then
+    echo "DSTPAT is DST, DST/DSTFCL, DST_PAT or DST_PAT/DSTFCL"
+    echo "DST is a data set name used to locate a file containing an input file list: one of"
+    echo "  $HOME/data/dune/datasets/DST.txt"
+    echo "  if DST matches SSS_runRRR_evtsEE1-EE2, $HOME/data/dune/SSS/run_slices/files/runRRRRRR_evtsEEEEE1-EEEEE2_files.txt"
+    echo "If PAT is not blank, only files containing the pattern are processed."
+    echo "If DSTFCL is provided, it is appended to the FCLPATH."
+  else
+    echo "The list of input files is taken from DSTPAT.txt in the directory tree"
+    echo "  $DSTDIR."
+    echo "Change or set DUNEPROC_DSTDIR to specify the search directory."
+  fi
   exit 0
 fi
 
@@ -439,12 +461,16 @@ RUNSUF=
 DSTPAT=
 RAWINFILELIST=
 EXTRAFCL=                  # Fcl derived fron run specifier
-# Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
-# restricts processing to events in range [EE, FF).
-RAWINFILELIST=$(find $HOME/data/dune/datasets -name $FDST.txt)
+RAWINFILELIST=$(find $DSTDIR -name $FDST.txt)
 if [ -n "$RAWINFILELIST" ]; then
   echo FOUND input file list: $RAWINFILELIST
+elif [ $DSTOPT -ne 1 ]; then
+  echo Dataset file list $FDST.txt is not found in $DSTDIR.
+  echo Please add the file or change the search directory.
+  exit 1
 elif echo $IDST | grep evts 1>/dev/null; then
+  # Input run specifier in form RRRRevtsEE-FF uses event slice input file list and
+  # restricts processing to events in range [EE, FF).
   # Looking for SSS_runRRRevtsEEE1-EEE2
   EVTS=`echo $IDST | sed 's/.*_evts//'`
   FPRE=`echo $IDST | sed 's/_evts.*//'`
