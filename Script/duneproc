@@ -534,6 +534,7 @@ cd $DIR
 INSPEC=
 if [ -z "$RAWINFILELIST" ]; then
   RAWINFILELIST=$HOME/data/dune/np04/np04_cryostat_commissioning/np04_run${FDST}_files.txt
+  RAWINFILELIST=$HOME/data/dune/np04/np04_cryostat_commissioning/np04${DSTPAT}_files.txt
   if [ ! -r "$RAWINFILELIST" ]; then
     echo File list not found: $RAWINFILELIST
   fi

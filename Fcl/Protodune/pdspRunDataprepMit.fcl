@@ -1,0 +1,11 @@
+# pdspRunDataprepMit.fcl
+#
+# David Adams
+# April 2020
+#
+# Run datapep through mitgation
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames:
+  @local::protodune_dataprep_tools_calib_mit

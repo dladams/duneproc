@@ -1,11 +1,11 @@
-# load_dataprep.fcl
+# load_dataprep_iceberg.fcl
 #
 # David Adams
-# January 2019
+# April 2020
 #
 # Load protoDUNE services and tools for interactive running.
 
-#include "run_dataprep.fcl"
+#include "run_dataprep_iceberg.fcl"
 
 # Copy bad and noisy channels from the ChannelStatusService configuration.
 #include "channelStatusTool.fcl"

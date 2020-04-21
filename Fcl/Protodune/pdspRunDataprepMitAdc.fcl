@@ -1,0 +1,19 @@
+# pdspRunDataprepMitAdc.fcl
+#
+# David Adams
+# April 2020
+#
+# Run dataprep through mitigation at ADC scale, i.e.
+# without appying charge calibration.
+
+#include "run_dataprep.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  "digitReader",                # Read RawDigit
+  "pdsp_sticky_codes_ped",      # Flag sticky codes
+  "pd_adcPedestalFit",          # Find pedestal
+  "adcSampleFiller",            # Subtract pedestal, trivial calibration
+  "pdsp_adcMitigate",           # Mitigate sticky codes
+  "pdsp_timingMitigate"         # Mitigate FEMB302 timing
+  #, "adcCorrectUndershootAdc"     # correct undershoot
+]
