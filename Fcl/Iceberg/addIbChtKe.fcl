@@ -1,0 +1,12 @@
+# addIbChtKe.fcl
+#
+# David Adams
+# April 2020
+#
+# Add Iceberg channel-tick plots at ke scale.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "ibchtke_Zplanes",
+  "ibchtke_Iplanes"
+]

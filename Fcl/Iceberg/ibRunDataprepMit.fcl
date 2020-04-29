@@ -3,7 +3,7 @@
 # David Adams
 # April 2020
 #
-# Run datapep through mitgation
+# Run dataprep through mitgation
 
 #include "run_dataprep_iceberg.fcl"
 

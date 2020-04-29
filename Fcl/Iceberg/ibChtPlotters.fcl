@@ -1,0 +1,26 @@
+# addIbChtPlotters.fcl
+#
+# David Adams
+# April 2020
+#
+# Add Iceberg Xplane channel-tick plot at ke scale.
+
+tools.tickRanges.ibPlotTicksZoom1: @local::tools.tickRanges.plotTicks
+tools.tickRanges.ibPlotTicksZoom1.begin:  400
+tools.tickRanges.ibPlotTicksZoom1.end:   1400
+
+tools.ibchtke_Zplanes: @local::tools.ibcht_Xplanes
+tools.ibchtke_Zplanes.DataType: 0
+tools.ibchtke_Zplanes.PlotFileName: "chtke_%CRNAME%_run%0RUN%_evt%0EVENT%.png"
+tools.ibchtke_Zplanes.HistTitle: "Prepared signal for Iceberg collection planes"
+tools.ibchtke_Zplanes.TickRange: "ibPlotTicksZoom1"
+tools.ibchtke_Zplanes.MaxSignal: 0.5
+tools.ibchtke_Zplanes.SkipBadChannels: true
+
+tools.ibchtke_Iplanes: @local::tools.ibcht_Iplanes
+tools.ibchtke_Iplanes.DataType: 0
+tools.ibchtke_Iplanes.PlotFileName: "chtke_%CRNAME%_run%0RUN%_evt%0EVENT%.png"
+tools.ibchtke_Iplanes.HistTitle: "Prepared signal for Iceberg %CRLABEL%"
+tools.ibchtke_Iplanes.TickRange: "ibPlotTicksZoom1"
+tools.ibchtke_Iplanes.MaxSignal: 0.5
+tools.ibchtke_Iplanes.SkipBadChannels: true

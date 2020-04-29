@@ -10,5 +10,11 @@
 # Copy bad and noisy channels from the ChannelStatusService configuration.
 #include "channelStatusTool.fcl"
 
+# Add bad calibrations to channel status.
+tools.channelStatus.IndexVectors: [
+  @sequence::tools.channelStatus.IndexVectors,
+  [239, 240, 1225, 1231]
+]
+
 services.LArFFT: @erase
 services.TFileService: @erase
