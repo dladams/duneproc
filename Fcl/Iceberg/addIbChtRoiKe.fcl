@@ -1,0 +1,12 @@
+# addIbChtRoiKe.fcl
+#
+# David Adams
+# April 2020
+#
+# Add Iceberg channel-tick ROI plots at ke scale.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "ibchtroike_Zplanes",
+  "ibchtroike_Iplanes"
+]
