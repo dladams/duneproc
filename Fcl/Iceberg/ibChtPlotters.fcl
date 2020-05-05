@@ -51,3 +51,21 @@ tools.ibchtnroke_Zplanes.DataType: 3
 tools.ibchtnroke_Iplanes: @local::tools.ibchtke_Iplanes
 tools.ibchtnroke_Iplanes.DataType: 3
 
+# Show the noise view.
+
+tools.ibchtnoise_Zplanes: @local::tools.ibchtke_Zplanes
+tools.ibchtnoise_Zplanes.DataView: "noise"
+tools.ibchtnoise_Zplanes.TickRange: "ibPlotTicksAll"
+
+tools.ibchtnoise_Iplanes: @local::tools.ibchtke_Iplanes
+tools.ibchtnoise_Iplanes.DataView: "noise"
+tools.ibchtnoise_Iplanes.TickRange: "ibPlotTicksAll"
+
+# Show the split noise view.
+
+tools.ibchtsplitnoise_Zplanes: @local::tools.ibchtnoise_Zplanes
+tools.ibchtsplitnoise_Zplanes.DataView: "noise/splitnoise"
+
+tools.ibchtsplitnoise_Iplanes: @local::tools.ibchtnoise_Iplanes
+tools.ibchtsplitnoise_Iplanes.DataView: "noise/splitnoise"
+

@@ -12,7 +12,7 @@ DEFDIR=$HOME/data/dune/datasets/iceberg
 if [ -z "$RUN" ]; then
   echo Usage: $0 RUN DIR
   echo "  RUN is run number."
-  echo "  DIR is the directry to write the file list."
+  echo "  DIR is the directory to write the file list."
   echo "  If DIR=\"-\", $DEFDIR is used."
   exit 0
 fi

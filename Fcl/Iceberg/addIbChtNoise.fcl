@@ -1,0 +1,12 @@
+# addIbChtNoise.fcl
+#
+# David Adams
+# April 2020
+#
+# Add Iceberg channel-tick noise (not ROI) plots at ke scale.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "ibchtnoise_Zplanes",
+  "ibchtnoise_Iplanes"
+]

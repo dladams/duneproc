@@ -1,0 +1,12 @@
+# addIbChtSplitNoise.fcl
+#
+# David Adams
+# April 2020
+#
+# Add Iceberg channel-tick noise (not ROI) plots at ke scale.
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+  "ibchtsplitnoise_Zplanes",
+  "ibchtsplitnoise_Iplanes"
+]
