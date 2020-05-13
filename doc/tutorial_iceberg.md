@@ -65,6 +65,10 @@ for all channels in each event.
 
 #### ibWfRaw.fcl
 Creates a 1000-tick raw waveform plots. Eight channels are shown on each plot.
+E.g. to plot all channels in one event for a plane:
+<pre>
+duneproc ibWfRaw/dpcr_apau iceberg005044/event000001
+</pre>
 
 #### ibWfMit.fcl
 Creates a 1000-tick mitigated waveform plots. Eight channels are shown on each plot.
