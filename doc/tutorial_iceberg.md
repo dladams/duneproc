@@ -30,7 +30,15 @@ example,
 > ibFindFiles 4481 -
 </pre>
 lists the file for run 4481 and (thanks to the second argument) puts
-a copy of that list at $HOME/data/dune/datasets/iceberg/iceberg004481.txt.
+a copy of that list in iceberg004481.txt in the default dataset directory
+$HOME/data/dune/datasets/iceberg/.
+
+Datasets with multiple runs can be defined with ibGroupRuns, e.g.
+<pre>
+> ibGroupRuns 4809 4823 -
+</pre>
+with the file list ibgroup004809-004823 written again to the default dataset
+directory.
 
 ### Configuration files
 
