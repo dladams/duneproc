@@ -30,7 +30,15 @@ example,
 > ibFindFiles 4481 -
 </pre>
 lists the file for run 4481 and (thanks to the second argument) puts
-a copy of that list at $HOME/data/dune/datasets/iceberg/iceberg004481.txt.
+a copy of that list in iceberg004481.txt in the default dataset directory
+$HOME/data/dune/datasets/iceberg/.
+
+Datasets with multiple runs can be defined with ibGroupRuns, e.g.
+<pre>
+> ibGroupRuns 4809 4823 -
+</pre>
+with the file list ibgroup004809-004823 written again to the default dataset
+directory.
 
 ### Configuration files
 
@@ -65,6 +73,10 @@ for all channels in each event.
 
 #### ibWfRaw.fcl
 Creates a 1000-tick raw waveform plots. Eight channels are shown on each plot.
+E.g. to plot all channels in one event for a plane:
+<pre>
+duneproc ibWfRaw/dpcr_apau iceberg005044/event000001
+</pre>
 
 #### ibWfMit.fcl
 Creates a 1000-tick mitigated waveform plots. Eight channels are shown on each plot.
