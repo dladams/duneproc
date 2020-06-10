@@ -6,9 +6,12 @@ install(PROGRAMS
   runjobs
   savedqmapa7
   savedqmw
+  savedqm2
   findFilePnfs
   findFileXroot
   ibFindFiles
+  ibGroupRuns
+  ibStageFiles
   savedqmi
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)

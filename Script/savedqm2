@@ -1,0 +1,42 @@
+#!/bin/sh
+
+RUN=$1
+EVT1=$2
+EVT2=$3
+if [ -z "$2" -o "$1" = "-h" ]; then
+  echo Usage: $0 RUN EVT2
+  echo "    or $0 RUN EVT1 EVT2"
+  exit 0
+fi
+SRUN=$RUN
+if [ -z "$EVT2" ]; then
+  EVT2=$EVT1
+  EVT1=0
+fi
+SEVT1=$EVT1
+SEVT2=$EVT2
+while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
+while [ ${#SEVT1} -lt 6 ]; do SEVT1="0"$SEVT1; done
+while [ ${#SEVT2} -lt 6 ]; do SEVT2="0"$SEVT2; done
+SEVTS=${SEVT1}-${SEVT2}
+RUNDIR=dqm2/np04_run${SRUN}_evts${SEVTS}
+echo Taking plots from $RUNDIR
+OUTBASEDIR=$HOME/wwwdune/protodune/data/dqm2
+OUTRUNDIR=$OUTBASEDIR/run$SRUN
+if [ ! -r $OUTRUNDIR ]; then
+  echo Creating $OUTRUNDIR
+  mkdir $OUTRUNDIR
+fi
+OUTDIR=$OUTRUNDIR/evts$SEVTS
+if [ ! -r $OUTDIR ]; then
+  echo Creating $OUTDIR
+  mkdir $OUTDIR
+fi
+echo Copying from $RUNDIR to $OUTDIR
+cp $RUNDIR/* $OUTDIR
+makeIndex $OUTDIR k
+makeIndex $OUTRUNDIR k
+makeIndex $OUTBASEDIR k
+
+exit 0
+

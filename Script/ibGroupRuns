@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+# David Adams
+# May 2020
+#
+# Group iceberg runs.
+
+RUN1=$1
+RUN2=$2
+OUTDIR=$3
+
+FILDIR=$HOME/data/dune/datasets/iceberg
+GRPDIR=$HOME/data/dune/datasets/ibgroup
+if [ -z "$RUN2" ]; then
+  echo Usage: $0 RUN1 RUN2 DIR
+  echo "  RUN is run number."
+  echo "  DIR is the directory to write the file list."
+  echo "  If DIR=\"-\", $GRPDIR is used."
+  exit 0
+fi
+
+OUTFILE=tmptmp
+rm -f $OUTFILE
+if [ -n "$OUTDIR" ]; then
+  if [ $OUTDIR = "-" ]; then
+    OUTDIR=$GRPDIR
+  fi
+else
+  OUTDIR=.
+fi
+
+if [ -d $OUTDIR ]; then
+  SRUN1=$RUN1
+  while [ ${#SRUN1} -lt 6 ]; do SRUN1=0$SRUN1; done
+  SRUN2=$RUN2
+  while [ ${#SRUN2} -lt 6 ]; do SRUN2=0$SRUN2; done
+  OUTFILE=$OUTDIR/ibgroup$SRUN1-$SRUN2.txt
+  if [ -r $OUTFILE ]; then
+    echo Output file already exists: $OUTFILE
+    exit 2
+  fi
+else
+  echo Output directory not found: $OUTDIR
+  exit 3
+fi
+
+RUN=$RUN1
+while [ $RUN -le $RUN2 ]; do
+  SRUN=$RUN
+  while [ ${#SRUN} -lt 6 ]; do SRUN=0$SRUN; done
+  INFIL=$FILDIR/iceberg$SRUN.txt
+  if [ ! -r $INFIL ]; then
+    ibFindFiles $RUN -
+  fi
+  if [ ! -r $INFIL ]; then
+    echo Skipping $RUN
+  else
+    echo Adding $RUN
+    cat $INFIL >>$OUTFILE
+  fi
+  RUN=$(($RUN+1))
+done
+
+echo Created $OUTFILE
+echo Stage dataset with ibStageFiles $RUN1 $RUN2

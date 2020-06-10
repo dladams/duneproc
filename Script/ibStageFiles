@@ -1,0 +1,11 @@
+RUN1=$1
+RUN2=$2
+if [ -z "$RUN2" ]; then RUN2=$RUN1; fi
+QUERY="run_type=iceberg and data_tier=raw and run_number>=$RUN1 and run_number<=$RUN2"
+DSNAME=${USER}_iceberg_runs_${RUN1}_${RUN2}
+RAWFILES=$(samweb list-files $QUERY | sort)
+echo Staging files for $DSNAME
+for FILE in $RAWFILES; do echo $FILE; done
+
+samweb create-definition $DSNAME "$QUERY"
+samweb prestage-dataset --defname $DSNAME

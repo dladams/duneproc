@@ -24,13 +24,15 @@
 #include "iceberg_dataprep_tools.fcl"
 #include "stickycodes_iceberg.fcl"
 #include "calibs_iceberg.fcl"
+#include "skipevents_iceberg.fcl"
 #include "ibChtPlotters.fcl"
 
 services: {
   TimeTracker:       {}
   RandomNumberGenerator: {} 
   ExptGeoHelperInterface:       @local::dune_geometry_helper
-  Geometry:                     @local::protodune_geo
+  #Geometry:                     @local::protodune_geo
+  Geometry:                     @local::iceberg_geo
   DetectorClocksService:        @local::dunefd_detectorclocks
   DetectorPropertiesService:    @local::protodune_detproperties
   LArPropertiesService:         @local::dunefd_properties
@@ -76,7 +78,7 @@ physics: {
       EventModFreq: 0
       EventModVal:  0
       JobIndexRangeTool: jobRanges
-      SkipEventTool: ""
+      SkipEventTool: "ibSkipEvents"
     }
   }
 
