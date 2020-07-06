@@ -126,6 +126,7 @@ makeFcl() {
   elif [ ${FCLNAME:0:5} = dpcr_ ]; then    # data prep channel ranges
     CRS=`echo ${FCLNAME:5} | sed 's/_/, /g'`
     echo "physics.producers.dataprep.ChannelGroups: [${CRS}]" >$FCLFILE
+    echo "physics.producers.dataprepsim.ChannelRanges: [${CRS}]" >>$FCLFILE
     for TOOL in adcRoiViewer adcRoiFitter; do
       echo "tools.$TOOL.ChannelRanges: [${CRS}]" >>$FCLFILE
       if [ ${FCLNAME:5:3} = "apa" -o ${FCLNAME:5:3} = "tps" ]; then

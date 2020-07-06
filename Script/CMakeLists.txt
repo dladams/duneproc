@@ -7,6 +7,7 @@ install(PROGRAMS
   savedqmapa7
   savedqmw
   savedqm2
+  savedqm3
   findFilePnfs
   findFileXroot
   ibFindFiles

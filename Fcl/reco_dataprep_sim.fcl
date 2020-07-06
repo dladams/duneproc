@@ -5,36 +5,15 @@
 #
 # Run standard reco dataprep on sim data adding display plots.
 
-#include "RawDecoder.fcl"
-#include "BeamEvent.fcl"
-#include "protoDUNE_reco_35ms_sce_datadriven.fcl"
+#include "protoDUNE_refactored_reco.fcl"
 
-pdsp_detplots: [
-  rawAdcDetectorPlotColl,
-  preparedAdcDetectorPlotColl,
-  preparedAdcDetectorPlotInd1,
-  preparedAdcDetectorPlotInd2,
-  #pdcht_Apa3z,
-  #pdchtp_Apa3z
-  pdcht_Iplanes,
-  pdcht_Zplanes,
-  pdcht_Cplanes,
-  pdchtp_Iplanes,
-  pdchtp_Zplanes,
-  pdchtp_Cplanes
-]
-
-# Add detector plots to dataprep.
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
-  @sequence::pdsp_detplots
-]
-
-# Run decoding and filtering plus full reco.
-#physics.reco: ["timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", @sequence::physics.reco]
+# This should be added to the above include.
+physics.producers.dataprep:@local::producer_adcprep_notool
+physics.producers.dataprep.DigitLabel: "tpcrawdecoder:daq"
+services.RawDigitPrepService.AdcChannelToolNames: @local::pdsim_dataprep_tools_tail
 
 # Run just dataprep.
-physics.reco: ["eventfilter", "caldata"]
+physics.reco: ["eventfilter", "dataprep"]
 
 services.PdspChannelMapService: {
   FileName:         "protoDUNETPCChannelMap_RCE_v4.txt"

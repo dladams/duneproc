@@ -1,0 +1,102 @@
+#include "services_dune.fcl"
+#include "ProtoDUNETriggerFilter.fcl"
+#include "BeamEvent.fcl"
+#include "dataprep_dune.fcl"
+#include "RawDecoder.fcl"
+
+# This must come after all prologs.
+#include "protodune_tools_dune.fcl"
+
+services:
+{
+  TimeTracker:       {}
+  RandomNumberGenerator: {} 
+  ExptGeoHelperInterface:       @local::dune_geometry_helper
+  Geometry:                     @local::protodune_geo
+  DetectorClocksService:        @local::dunefd_detectorclocks
+  DetectorPropertiesService:    @local::protodune_detproperties
+  LArPropertiesService:         @local::dunefd_properties
+  LArFFT:                       @local::dunefd_larfft  
+  DatabaseUtil:                 @local::dunefd_database
+  SignalShapingServiceDUNE:     @local::protodunesp_signalshapingservice
+  ChannelGroupService:          @local::changroup_apa_keepall
+  ChannelStatusService:         @local::pdsp_channel_status
+  TFileService: { 
+   closeFileFast: true  # default
+   fileName:  "/dev/null"
+   tmpDir: "/dev/null"  # default
+  }
+  #soon PdspChannelMapService:   @local::pdspchannelmap
+  PdspChannelMapService: {
+    FileName:         "protoDUNETPCChannelMap_RCE_v4.txt"
+    FELIXFileName:    "protoDUNETPCChannelMap_FELIX_v4.txt"
+    SSPFileName:      "protoDUNESSPChannelMap_v1.txt"
+    LogLevel:         1
+  }
+  #RawDigitPrepService: @local::adcprep_readraw
+  #RawDigitExtractService: @local::rdx_std
+  RawDigitPrepService: {
+    service_provider: ToolBasedRawDigitPrepService
+    LogLevel: 3
+    DoWires: false
+    AdcChannelToolNames: []
+  }
+  IFBeam: {}  # Needed for the beamevent producer
+}
+
+outputs: {
+  out1: {
+    compressionLevel: 1
+    module_type: RootOutput
+    fileName: "DataprepEventOutput.root"
+    SelectEvents: [freco]
+  }
+}
+
+physics: {
+
+  filters: {
+    #trigfilter:  @local::pdsp_trigfilter_all
+    eventfilter: {
+      LogLevel: 2
+      module_type: DuneEventFilter
+      SelectEvents: []
+      RejectEvents: []
+      EventBegin: 0
+      EventEnd:   0
+      EventModFreq: 0
+      EventModVal:  0
+      JobIndexRangeTool: jobRanges
+      SkipEventTool: ""
+    }
+  }
+
+  producers: {
+    #timingrawdecoder: @local::timing_raw_decoder   
+    #ssprawdecoder: @local::ssp_raw_decoder  
+    #ctbrawdecoder: @local::ctb_raw_decoder
+    #beamevent: @local::proto_beamevent
+    dataprepsim: @local::producer_adcprep_notool
+  }
+
+  #Create path to run module
+  freco: [ eventfilter, dataprepsim ] 
+  output: [ out1 ]
+  #trigger_paths : [ produce ]
+  end_paths: [ output ]
+}
+
+#physics.producers.timingrawdecoder.MakeEventTimeFile: true
+physics.producers.dataprepsim.DigitLabel: "tpcrawdecoder:daq"
+
+source:
+{
+  module_type: RootInput
+  fileNames: [ "noSuchFile.root" ]
+  maxEvents : -1
+}
+
+physics.filters.trigfilter.LogLevel: 2
+physics.filters.trigfilter.LogLevel: 2
+
+process_name: processNp04Data
