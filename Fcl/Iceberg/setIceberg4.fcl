@@ -1,0 +1,15 @@
+# setIceberg4.fcl
+#
+# David Adams
+# July 2020
+#
+# Set configuration for Iceberg run 4.
+
+services.ChannelStatusService.BadChannels: @local::iceberg4_bad_channels
+services.ChannelStatusService.NoisyChannels: @local::iceberg4_noisy_channels
+tools.channelStatus.IndexVectors: [
+  [],
+  @local::iceberg4_bad_channels,
+  @local::iceberg4_noisy_channels,
+  []
+]
