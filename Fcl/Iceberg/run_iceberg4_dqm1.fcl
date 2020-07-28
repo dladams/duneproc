@@ -6,6 +6,7 @@
 # Make single-event DQM plots for Iceberg.
 
 #include "run_dataprep_iceberg.fcl"
+#include "setIceberg4.fcl"
 #include "iceberg_dqm1.fcl"
 
 tools.ib_adcPedestalFit.FitRmsMin: 0.20
