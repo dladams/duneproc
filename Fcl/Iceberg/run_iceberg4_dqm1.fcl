@@ -11,3 +11,6 @@
 
 tools.ib_adcPedestalFit.FitRmsMin: 0.20
 tools.ibmet_adcChannelPedestalNoisePlotter.MetricMax: 3.0
+
+tools.ibcht_Xplanes.MaxSignal: 10
+tools.ibcht_Iplanes.MaxSignal: 10
