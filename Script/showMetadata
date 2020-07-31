@@ -1,0 +1,2 @@
+LFN=$1
+samweb -e dune get-metadata $LFN

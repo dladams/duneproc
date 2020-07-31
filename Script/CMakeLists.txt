@@ -14,6 +14,7 @@ install(PROGRAMS
   ibGroupRuns
   ibStageFiles
   savedqmi
+  showMetadata
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
