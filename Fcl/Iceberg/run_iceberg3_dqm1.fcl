@@ -6,4 +6,4 @@
 # Make single-event DQM plots for Iceberg.
 
 #include "run_dataprep_iceberg.fcl"
-#include "iceberg_dqm1.fcl"
+#include "iceberg3_dqm1.fcl"

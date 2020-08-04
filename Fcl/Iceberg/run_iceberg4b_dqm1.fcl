@@ -1,0 +1,13 @@
+# run_iceberg4b_dqm1.fcl
+#
+# David Adams
+# April 2020
+#
+# Make single-event DQM plots for Iceberg.
+
+#include "run_dataprep_iceberg.fcl"
+#include "setIceberg4b.fcl"
+#include "iceberg4_dqm1.fcl"
+
+#tools.ib_adcPedestalFit.FitRmsMin: 0.50
+tools.ibmet_adcChannelPedestalNoisePlotter.MetricMax: 6.0

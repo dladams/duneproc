@@ -3,9 +3,9 @@
 # David Adams
 # July 2020
 #
-# Set configuration for Iceberg run 4.
+# Set configuration for Iceberg run 4b.
 
-#include "setIceberg4.fcl"
+#include "setIceberg4a.fcl"
 
 # Configure the calibration tool used in iceberg4 dataprep.
 tools.areaGain_ib4: @local::tools.areaGain_ib4b_v10

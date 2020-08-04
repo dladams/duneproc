@@ -1,4 +1,4 @@
-# run_dataprep_iceberg.fcl
+# run_dataprep_iceberg3.fcl
 #
 # David Adams
 # April 2020
@@ -19,7 +19,7 @@
 #include "IcebergDataInterfaceTool.fcl"
 #include "channelstatus_iceberg.fcl"
 
-# This must come after all prologs.
+# These must come after all prologs.
 #include "protodune_tools_dune.fcl"
 #include "iceberg_dataprep_tools.fcl"
 #include "stickycodes_iceberg.fcl"
