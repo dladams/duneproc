@@ -13,6 +13,7 @@ install(PROGRAMS
   ibFindFiles
   ibGroupRuns
   ibStageFiles
+  ibRunPeriod
   savedqmi
   showMetadata
 DESTINATION bin)

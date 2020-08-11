@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# ibRunPeriod
+#
+# David Adams
+# August 2020
+#
+# Return the run period for and Iceberg run numnber.
+
+RUN=$1
+SHORT=$2
+
+if [ -z "$1" ]; then
+  echo Usage: $0 RUN >&2
+  echo "       $0 RUN short" >&2
+  echo "Latter returns dhortened period, e.g. 4 for 4b" >&2
+  exit 1
+fi
+
+if [ $RUN -lt 5360 ]; then
+  echo 3
+else
+  if [ "$2" = short ]; then
+    echo 4
+  elif [ $RUN -lt 6100 ]; then
+    echo 4a
+  else
+    echo 4b
+  fi
+fi
+
