@@ -24,7 +24,8 @@ fi
 
 if [ "$1" = "-H" ]; then
   echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG]
-  echo "       FLAG=clean to remove existing run directory"
+  echo "       FLAG=clean to remove existing run directory and exit"
+  echo "       FLAG=clean to remove existing run directory before running"
   echo "       FLAG=output to save event output"
   echo "       FLAG=val to run with valgrind log mixed with process log"
   echo "       FLAG=valout to run with valgrind logged to valgrind.out"
@@ -406,6 +407,7 @@ SSKP=    # # events to skip padded with zeroes
 OUTPUT=0
 VALOPT=
 CLEAN=
+RETRY=
 EXTRAS=
 if [ -n "$1" -a -n "$2" ]; then
   FCLPATH=$1
@@ -445,6 +447,7 @@ fi
 USEXROOTD=true
 for ARG in $EXTRAS $5 $6; do
   if   [ $ARG = clean ]; then CLEAN=true
+  elif [ $ARG = retry ]; then RETRY=true
   elif [ $ARG = output ]; then OUTPUT=1
   elif [ $ARG = val ]; then VALOPT=val
   elif [ $ARG = valout ]; then VALOPT=valout
@@ -517,10 +520,10 @@ if [ $OUTPUT -eq 1 ]; then RUNDIR=${RUNDIR}_output; fi
 echo RUNDIR = $RUNDIR
 
 DIR=$(echo $RUNDIR | sed 's#:#/#g')
-if [ -n "$CLEAN" ]; then
+if [ -n "$CLEAN" -o -n "$RETRY" ]; then
   echo Removing $DIR
   rm -rf $DIR
-  exit 0
+  if [ -n "$CLEAN" ]; then exit 0; fi
 fi
 echo Run directory: $DIR
 if [ -r $DIR ]; then
