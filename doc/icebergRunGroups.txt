@@ -1,0 +1,40 @@
+Iceberg run groups
+
+David Adams
+August 2020
+
+This is my attempt to sort the Iceberg data into groups of runs taken
+under similar conditions.
+
+Run range  Conditions
+---------  ----------
+
+    -5359  Run period 3.
+
+5363       Test run. First for period 4a.
+5853       TPC off
+5854-5879  Pulser calibration
+5880       Cosmic
+5915       Cosimic used in bad channel search
+5978-6003  Cosmics July 24
+6053       Pulser run with new DAC setting
+6055-6090  Cosmics July 30, New DAC settings
+
+           More DAQ changes. Start period 4b.
+6103       Pulser DAQ=2
+6147-6177  Pulser data.
+6104       DAQ = 0, sense and cathode HV off (?)
+6166       Clock trigger with TPC off.
+6401-6501  Cosmics Aug 3-4.
+6515-6545  Cosmic trigger with TPC off.
+
+6548-6553  Clock trigger. TPC off.
+6554-6558  Clock trigger. TPC on.
+6559-6563  Cosmic trigger. TPC off.
+6564-6652  Cosmic trigger with TPC on (92%?)
+6653-6660  ???
+6661-6669  Clock trigger. TPC off. Bad: 6662,3,4,8,9
+6670-6781  Cosmic trigger. TPC on (92%).
+
+6782-6856  Cosmic trigger. TPC on. Varying FEMB parameters.
+6857-6911  Clock trigger. TPC off. Varying FEMB parameters.
