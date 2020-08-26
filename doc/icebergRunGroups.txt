@@ -38,3 +38,12 @@ Run range  Conditions
 
 6782-6856  Cosmic trigger. TPC on. Varying FEMB parameters.
 6857-6911  Clock trigger. TPC off. Varying FEMB parameters.
+
+7264-7273  Cosmic trigger. HV off. Bias off. (Same as TPC off).
+7274-7283  Clock trigger. HV off. Bias off.
+7285-7294  Clock trigger. HV off. Bias on.
+7295-7304  Clock trigger. HV on. Bias on.
+7305-7314  Cosmic trigger. HV off. Bias on.
+7315-7324  Cosmic trigger. HV on. Bias on.
+7325-7329  Cosmic trigger. HV off. Bias on.
+7330-7334  Cosmic trigger. HV off. Bias off.
