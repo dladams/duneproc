@@ -39,11 +39,24 @@ Run range  Conditions
 6782-6856  Cosmic trigger. TPC on. Varying FEMB parameters.
 6857-6911  Clock trigger. TPC off. Varying FEMB parameters.
 
-7264-7273  Cosmic trigger. HV off. Bias off. (Same as TPC off).
-7274-7283  Clock trigger. HV off. Bias off.
-7285-7294  Clock trigger. HV off. Bias on.
-7295-7304  Clock trigger. HV on. Bias on.
-7305-7314  Cosmic trigger. HV off. Bias on.
-7315-7324  Cosmic trigger. HV on. Bias on.
-7325-7329  Cosmic trigger. HV off. Bias on.
-7330-7334  Cosmic trigger. HV off. Bias off.
+7264-7273  Cosmic trigger. Drift off. Bias off. (Same as TPC off).
+7274-7283  Clock trigger. Drift off. Bias off.
+7285-7294  Clock trigger. Drift off. Bias on.
+7295-7304  Clock trigger. Drift on. Bias on.
+7305-7314  Cosmic trigger. Drift off. Bias on.
+7315-7324  Cosmic trigger. Drift on. Bias on.
+7325-7329  Cosmic trigger. Drift off. Bias on.  Cryo ramp down.
+7330-7334  Cosmic trigger. Drift off. Bias off. Cryo ramp down.
+7335-7339  Clock trigger.  Drift off. Bias off. Cryo up ramp.
+7340-7344  Clock trigger.  Drift off. Bias on.  Cryo up ramp.
+7345-7349  Clock trigger.  Drift on.  Bias on.  Cryo no ramp.
+7350-7354  Clock trigger.  Drift on.  Bias on.  Cryo up ramp.
+7355-7394  ?
+7395-7399  Clock trigger.  Drift off. Bias off.
+7400-7406  Clock trigger.  Drift off. Bias on.
+7407-7412  Clock trigger.  Drift on.  Bias on.
+7413-7418  Clock trigger.  Drift on.  Bias on.
+7419-7424  Clock trigger.  Drift on.  Bias on.
+7425-7430  Clock trigger.  Drift on.  Bias on.
+7431-7433  Clock trigger.  Drift on.  Bias on.
+7434-      ?
