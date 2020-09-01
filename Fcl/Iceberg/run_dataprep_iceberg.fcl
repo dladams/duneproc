@@ -93,7 +93,7 @@ physics: {
       OutputDigitName: ""
       OutputWireName: ""
       ChannelGroups: ["all"]
-      OnlineChannelMapTool: pd_onlineChannelMapByFemb
+      OnlineChannelMapTool: ib_onlineChannelMapByFemb
       KeepChannels: []
       SkipChannels: []
       SkipEmptyChannels: true
