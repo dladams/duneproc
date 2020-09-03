@@ -4,6 +4,7 @@
 set(PKGLIB ${PROJECT_NAME})
 FILE(GLOB MYSRCS *.cxx)
 add_library(${PKGLIB} SHARED ${MYSRCS})
+target_link_libraries(${PKGLIB} ${ROOT_LIBRARIES})
 install(TARGETS ${PKGLIB} DESTINATION lib)
 
 # Build Root dictionary.

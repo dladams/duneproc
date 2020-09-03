@@ -40,9 +40,9 @@ Run range  Conditions
 6857-6911  Clock trigger. TPC off. Varying FEMB parameters.
 
 7264-7273  Cosmic trigger. Drift off. Bias off. (Same as TPC off).
-7274-7283  Clock trigger. Drift off. Bias off.
-7285-7294  Clock trigger. Drift off. Bias on.
-7295-7304  Clock trigger. Drift on. Bias on.
+7274-7283  Clock trigger.  Drift off. Bias off.
+7285-7294  Clock trigger.  Drift off. Bias on.
+7295-7304  Clock trigger.  Drift on. Bias on.
 7305-7314  Cosmic trigger. Drift off. Bias on.
 7315-7324  Cosmic trigger. Drift on. Bias on.
 7325-7329  Cosmic trigger. Drift off. Bias on.  Cryo ramp down.
@@ -58,5 +58,35 @@ Run range  Conditions
 7413-7418  Clock trigger.  Drift on.  Bias on.
 7419-7424  Clock trigger.  Drift on.  Bias on.
 7425-7430  Clock trigger.  Drift on.  Bias on.
-7431-7433  Clock trigger.  Drift on.  Bias on.
-7434-      ?
+7431-7437  Clock trigger.  Drift on.  Bias on.
+7438-7444  Clock trigger.  Drift on.  Bias on.
+7445-7450  Clock trigger.  Drift on.  Bias on.
+7451-7456  Clock trigger.  Drift on.  Bias on.
+7457-7462  Clock trigger.  Drift on.  Bias on.
+7463-7468  Clock trigger.  Drift on.  Bias on.
+7469-7474  Clock trigger.  Drift on.  Bias on.
+7475-7480  Clock trigger.  Drift on.  Bias on.
+7481-7486  Clock trigger.  Drift on.  Bias on.
+7487-7491  Clock trigger.  Drift on.  Bias on.
+7492-7497  Clock trigger.  Drift off. Bias on.
+7499-7504  Clock trigger.  Drift off. Bias on.
+7505-7514  Clock trigger.  Drift off. Bias off.
+7505-7514  Clock trigger.  Drift off. Bias off.
+7515-7519  Cosmi trigger.  Drift off. Bias off.
+7520-7524  Cosmic trigger. Drift off. Bias off.
+7525-7529  Cosmic trigger. Drift off. Bias off.
+7530-7534  Cosmic trigger. Drift off. Bias on.
+7535-7538  Cosmic trigger. Drift off. Bias on.
+7539-7564  Cosmic trigger. Drift on.  Bias on.
+7565-      ?
+7567-7568  Clock trigger.  Drift off. Bias on.
+7569-7580  Clock trigger.  Drift on.  Bias on.
+7581-7581  Clock trigger.  Drift on.  Bias on.
+7582-7590  Clock trigger.  Drift off. Bias on.
+7591-7603  Clock trigger.  Drift on.  Bias on.
+7604-7614  Clock trigger.  Drift on.  Bias on.
+7615-7619  Clock trigger.  Drift on.  Bias on.
+7620-7625  Clock trigger.  Drift on.  Bias on.
+7626-7638  Clock trigger.  Drift off. Bias on.
+7639-7668  ??
+
