@@ -88,5 +88,23 @@ Run range  Conditions
 7615-7619  Clock trigger.  Drift on.  Bias on.
 7620-7625  Clock trigger.  Drift on.  Bias on.
 7626-7638  Clock trigger.  Drift off. Bias on.
-7639-7668  ??
+7639-7668  Clock trigger.  Drift off. Bias on.
 
+7676-7832  Cosmic trigger. Drift on.  Bias on.
+7835-7913  Clock trigger.  Drift on.  Bias on.
+o
+
+
+I looked at the cryogenic data for the runs which are labeled as “Quite Run” in your analysis. It happens to be that most of those runs are taken when the cryostat is at 18 psi, or pressure is being reduced to get to 10 psi.
+
+Set 1: Run 7475 – 7530 (Aug 29: 01:46 to Aug 30: 14:00) Started at 18 psi (Starts with PV), smooth drop to 10 psi, at 10 psi (In PB, C0)
+
+Set 2: Run 7568 – 7590 (Sept 1 10:54 to Sept 1 20:51) Started at 18 psi (Starts with PV), smooth drop to 10 psi, at 10 psi (In PB)
+
+Set 3: Run 7639 – 7652 (Sept 2 19:13 to Sept 3 00:18 ) All at 18 psi (All PV)
+
+For all 3 quite period we have only one ICEBERG pressure setting 18 psi. We have very carefully adjusted the time that the DAQ starts after the pressure has been stabilized which changed due to the Internal Filter.
+
+There is a natural rise in pressure of the cryostat by about 0.5 psi per hour at lower pressure. It slows down and flattens, have not measure this is Run
+
+In normal operation we are requesting condenser to maintain that pressure to a fixed value for 4 hours. When we are at 18 psi most likely condenser is not working as hard as when we are at 10 psi and anywhere in between. 
