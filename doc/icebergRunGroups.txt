@@ -92,7 +92,7 @@ Run range  Conditions
 
 7676-7832  Cosmic trigger. Drift on.  Bias on.
 7835-7913  Clock trigger.  Drift on.  Bias on.
-o
+7901-7910  Clock trigger.  Drift on.  Bias on. Subset for noise evaluation.
 
 
 I looked at the cryogenic data for the runs which are labeled as “Quite Run” in your analysis. It happens to be that most of those runs are taken when the cryostat is at 18 psi, or pressure is being reduced to get to 10 psi.

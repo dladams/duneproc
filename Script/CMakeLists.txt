@@ -2,6 +2,7 @@
 
 # Install shell scripts.
 install(PROGRAMS
+  duneprocHelp
   duneproc
   runjobs
   savedqmapa7
@@ -16,6 +17,9 @@ install(PROGRAMS
   ibRunPeriod
   savedqmi
   showMetadata
+  pdspRunFileCount
+  pdspRunLfn
+  pdspWibCount
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 

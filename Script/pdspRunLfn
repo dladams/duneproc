@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# David Adams
+# October 2020
+
+# Find a raw LFN for a PDSP run.
+
+RUN=$1
+if ! [ $RUN -gt 0 ] 2>/dev/null; then
+  echo Invalid run number: $RUN
+  exit 0
+fi
+
+FRUN=$RUN
+while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+LFN=np04_raw_run${FRUN}_0001_dl1.root
+if samweb locate-file $LFN 1>/dev/null 2>/dev/null; then
+  echo $LFN
+  exit 0
+fi
+
+NFIL=$(samweb count-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN")
+if [ "$NFIL" -gt 0 ]; then
+
+  EVT=1
+  while [ $EVT <= 100000000 ]; do
+    LFN=samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN and first_event <= $EVT"
+    if [ -n "$LFN" ]; do
+      echo $LFN
+  done
+fi

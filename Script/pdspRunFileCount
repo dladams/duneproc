@@ -1,0 +1,6 @@
+# pdspRunFileCount
+
+# Return the number of raw data files for a PDSP run.
+
+RUN=$1
+samweb count-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN"

@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# David Adams
+# October 2020
+
+# Return the WIB count for an LFN or run.
+
+LFN=$1
+
+if [ -z "$LFN" -o "$LFN" = "-h" ]; then
+  echo "Usage: $0 LFN"
+  echo "       $0 RUN"
+  echo "       $0 RUN1 RUN2"
+  exit 0
+fi
+
+if [ $LFN > 0 ] 2>/dev/null; then
+  RUN=$LFN
+  RUN2=$2
+  if [ "$RUN2" -ge $RUN ] 2>/dev/null; then
+    while [ $RUN -le $RUN2 ]; do
+      NWIB=$($0 $RUN)
+      echo $RUN: $NWIB
+      RUN=$(($RUN+1))
+    done
+    exit 0
+  fi
+  LFN=$(pdspRunLfn $RUN)
+  if [ -z "$LFN" ]; then
+    echo 0
+    exit 1
+  fi
+fi
+#echo $LFN
+NWIB=$(showMetadata $LFN 2>/dev/null | grep DUNE_data.detector_config | sed 's/:/\n/g' | grep wib | wc -l)
+echo $NWIB
