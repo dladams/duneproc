@@ -108,12 +108,12 @@ or
 
 5. DQM with wide display for event 1. This includes a channel-tick
 display for each plane and many metric vs. channel plots:
-> duneproc dqmw mydst/event000001
+> duneproc dqmw mydst/event000001  
 > display dqmw/mydst/event000001/adcraw_tpp0v_run008564_evt000001.png 
 
 6. DQM3 for events 1-5. These produces metric vs. channel plots averages
 over the events.
-> duneproc dqm3 mydst/event000001-000005
+> duneproc dqm3 mydst/event000001-000005  
 > display dqm3/mydst/event000001-000005/chmet_pednoise_tps0_run008564.png
 
 #### Waveforms
