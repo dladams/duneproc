@@ -19,6 +19,9 @@ install(PROGRAMS
   showMetadata
   pdspRunFileCount
   pdspRunLfn
+  pdspShowMetadata
+  pdspDataStream
+  pdspStartTime
   pdspWibCount
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)

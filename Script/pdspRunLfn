@@ -21,11 +21,17 @@ fi
 
 NFIL=$(samweb count-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN")
 if [ "$NFIL" -gt 0 ]; then
-
+  #echo Trying event $EVT
   EVT=1
-  while [ $EVT <= 100000000 ]; do
-    LFN=samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN and first_event <= $EVT"
-    if [ -n "$LFN" ]; do
+  while [ $EVT -le 100000000 ]; do
+    LFN=$(samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN and first_event <= $EVT")
+    if [ -n "$LFN" ]; then
       echo $LFN
+      exit 0
+    fi
+    EVT=$((10*$EVT))
   done
 fi
+
+# Run has no files in SAM
+exit 1

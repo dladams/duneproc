@@ -25,7 +25,7 @@ fi
 if [ "$1" = "-H" ]; then
   echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG]
   echo "       FLAG=clean to remove existing run directory and exit"
-  echo "       FLAG=clean to remove existing run directory before running"
+  echo "       FLAG=retry to remove existing run directory before running"
   echo "       FLAG=output to save event output"
   echo "       FLAG=val to run with valgrind log mixed with process log"
   echo "       FLAG=valout to run with valgrind logged to valgrind.out"
@@ -658,12 +658,22 @@ echo $VALBASE $COM >runval
 echo $VALBASE --log-file=valgrind.out $COM >runvalout
 echo $VALBASE --vgdb-error=1 $COM >runvalgdb
 echo $VALBASE --error-exitcode=5 --exit-on-first-error=yes $COM >runvalstop
+echo 'rm -f callgrind.out' >runcallgrind
+echo 'valgrind --tool=callgrind --callgrind-out-file=callgrind.out $(cat run) $COM' >>runcallgrind
+echo 'callgrind_annotate --inclusive=yes --auto=yes callgrind.out >callgrind.log' >>runcallgrind
+echo 'echo Callgrind results are in callgrind.log' >>runcallgrind
+echo 'rm -f callgrind.out' >runcallgrindToggled
+echo 'valgrind --tool=callgrind --instr-atstart=no --collect-atstart=no --callgrind-out-file=callgrind.out $(cat run) $COM' >>runcallgrindToggled
+echo 'callgrind_annotate --inclusive=yes --auto=yes callgrind.out >callgrind.log' >>runcallgrindToggled
+echo 'echo Callgrind results are in callgrind.log' >>runcallgrindToggled
 
 chmod +x run
 chmod +x runval
 chmod +x runvalout
 chmod +x runvalgdb
 chmod +x runvalstop
+chmod +x runcallgrind
+chmod +x runcallgrindToggled
 RUNCOM=./run$VALOPT
 if [ $IDST != '0' ]; then
   ulimit -c unlimited

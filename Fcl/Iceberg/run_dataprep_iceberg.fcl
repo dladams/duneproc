@@ -51,6 +51,7 @@ services: {
     LogLevel: 3
     DoWires: false
     AdcChannelToolNames: []
+    CallgrindToolNames: []
   }
   IFBeam: {}  # Needed for the beamevent producer
 }
