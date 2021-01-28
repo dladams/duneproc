@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# David Adams
+# October 2020
+#
+# Script to display the metatdata associated with a PDSP run file.
+
+LFN=$1
+
+if [ -z "$LFN" -o "$LFN" = "-h" ]; then
+  echo Usage: $0 LFN
+  echo "  or   $0 RUN"
+  exit 0
+fi
+
+# If the argument is a number, find the file.
+if [ $LFN -gt 0 ] 2>/dev/null; then
+  if ! LFN=$(pdspRunLfn $LFN); then
+    echo $LFN
+    exit 1
+  fi
+  echo "SSSS " $LFN
+fi
+
+samweb -e dune get-metadata $LFN

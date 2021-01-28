@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Help for duneproc users.
+
+echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
+echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."
+echo "pdspShowMetadata - Show the SAM metadata for a PDSP file or run."
+echo "pdspStartTime - Returns the WIB count for a PDSP file."
+echo "pdspDataStream - Returns the data stream name for a PDSP file."
+echo "pdspWibCount - Returns the WIB count for a PDSP run."

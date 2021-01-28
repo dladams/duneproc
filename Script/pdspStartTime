@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# David Adams
+# October 2020
+#
+# Script to display the start time associated with a PDSP run file.
+
+LFN=$1
+RUN2=$2
+
+if [ -n "$RUN2" ]; then
+  RUN=$LFN
+  while [ $RUN -le $RUN2 ]; do
+    TIME=$($0 $RUN)
+    echo $RUN: $TIME
+    RUN=$(($RUN+1))
+  done
+  exit 0
+fi
+pdspShowMetadata $LFN | grep "Start Time:" | sed 's/.*Start Time: *//g' | sed 's/T/ /g' | sed 's/+.*//g'

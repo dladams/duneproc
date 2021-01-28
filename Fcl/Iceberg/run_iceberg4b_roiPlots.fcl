@@ -1,0 +1,33 @@
+# run_iceberg4b_roiPlots.fcl
+#
+# David Adams
+# April 2020
+#
+# Make single-event DQM plots for Iceberg.
+
+#include "run_dataprep_iceberg.fcl"
+#include "setIceberg4b.fcl"
+
+services.RawDigitPrepService.AdcChannelToolNames: [
+  @sequence::ib4_dataprep_tools_calib_tail,
+  adcThresholdSignalFinder,
+  ibRoiViewer
+]
+
+tools.adcThresholdSignalFinder.Threshold: 0.5
+
+tools.ibRoiViewer: @local::tools.adcRoiViewer
+tools.ibRoiViewer.PlotLabels: ["Iceberg"]
+tools.ibRoiViewer.SumHists: [
+  {var:sigArea             name:"hsa_ch%0CHAN%"     title:"ROI signal area %LAB0% run %RUN% channel %CHAN%"                 nbin:100  xmin:-10   xmax:90 fit:""    plot:"hsa_ch%0CHAN%.png"  pwid:0},
+  {var:sigArea             name:"hsa"     title:"ROI signal area %LAB0% run %RUN% event %EVENT%"                 nbin:100  xmin:-10   xmax:90 fit:""    plot:"hsa.png"  pwid:0}
+]
+
+tools.ibRoiViewer.ChannelRanges: [apaz, apau, apav]
+tools.ibRoiViewer.ChannelRanges: [apaz]
+
+tools.ibRoiViewer.ChanSumHists: [
+  {name:"hcsArea_%CRNAME%"         title:"ROI %LAB0% area run %RUN% %CRLABEL% event %EVENT%"                        valHist:"hsa_ch%0CHAN%"     valType:sum    errType:none   nbins:0 plot:"%HNAME%.png" pran:"-10:90" cr:list}
+]
+
+
