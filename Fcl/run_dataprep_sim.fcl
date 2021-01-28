@@ -36,10 +36,10 @@ services:
   #RawDigitPrepService: @local::adcprep_readraw
   #RawDigitExtractService: @local::rdx_std
   RawDigitPrepService: {
-    service_provider: ToolBasedRawDigitPrepService
+    service_provider: TpcToolBasedRawDigitPrepService
     LogLevel: 3
     DoWires: false
-    AdcChannelToolNames: []
+    ToolNames: []
     CallgrindToolNames: []
   }
   IFBeam: {}  # Needed for the beamevent producer

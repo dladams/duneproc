@@ -6,7 +6,7 @@
 # Produce raw waveform plots showing +/50 around pedestal.
 #include "run_dataprep.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames: [
+services.RawDigitPrepService.ToolNames: [
   "digitReader",
   "pd_adcPedestalFit",
   "adcSampleFiller",

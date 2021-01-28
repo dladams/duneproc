@@ -10,7 +10,7 @@
 
 #include "run_dataprep_iceberg.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames: [
+services.RawDigitPrepService.ToolNames: [
   "digitReader",
   "pd_adcPedestalFit",
   "adcPlotRaw"

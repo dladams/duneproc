@@ -10,8 +10,8 @@
 
 #include "ibRunDataprepMit.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
   "adcPlotRaw",
   "adcPlotPrepared"
 ]

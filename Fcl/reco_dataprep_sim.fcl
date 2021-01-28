@@ -10,7 +10,7 @@
 # This should be added to the above include.
 physics.producers.dataprep:@local::producer_adcprep_notool
 physics.producers.dataprep.DigitLabel: "tpcrawdecoder:daq"
-services.RawDigitPrepService.AdcChannelToolNames: @local::pdsim_dataprep_tools_tail
+services.RawDigitPrepService.ToolNames: @local::pdsim_dataprep_tools_tail
 
 # Run just dataprep.
 physics.reco: ["eventfilter", "dataprep"]

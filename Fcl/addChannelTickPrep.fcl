@@ -6,8 +6,8 @@
 # Add protoDUNE raw channel-tick plots to the end of
 # the dataprep tools.
 
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
   "pdchtp_Zplanes",
   "pdchtp_Cplanes",
   "pdchtp_Iplanes"

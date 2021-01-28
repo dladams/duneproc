@@ -39,7 +39,7 @@ services:
     service_provider: TpcToolBasedRawDigitPrepService
     LogLevel: 3
     DoWires: false
-    AdcChannelToolNames: []
+    ToolNames: []
     CallgrindToolNames: []
   }
   IFBeam: {}  # Needed for the beamevent producer

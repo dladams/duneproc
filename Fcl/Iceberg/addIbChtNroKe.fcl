@@ -5,8 +5,8 @@
 #
 # Add Iceberg channel-tick not-ROI plots at ke scale.
 
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
   "ibchtnroke_Zplanes",
   "ibchtnroke_Iplanes"
 ]

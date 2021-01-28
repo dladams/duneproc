@@ -7,5 +7,5 @@
 
 #include "run_dataprep.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames:
+services.RawDigitPrepService.ToolNames:
   @local::protodune_dataprep_tools_calib_mit

@@ -6,8 +6,8 @@
 # Add protoDUNE detector display plots to the end of
 # the dataprep tools.
 
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
   rawAdcDetectorPlotColl,
   rawAdcDetectorPlotInd1,
   rawAdcDetectorPlotInd2

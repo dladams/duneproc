@@ -5,8 +5,8 @@
 #
 # Add Iceberg channel-tick noise (not ROI) plots at ke scale.
 
-services.RawDigitPrepService.AdcChannelToolNames: [
-  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
   "ibchtsplitnoise_Zplanes",
   "ibchtsplitnoise_Iplanes"
 ]

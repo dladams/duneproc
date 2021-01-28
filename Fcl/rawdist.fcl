@@ -7,7 +7,7 @@
 
 #include "run_dataprep.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames: [
+services.RawDigitPrepService.ToolNames: [
   "digitReader",
   "adcPlotRawDist"
 ]

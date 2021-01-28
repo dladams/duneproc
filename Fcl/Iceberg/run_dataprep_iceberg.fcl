@@ -9,7 +9,7 @@
 # prolog
 #   dataprep_tools
 # and may be overridden at
-#   services.RawDigitPrepService.AdcChannelToolNames
+#   services.RawDigitPrepService.ToolNames
 
 #include "services_dune.fcl"
 #include "iceberg_dataprep_services.fcl"
@@ -47,10 +47,10 @@ services: {
   IcebergChannelMapService: @local::icebergchannelmap 
   PdspChannelMapService:   @local::pdspchannelmap   # Why do we need this??
   RawDigitPrepService: {
-    service_provider: ToolBasedRawDigitPrepService
+    service_provider: TpcToolBasedRawDigitPrepService
     LogLevel: 3
     DoWires: false
-    AdcChannelToolNames: []
+    ToolNames: []
     CallgrindToolNames: []
   }
   IFBeam: {}  # Needed for the beamevent producer

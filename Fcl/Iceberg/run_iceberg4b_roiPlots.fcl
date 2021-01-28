@@ -8,7 +8,7 @@
 #include "run_dataprep_iceberg.fcl"
 #include "setIceberg4b.fcl"
 
-services.RawDigitPrepService.AdcChannelToolNames: [
+services.RawDigitPrepService.ToolNames: [
   @sequence::ib4_dataprep_tools_calib_tail,
   adcThresholdSignalFinder,
   ibRoiViewer
