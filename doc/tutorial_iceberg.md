@@ -49,15 +49,16 @@ Runs dataprep with no tools. Useful to check and stage files. For example:
 <pre>
 duneproc run_dataprep_iceberg iceberg4481/event000010
 </pre>
-should creaate the DQM1 plots for event 10 in run 4481.
+will read event 10 from run 4481.
 Note that a grid certificate is required to acess the data file.
 To circumvent this, use pnfs access by adding the noxrootd flag:
 <pre>
 duneproc run_dataprep_iceberg iceberg4481/event000010 noxrootd
 </pre>
 
-#### run_iceberg_dqm1.fcl
+#### run_icebergV_dqm1.fcl
 Run dunetpc DQM to separately view pedestal-subtracted raw data for each event.
+Replace V with Iceberg run flag: 3, 4a, 4b or 5a.
 The produced plots include
 * Channel-tick displays for each view (collection, induction u and v)
 * A series of metric vs. channel plots including pedestal, pedestal rms and noise,
