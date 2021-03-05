@@ -15,3 +15,5 @@ tools.channelStatus.IndexVectors: [
 ]
 
 tools.areaGain_ib4: @local::tools.areaGain_ib4a_v10
+
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit

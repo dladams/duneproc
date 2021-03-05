@@ -1,0 +1,25 @@
+# setIceberg5a.fcl
+#
+# David Adams
+# July 2020
+#
+# Set configuration for Iceberg run 5a.
+
+physics.producers.dataprep.DecoderTool: "IcebergDecoderFrame14"
+services.IcebergChannelMapService.FELIXFileName: "IcebergChannelMap_FELIX_FRAME14_v1.txt"
+
+services.ChannelStatusService.BadChannels: @local::data.iceberg5_bad_channels
+services.ChannelStatusService.NoisyChannels: @local::data.iceberg5_noisy_channels
+tools.channelStatus.IndexVectors: [
+  [],
+  @local::data.iceberg5_bad_channels,
+  @local::data.iceberg5_hirms_channels,
+  @local::data.iceberg5_modrms_channels,
+  @local::data.iceberg5_splitped_channels,
+  @local::data.iceberg5_stickycode_channels,
+  []
+]
+
+tools.areaGain_ib4: @local::tools.areaGain_ib4a_v10
+
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit

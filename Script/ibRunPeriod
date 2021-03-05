@@ -24,8 +24,10 @@ else
     echo 4
   elif [ $RUN -lt 6100 ]; then
     echo 4a
-  else
+  elif [ $RUN -lt 6100 ]; then
     echo 4b
+  else
+    echo 5a
   fi
 fi
 

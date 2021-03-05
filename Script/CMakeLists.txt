@@ -15,6 +15,9 @@ install(PROGRAMS
   ibGroupRuns
   ibStageFiles
   ibRunPeriod
+  ibDaqConfig
+  ibSaveWfRaw
+  ibSavePeds
   savedqmi
   showMetadata
   pdspRunFileCount

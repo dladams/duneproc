@@ -10,14 +10,15 @@ SRUN=$RUN
 SEVT=$EVT
 while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
 while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
-RUNDIR=$(ls -d run_iceberg*_dqm1/iceberg${SRUN}/event${SEVT})
+SPER=$(ibRunPeriod $RUN)
+RUNDIR=$(ls -d ibWfRaw/setIceberg$SPER/iceberg${SRUN}/event${SEVT})
 if [ ! -n "$RUNDIR" ]; then
   echo Run directory not found for run $RUN event $EVT
   exit 1
 fi
 echo Taking plots from $RUNDIR
 
-OUTBASEDIR=$HOME/wwwdune/protodune/iceberg/data/dqm1
+OUTBASEDIR=$HOME/wwwdune/protodune/iceberg/data/wfraw
 OUTRUNDIR=$OUTBASEDIR/run$SRUN
 if [ ! -r $OUTRUNDIR ]; then
   echo Creating $OUTRUNDIR

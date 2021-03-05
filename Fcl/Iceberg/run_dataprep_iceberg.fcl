@@ -17,10 +17,12 @@
 #include "RawDecoder.fcl"
 
 #include "IcebergDataInterfaceTool.fcl"
-#include "channelstatus_iceberg.fcl"
+#include "channelstatus_iceberg3.fcl"
+#include "channelstatus_iceberg4.fcl"
 
 # These must come after all prologs.
 #include "protodune_tools_dune.fcl"
+#include "channelstatus_iceberg5.fcl"
 #include "iceberg_dataprep_tools.fcl"
 #include "stickycodes_iceberg.fcl"
 #include "calibs_iceberg.fcl"
@@ -54,6 +56,7 @@ services: {
     CallgrindToolNames: []
   }
   IFBeam: {}  # Needed for the beamevent producer
+  GeometryConfigurationWriter: { }
 }
 services.LArFFT.FFTSize: 2000
 
@@ -120,10 +123,11 @@ process_name: processIcebergData
  
 tools.IcebergDecoder:  @local::IcebergDataInterface_tool
 tools.IcebergDecoder.RCEFIX110: false                   
+tools.IcebergDecoderFrame14:  @local::IcebergDataInterface_tool_frame14
 services.ChannelStatusService: {
   service_provider: SimpleChannelStatusService
-  BadChannels: @local::iceberg_bad_channels
-  NoisyChannels: @local::iceberg_noisy_channels
+  BadChannels: @local::data.iceberg5_bad_channels
+  NoisyChannels: @local::data.iceberg5_noisy_channels
 }
 
 tools.channelRanges: @local::tools.channelRangesIceberg

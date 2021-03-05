@@ -2,9 +2,55 @@
 
 # Help for duneproc users.
 
-echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
-echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."
-echo "pdspShowMetadata - Show the SAM metadata for a PDSP file or run."
-echo "pdspStartTime - Returns the WIB count for a PDSP file."
-echo "pdspDataStream - Returns the data stream name for a PDSP file."
-echo "pdspWibCount - Returns the WIB count for a PDSP run."
+OPT=$1
+
+if [ -z "$OPT" ]; then
+  echo $0 OPT
+  echo "  OPT = pdsp fpr protoDUNE commands"
+  echo "  OPT = ib for Iceberg commands"
+  echo "  OPT = ibex fpr Iceberg examples"
+  exit 0
+fi
+
+if [ $OPT = pdsp ]; then
+  echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
+  echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."
+  echo "pdspShowMetadata - Show the SAM metadata for a PDSP file or run."
+  echo "pdspStartTime - Returns the WIB count for a PDSP file."
+  echo "pdspDataStream - Returns the data stream name for a PDSP file."
+  echo "pdspWibCount - Returns the WIB count for a PDSP run."
+  echo "ibRunPeriod" - Returns the run period, e.g. 5a, for a run.
+elif [ $OPT = ib ]; then
+  echo
+  echo "showMetadata - Displays metatdata for a file or an Iceberg run"
+  echo "ibDaqConfig - Display DAQ config string for Iceberg runs"
+  echo
+  echo "savedqmi - Copy iceberg DQM results"
+  echo "ibSaveWfRaw - Copy iceberg waveforms to web area"
+elif [ $OPT = ibex ]; then
+  echo "Example Iceberg processing commands:"
+  echo
+  echo Run dataprep with no tools and display trigger flags:
+  echo "  duneproc run_dataprep_iceberg/setIceberg5a iceberg008378"
+  echo "  grep "Trigger flag:" run_dataprep_iceberg/setIceberg5a/iceberg008378/event000001/run.log"
+  echo
+  echo Run DQM and post results
+  echo "  duneproc run_iceberg5a_dqm1 iceberg008378/event000001"
+  echo "  savedqmi 8378 1"
+  echo
+  echo Post waveforms:
+  echo "  duneproc ibWfRaw/setIceberg5a iceberg008378/event000001"
+  echo "  ibSaveWfRaw 8378 1"
+  echo
+  echo Generate and post pedestal distributions:
+  echo "  duneproc run_iceberg5a_dqm1/showPeds iceberg008378/event000001"
+  echo "  ibSavePeds 8378 1"
+  echo
+  echo Generate and post pedestal distributions:
+  echo "  duneproc run_iceberg5a_dqm1/showPeds iceberg008378/event000001"
+  echo "  ibSavePeds 8378 1"
+  echo
+  echo Create ROI tree at ADC scale:
+  echo "  duneproc run_iceberg5a_dqm1/addRoiTree iceberg008378/event000001"
+  echo "  root.exe run_iceberg5a_dqm1/addRoiTree/iceberg008378/event000001/adcrois.root"
+fi

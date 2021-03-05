@@ -1,0 +1,6 @@
+
+tools.ib5_adcPedestalFit.PlotFileName: "peds_run%0RUN%_event%0EVENT%_chan%0CHAN%.png"
+tools.ib5_adcPedestalFit.PlotSizeX: 1400
+tools.ib5_adcPedestalFit.PlotSizeY: 1000
+tools.ib5_adcPedestalFit.PlotSplitX: 4
+tools.ib5_adcPedestalFit.PlotSplitY: 4

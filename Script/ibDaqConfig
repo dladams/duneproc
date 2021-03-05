@@ -1,0 +1,28 @@
+#! /bin/sh
+
+# ibDaqConfig
+#
+# David Adams
+# March 2021
+#
+# Display the DAQ config strings for a series of Iceberg runs.
+
+RUN1=$1
+RUN2=$2
+
+if [ -z "$RUN1" ]; then
+  echo Usage: $0 RUN1 [RUN2]
+  exit 0
+fi
+
+if [ -z "$RUN2" ]; then
+  RUN2=$RUN1
+fi
+
+RUN=$RUN1
+while [ $RUN -le $RUN2 ]; do
+  CNAM=$(showMetadata $RUN | grep DAQConfigName | sed 's/.*DAQConfigName: //g')
+  NEVM=$(showMetadata $RUN | grep "Event Count" | sed 's/.*Event Count: //g')
+  echo $RUN $CNAM $NEV
+  RUN=$((RUN+1))
+done

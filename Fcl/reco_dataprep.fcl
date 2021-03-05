@@ -7,7 +7,7 @@
 
 #include "RawDecoder.fcl"
 #include "BeamEvent.fcl"
-#include "protoDUNE_reco_data.fcl"
+#include "protoDUNE_SP_keepup_decoder_reco.fcl"
 
 pdsp_detplots: [
   rawAdcDetectorPlotColl,
@@ -30,11 +30,20 @@ services.RawDigitPrepService.ToolNames: [
   @sequence::pdsp_detplots
 ]
 
+# For v0_15_00 and earlier.
+#services.RawDigitPrepService.AdcChannelToolNames: [
+#  @sequence::services.RawDigitPrepService.AdcChannelToolNames,
+#  @sequence::pdsp_detplots
+#]
+
 # Run decoding and filtering plus full reco.
 #physics.reco: ["timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", @sequence::physics.reco]
 
 # Run decoding and filtering plus dataprep.
-physics.reco: ["eventfilter", "timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", "caldata"]
+#physics.reco: ["eventfilter", "timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", "caldata"]
+
+# Run decoding and filtering plus dataprep.
+physics.decode: ["eventfilter", "timingrawdecoder", "trigfilter", "ssprawdecoder", "tpcrawdecoder", "ctbrawdecoder", "beamevent", "caldata"]
 
 physics.producers.timingrawdecoder: @local::timing_raw_decoder
 physics.producers.ssprawdecoder:    @local::ssp_raw_decoder

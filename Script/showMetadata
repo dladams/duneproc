@@ -13,7 +13,7 @@ if [ -z "$LFN" -o "$LFN" = "-h" ]; then
   exit 0
 fi
 
-# If the argument is a number, find the file.
+# If the argument is a number, find the Iceberg file.
 if [ $LFN -gt 0 ] 2>/dev/null; then
   if ! LFN=$(ibFindFiles $LFN); then
     echo $LFN
