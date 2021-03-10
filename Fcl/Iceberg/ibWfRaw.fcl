@@ -12,7 +12,7 @@
 
 services.RawDigitPrepService.ToolNames: [
   "digitReader",
-  "pd_adcPedestalFit",
+  "ib_adcPedestalFit",
   "adcPlotRaw"
 ]
 

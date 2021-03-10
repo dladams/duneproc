@@ -26,8 +26,16 @@ else
     echo 4a
   elif [ $RUN -lt 6100 ]; then
     echo 4b
-  else
+  elif [ $RUN -lt 8249 ]; then
+    echo test
+  elif [ $RUN -lt 8409 ]; then
     echo 5a
+  elif [ $RUN -lt 8416 ]; then
+    echo test
+  elif [ $RUN -lt 8431 ]; then
+    echo 5b
+  else
+    echo 5c
   fi
 fi
 

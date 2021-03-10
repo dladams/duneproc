@@ -10,7 +10,8 @@ SRUN=$RUN
 SEVT=$EVT
 while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
 while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
-RUNDIR=$(ls -d run_iceberg*_dqm1/iceberg${SRUN}/event${SEVT})
+SPER=$(ibRunPeriod $RUN)
+RUNDIR=$(ls -d run_iceberg${SPER}_dqm1/iceberg${SRUN}/event${SEVT})
 if [ ! -n "$RUNDIR" ]; then
   echo Run directory not found for run $RUN event $EVT
   exit 1

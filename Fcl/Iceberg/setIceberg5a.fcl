@@ -1,7 +1,7 @@
 # setIceberg5a.fcl
 #
 # David Adams
-# July 2020
+# March 2021
 #
 # Set configuration for Iceberg run 5a.
 
@@ -20,6 +20,7 @@ tools.channelStatus.IndexVectors: [
   []
 ]
 
-tools.areaGain_ib4: @local::tools.areaGain_ib4a_v10
-
+tools.ib5_adcPedestalFit: @local::tools.ib5a_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5a_v00

@@ -7,9 +7,4 @@
 
 #include "run_dataprep_iceberg.fcl"
 #include "setIceberg5a.fcl"
-#include "iceberg5_dqm1.fcl"
-
-#tools.ibmet_adcChannelPedestalNoisePlotter.MetricMax: 12.0
-
-#tools.ibcht_Xplanes.MaxSignal: 40
-#tools.ibcht_Iplanes.MaxSignal: 40
+#include "iceberg5a_dqm1.fcl"

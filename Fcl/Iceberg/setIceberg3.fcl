@@ -1,0 +1,4 @@
+# setIceberg3.fcl
+
+tools.ib_adcPedestalFit: @local::tools.ib3_adcPedestalFit
+

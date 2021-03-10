@@ -4,6 +4,7 @@
 install(PROGRAMS
   duneprocHelp
   duneproc
+  formatInt
   runjobs
   savedqmapa7
   savedqmw

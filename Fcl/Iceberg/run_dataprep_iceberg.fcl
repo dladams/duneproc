@@ -1,18 +1,14 @@
-# run_dataprep_iceberg3.fcl
+# run_dataprep_iceberg.fcl
 #
 # David Adams
 # April 2020
 #
 # Runs datpaprep with Iceberg configuration.
 #
-# The dataprep tool sequence is taken from
-# prolog
-#   dataprep_tools
-# and may be overridden at
-#   services.RawDigitPrepService.ToolNames
+# The dataprep tool sequence is set empty and may be reset with
+#   services.RawDigitPrepService.ToolNames: @local::mysequence
 
 #include "services_dune.fcl"
-#include "iceberg_dataprep_services.fcl"
 #include "dataprep_dune.fcl"
 #include "RawDecoder.fcl"
 
@@ -21,6 +17,7 @@
 #include "channelstatus_iceberg4.fcl"
 
 # These must come after all prologs.
+#include "iceberg_dataprep_sequences.fcl"
 #include "protodune_tools_dune.fcl"
 #include "channelstatus_iceberg5.fcl"
 #include "iceberg_dataprep_tools.fcl"
