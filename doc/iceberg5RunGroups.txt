@@ -83,7 +83,7 @@
 8413      3ASIC-8of10-WIB2-ICEBERG_g2b1_00001
 8414      3ASIC-8of10-WIB2-ICEBERG_g2b1s1_00001
 8415      3ASIC-8of10-WIB2-ICEBERG_g2b1s2_00001
-********* Begin 5b ********* 14 mV/fC, 25 us, 200 mV
+********* Begin 5b ********* 14 mV/fC, 3 us, 200 mV
 8416      3ASIC-8of10-WIB2-ICEBERG_g2b1s3_00001
 8417      3ASIC-CD-g2s3b1-WIB2-p10_00001  3/6 evening
 8418-8419 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/6 evening
@@ -94,7 +94,7 @@
 8432
 ********* Begin 5c ********* 14 mV/fC, 2 us, 900 mV
 8433-8452 3ASIC-CD-g2s3b0-WIB2-cos_00001
-********* Begin 5d ********* 14.7 mV/FC, 1 us, 900 mV
+********* Begin 5d ********* 14 mV/FC, 1 us, 900 mV
 8453-8473 3ASIC-CD-g2s0b0-WIB2-cos_00001  1 us shaping
 ********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
 8474-8483 3ASIC-CD-g2s3b0-WIB2-cos_00001
@@ -122,3 +122,40 @@
 8505      3ASIC-CD-g2s3b0-WIB2-cos_p19_00001
 8506      3ASIC-CD-g2s3b0-WIB2-cos_p20_00001
 8507-8606 3ASIC-CD-g2s3b0-WIB2-cos_00001
+8607-8612 3ASIC-CD-g2s3b0-WIB2-cos_00001
+8613-8614
+8615-8619 3ASIC-CD-g2s3b0-WIB2-cos_00001   3/16 20:30
+********* Back to 5d ********* 14 mV/FC, 1 us, 900 mV
+8620 8629 3ASIC-CD-g2s0b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8630-8634 3ASIC-CD-g2s3b0-WIB2-cos_00001
+********* Start 5e *********** 14 mV/fC, 3 us, 900 mV
+8635-8638 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8639      3ASIC-CD-g2s3b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8640-8644 3ASIC-CD-g2s2b0-WIB2-cos_00001  3/17 04:20
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8645      3ASIC-CD-g2s3b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8646-8650 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8651      3ASIC-CD-g2s3b0-WIB2-cos_00001   3/17 06:30
+********* Back to 5d ********* 14 mV/FC, 1 us, 900 mV
+8652-8654 3ASIC-CD-g2s0b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8655-8656 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8657      3ASIC-CD-g2s3b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8658-8661 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5d ********* 14 mV/FC, 1 us, 900 mV
+8662      3ASIC-CD-g2s0b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8663-8669 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8670      3ASIC-CD-g2s3b0-WIB2-cos_00001
+********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
+8671-8676 3ASIC-CD-g2s2b0-WIB2-cos_00001
+********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+8677-8679 3ASIC-CD-g2s3b0-WIB2-cos_00001   3/17 12:00
