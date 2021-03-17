@@ -129,3 +129,6 @@ services.ChannelStatusService: {
 
 tools.channelRanges: @local::tools.channelRangesIceberg
 
+# Default ROI signal finder.
+tools.roiSignalFinder: @local::tools.calibThresholdSignalFinder
+#tools.roiSignalFinder: @local::tools.calibNoiseSignalFinder

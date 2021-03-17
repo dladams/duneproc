@@ -6,3 +6,4 @@ fi
 LEN=$2
 if [ -z "$LEN" ]; then LEN=6; fi
 while [ ${#SVAL} -lt $LEN ]; do SVAL="0"$SVAL; done
+echo $SVAL

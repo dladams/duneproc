@@ -5,6 +5,9 @@
 //
 // Helper class for Iceberg.
 
+#ifndef IcebegHelper_H
+#define IcebegHelper_H
+
 #include <string>
 #include <map>
 
@@ -32,3 +35,5 @@ public:
   runDates(unsigned int irun1, unsigned int irun2i, int dbg =0);
 
 };
+
+#endif

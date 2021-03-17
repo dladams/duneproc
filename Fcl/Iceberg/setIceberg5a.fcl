@@ -24,3 +24,11 @@ tools.ib5_adcPedestalFit: @local::tools.ib5a_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5a_v00
+
+data.dataprep_seqs.calib: @local::data.ib5_dataprep_seqs.calib_only
+
+
+tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 1.0
+tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 10.0
+tools.ibmet_nsfNoise.MetricMax: 1.0
+tools.ibmet_nsfThresh.MetricMax: 4.0

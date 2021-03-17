@@ -7,7 +7,7 @@
 
 #include "setIceberg5a.fcl"
 
-tools.ib5_adcPedestalFit: @local::tools.ib5a_adcPedestalFit
+tools.ib5_adcPedestalFit: @local::tools.ib5b_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
-tools.areaGain_ib5: @local::tools.areaGain_ib5b_v00
+tools.areaGain_ib5: @local::tools.areaGain_ib5b

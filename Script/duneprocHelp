@@ -52,10 +52,13 @@ elif [ $OPT = ibex ]; then
   echo Generate and post pedestal distributions:
   echo "  duneproc run_iceberg5a_dqm1/showPeds iceberg008378/event000001"
   echo "  ibSavePeds 8378 1"
-  #echo
-  #echo Create ROI tree at ADC scale:
-  #echo "  duneproc run_iceberg5a_dqm1/addRoiTree iceberg008378/event000001"
-  #echo "  root.exe run_iceberg5a_dqm1/addRoiTree/iceberg008378/event000001/adcrois.root"
+  echo
+  echo Create ROI tree for calibrated data.
+  echo "  duneproc run_dataprep_iceberg/setIceberg5a/dptools_calib/addRoiTree iceberg008372"
+  echo "  root.exe run_dataprep_iceberg/setIceberg5a/dptools_calib/addRoiTree/iceberg008372/adcrois.root"
+  echo "  root> drawRois(adcrois, \"status==0&&(hmax>0.9)\", \"x\")"
+  echo "  root> drawRois(adcrois, \"status==0&&(hmin<-1.5||hmax>1.5)\", "uv")"
+  echo "  root> drawSigstren(adcrois, \"channel>=800&&status==0&&hmax>1.3\")"
 else
   echo Invalid option: $OPT
 fi
