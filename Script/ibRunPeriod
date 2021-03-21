@@ -21,7 +21,8 @@ if [ $RUN -lt 5360 ]; then
   echo 3
 else
   if [ "$2" = short ]; then
-    echo 4
+    SPER=$($0 $RUN)
+    echo ${SPER:0:1}
   elif [ $RUN -lt 6100 ]; then
     echo 4a
   elif [ $RUN -lt 6100 ]; then
@@ -78,6 +79,8 @@ else
     echo 5e
   elif [ $RUN -lt 8680 ]; then
     echo 5c
+  elif [ $RUN -lt 9000 ]; then
+    echo 5f
   else
     echo 5x
   fi

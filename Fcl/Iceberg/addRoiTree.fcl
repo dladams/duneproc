@@ -1,0 +1,13 @@
+# addRoiTree.fcl
+#
+# David Adams
+# March 2021
+#
+# Add ROIs and ROI tree maker.
+
+services.RawDigitPrepService.ToolNames: [
+  @sequence::services.RawDigitPrepService.ToolNames,
+  roiSignalFinder,
+  adcRoiTreeMaker
+]
+

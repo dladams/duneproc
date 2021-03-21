@@ -1,0 +1,10 @@
+# run_iceberg5b_dqm1.fcl
+#
+# David Adams
+# March 2021
+#
+# Make single-event DQM plots for Iceberg.
+
+#include "run_dataprep_iceberg.fcl"
+#include "setIceberg5b.fcl"
+#include "iceberg5b_dqm1.fcl"

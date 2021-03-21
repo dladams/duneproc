@@ -9,6 +9,7 @@
 
 RUN1=$1
 RUN2=$2
+PAT1="$3"
 
 if [ -z "$RUN1" ]; then
   echo Usage: $0 RUN1 [RUN2]
@@ -20,9 +21,30 @@ if [ -z "$RUN2" ]; then
 fi
 
 RUN=$RUN1
+RUC=0
+EVC=0
+START=
+STOP=
 while [ $RUN -le $RUN2 ]; do
-  CNAM=$(showMetadata $RUN | grep DAQConfigName | sed 's/.*DAQConfigName: //g')
-  NEVM=$(showMetadata $RUN | grep "Event Count" | sed 's/.*Event Count: //g')
-  echo $RUN $CNAM $NEV
+  MDFILE=./md$RUN.tmp
+  if showMetadata $RUN >$MDFILE; then
+    if [ -z "$START" ]; then
+      START="$(grep "Start Time" $MDFILE | sed 's/.*Start Time: //g')"
+    fi
+    STOP="$(grep "End Time" $MDFILE | sed 's/.*End Time: //g')"
+    CNAM=$(grep DAQConfigName $MDFILE | sed 's/.*DAQConfigName: //g')
+    NEVT=$(grep "Event Count" $MDFILE | sed 's/.*Event Count: //g')
+    EVC=$(($EVC+$NEVT))
+    RUC=$(($RUC+1))
+    echo $RUN $CNAM $NEVT
+  else
+    echo "$RUN: ***** Metadata not found *****"
+  fi
+  rm $MDFILE
   RUN=$((RUN+1))
 done
+echo Runs $RUN1-$RUN2
+echo "   Run count: $RUC"
+echo " Event count: $EVC"
+echo "       Start: $START"
+echo "        Stop: $STOP"

@@ -1,0 +1,13 @@
+# setIceberg5c.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run 5b.
+
+#include "setIceberg5b.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5c_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5c

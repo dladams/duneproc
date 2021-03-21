@@ -83,7 +83,7 @@
 8413      3ASIC-8of10-WIB2-ICEBERG_g2b1_00001
 8414      3ASIC-8of10-WIB2-ICEBERG_g2b1s1_00001
 8415      3ASIC-8of10-WIB2-ICEBERG_g2b1s2_00001
-********* Begin 5b ********* 14 mV/fC, 3 us, 200 mV
+********* Begin 5b ********* 14 mV/fC, 3 us, 200 mV  Note 03-19: No! 2 us
 8416      3ASIC-8of10-WIB2-ICEBERG_g2b1s3_00001
 8417      3ASIC-CD-g2s3b1-WIB2-p10_00001  3/6 evening
 8418-8419 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/6 evening
@@ -153,9 +153,38 @@
 8662      3ASIC-CD-g2s0b0-WIB2-cos_00001
 ********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
 8663-8669 3ASIC-CD-g2s2b0-WIB2-cos_00001
-********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
+******** Back to 5c ********* 14 mV/fC, 2 us, 900 mV
 8670      3ASIC-CD-g2s3b0-WIB2-cos_00001
 ********* Back to 5e ********* 14 mV/fC, 3 us, 900 mV
-8671-8676 3ASIC-CD-g2s2b0-WIB2-cos_00001
+8671-8676 3ASIC-CD-g2s2b0-WIB2-cos_00001 03-17 5917/6 8764-5 have 2k events
 ********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
-8677-8679 3ASIC-CD-g2s3b0-WIB2-cos_00001   3/17 12:00
+8677-8679 3ASIC-CD-g2s3b0-WIB2-cos_00001 03-17 1211/3
+********* Tests *********
+8680-8684
+8685 3ASIC-CD-g2s3b0-WIB2-cos_00002  Synchronizing FEMBs!
+8686 3ASIC-CD-g2s3b0-WIB2-cos_00003
+8687 3ASIC-CD-g2s3b0-WIB2-cos_00004
+8688 3ASIC-CD-g2s3b0-WIB2-cos_00004
+8689 3ASIC-CD-g2s3b0-WIB2-cos_00005
+8690
+8691 3ASIC-CD-g2s3b0-WIB2-cos_00004
+********* Begin 5f-006 ********* 14 mV/fC, 2 us, 900 mV
+8692-8696 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-19 Begin running with synchronized FEMBs and cosmic trigger (only).
+8697
+8698-8743 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-19 EVR=1111/46
+8744
+8745-8768 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-19 EVR=591/24   Missing some digits: 8750, 60,73
+********* Test ********* 14 mV/fC, 2 us, 900 mV
+8769-8772 3ASIC-CD-g2s3b0-WIB2-cos_00007 03-19 EVR=381/1  No TPC data in these runs.
+********* Begin 5f-007 ********* 14 mV/fC, 2 us, 900 mV
+8773-8774 3ASIC-CD-g2s3b0-WIB2-cos_00007 03-19 EVR=40/2   Cosmic trigger, spy buffer readout.
+********* Bad *********
+8775      3ASIC-CD-g2s3b0-WIB2-cos_00007 03-19 EVR=438/4  No TPC data
+********* Continue 5f-007 ********* 14 mV/fC, 2 us, 900 mV
+8776-8791 3ASIC-CD-g2s3b0-WIB2-cos_00007 03-19 EVR=390/16 Most runs have a few events with no TPC data.
+********* Bad *********
+8792-8794 Files not found
+********* Continue 5f-007 ********* 14 mV/fC, 2 us, 900 mV
+8795-8813 3ASIC-CD-g2s3b0-WIB2-cos_00007 03-20 EVR=530/19 Most runs have a few events with no TPC data.
+********* Begin 5f-008 ********* 14 mV/fC, 2 us, 900 mV
+8814-8837 3ASIC-CD-g2s3b0-WIB2-cos_00008 3/20 EVR=641/24
