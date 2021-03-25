@@ -1,0 +1,10 @@
+# setIceberg5l.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run 5l.
+
+#include "setIceberg5a.fcl"
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5l

@@ -1,0 +1,10 @@
+# setIceberg5k.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run 5k: 14 mV/fC, 2.0 us, 200 mV
+
+#include "setIceberg5b.fcl"
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5k

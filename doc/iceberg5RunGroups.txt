@@ -39,7 +39,7 @@
 8267      3ASIC-8of10-WIB2-ICEBERG_p18_00001
 8268      3ASIC-8of10-WIB2-ICEBERG_p19_00001
 8269      3ASIC-8of10-WIB2-ICEBERG_p20_00001
-8270-8274 3ASIC-8of10-WIB2-ICEBERG_cos_00001
+8270-8274 3ASIC-8of10-WIB2-ICEBERG_cos_00001  2/28 -0030-0400
 8275      3ASIC-8of10-WIB2-ICEBERG_p00_00001
 8276      3ASIC-8of10-WIB2-ICEBERG_p01_00001
 8277      3ASIC-8of10-WIB2-ICEBERG_p02_00001
@@ -47,7 +47,7 @@
 8279      3ASIC-8of10-WIB2-ICEBERG_p04_00001
 8280      3ASIC-8of10-WIB2-ICEBERG_p05_00001
 8281      3ASIC-8of10-WIB2-ICEBERG_p06_00001
-8282-8377 3ASIC-8of10-WIB2-ICEBERG_cos_00001
+8282-8377 3ASIC-8of10-WIB2-ICEBERG_cos_00001  2/28 0430-1800
 8378      3ASIC-8of10-WIB2-ICEBERG_p00_00001
 8379      3ASIC-8of10-WIB2-ICEBERG_p01_00001
 8380      3ASIC-8of10-WIB2-ICEBERG_p02_00001
@@ -68,13 +68,13 @@
 8395      3ASIC-8of10-WIB2-ICEBERG_p17_00001
 8396      3ASIC-8of10-WIB2-ICEBERG_p18_00001
 8397      3ASIC-8of10-WIB2-ICEBERG_p19_00001
-8398      3ASIC-8of10-WIB2-ICEBERG_p20_00001
-8399-8402 3ASIC-8of10-WIB2-ICEBERG_cos_00002  No TPC data in these files
+8398      3ASIC-8of10-WIB2-ICEBERG_p20_00001  2/28
+8399-8402 3ASIC-8of10-WIB2-ICEBERG_cos_00002  3/04 No TPC data in these files
 8403
-8404      3ASIC-8of10-WIB2-ICEBERG_cos_00002  No TPC data
-8405      3ASIC-10of10-WIB2-ICEBERG_p0_00002
-8406-8407 3ASIC-8of10-WIB2-ICEBERG_p00_00001
-8408      3ASIC-8of10-WIB2-ICEBERG_cos_00006
+8404      3ASIC-8of10-WIB2-ICEBERG_cos_00002  3/05 No TPC data
+8405      3ASIC-10of10-WIB2-ICEBERG_p0_00002  3/05
+8406-8407 3ASIC-8of10-WIB2-ICEBERG_p00_00001  3/06
+8408      3ASIC-8of10-WIB2-ICEBERG_cos_00006  3/06
 ********* End 5a *********
 8409      3ASIC-8of10-WIB2-ICEBERG_g0_00001
 8410      3ASIC-8of10-WIB2-ICEBERG_g1_00001
@@ -83,21 +83,21 @@
 8413      3ASIC-8of10-WIB2-ICEBERG_g2b1_00001
 8414      3ASIC-8of10-WIB2-ICEBERG_g2b1s1_00001
 8415      3ASIC-8of10-WIB2-ICEBERG_g2b1s2_00001
-********* Begin 5b ********* 14 mV/fC, 3 us, 200 mV  Note 03-19: No! 2 us
-8416      3ASIC-8of10-WIB2-ICEBERG_g2b1s3_00001
-8417      3ASIC-CD-g2s3b1-WIB2-p10_00001  3/6 evening
-8418-8419 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/6 evening
+********* Begin 5b ********* 14 mV/fC, 2 us, 200 mV
+8416      3ASIC-8of10-WIB2-ICEBERG_g2b1s3_00001      pulser
+8417      3ASIC-CD-g2s3b1-WIB2-p10_00001  3/06 evening  pulser
+8418-8419 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/06 evening
 8420      3ASIC-CD-g2s3b1-WIB2-fx-cos_00004
-8421-8430 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/7 evening
-8431      3ASIC-CD-g2s3b1-WIB2-cos_00001  3/8 ~13:40
+8421-8430 3ASIC-CD-g2s3b1-WIB2-cos_00001  3/07 evening
+8431      3ASIC-CD-g2s3b1-WIB2-cos_00001  3/08 ~13:40
 ********* End 5b *********
 8432
 ********* Begin 5c ********* 14 mV/fC, 2 us, 900 mV
-8433-8452 3ASIC-CD-g2s3b0-WIB2-cos_00001
+8433-8452 3ASIC-CD-g2s3b0-WIB2-cos_00001  3/13
 ********* Begin 5d ********* 14 mV/FC, 1 us, 900 mV
 8453-8473 3ASIC-CD-g2s0b0-WIB2-cos_00001  1 us shaping
 ********* Back to 5c ********* 14 mV/fC, 2 us, 900 mV
-8474-8483 3ASIC-CD-g2s3b0-WIB2-cos_00001
+8474-8483 3ASIC-CD-g2s3b0-WIB2-cos_00001  3/13
 8484      3ASIC-CD-g2s3b0-WIB2-cos_p1_00001
 8485      3ASIC-CD-g2s3b0-WIB2-cos_p0_00001
 8486      3ASIC-CD-g2s3b0-WIB2-cos_p1_00001
@@ -115,14 +115,14 @@
 8498      3ASIC-CD-g2s3b0-WIB2-cos_p13_00001
 8499      3ASIC-CD-g2s3b0-WIB2-cos_p14_00001
 8500      3ASIC-CD-g2s3b0-WIB2-cos_p15_00001
-8501      3ASIC-CD-g2s3b0-WIB2-cos_p15_00001
+8501      3ASIC-CD-g2s3b0-WIB2-cos_p15_00001  3/14
 8502      3ASIC-CD-g2s3b0-WIB2-cos_p16_00001
 8503      3ASIC-CD-g2s3b0-WIB2-cos_p17_00001
 8504      3ASIC-CD-g2s3b0-WIB2-cos_p18_00001
 8505      3ASIC-CD-g2s3b0-WIB2-cos_p19_00001
 8506      3ASIC-CD-g2s3b0-WIB2-cos_p20_00001
-8507-8606 3ASIC-CD-g2s3b0-WIB2-cos_00001
-8607-8612 3ASIC-CD-g2s3b0-WIB2-cos_00001
+8507-8606 3ASIC-CD-g2s3b0-WIB2-cos_00001  3/14
+8607-8612 3ASIC-CD-g2s3b0-WIB2-cos_00001  3/16
 8613-8614
 8615-8619 3ASIC-CD-g2s3b0-WIB2-cos_00001   3/16 20:30
 ********* Back to 5d ********* 14 mV/FC, 1 us, 900 mV
@@ -169,7 +169,7 @@
 8690
 8691 3ASIC-CD-g2s3b0-WIB2-cos_00004
 ********* Begin 5f-006 ********* 14 mV/fC, 2 us, 900 mV
-8692-8696 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-19 Begin running with synchronized FEMBs and cosmic trigger (only).
+8692-8696 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-18 Begin running with synchronized FEMBs and cosmic trigger (only).
 8697
 8698-8743 3ASIC-CD-g2s3b0-WIB2-cos_00006 03-19 EVR=1111/46
 8744
@@ -187,4 +187,86 @@
 ********* Continue 5f-007 ********* 14 mV/fC, 2 us, 900 mV
 8795-8813 3ASIC-CD-g2s3b0-WIB2-cos_00007 03-20 EVR=530/19 Most runs have a few events with no TPC data.
 ********* Begin 5f-008 ********* 14 mV/fC, 2 us, 900 mV
-8814-8837 3ASIC-CD-g2s3b0-WIB2-cos_00008 3/20 EVR=641/24
+8814-8819 3ASIC-CD-g2s3b0-WIB2-cos_00008 3/20 EVR=641/24
+********* Begin 5g-g ********* 4.7 mV/fC, 2us, 900 mV; Start of gain scan
+8820-8825 3ASIC-CD-g0s3b0-WIB2-cos_00001
+********* Begin 5h-g ********* 7.8 mV/fC, 2us, 900 mV
+8826-8831 3ASIC-CD-g1s3b0-WIB2-cos_00001
+********* Begin 5i-g ********* 25 mV/fC, 2us, 900 mV
+8832-8837 3ASIC-CD-g3s3b0-WIB2-cos_00001
+********* Begin 5f-g ********* 14 mV/fC, 2us, 900 mV
+8838-8843 3ASIC-CD-g2s3b0-WIB2-cos_00008
+********* Begin 5d-s ********* 14 mV/FC, 1 us, 900 mV; Start of shaping scan
+8844-8849 3ASIC-CD-g2s0b0-WIB2-cos_00003
+********* Begin 5j-s ********* 14 mV/fC, 0.5 us, 900 mV
+8850-8855 3ASIC-CD-g2s1b0-WIB2-cos_00001
+********* Begin 5e-s ********* 14 mV/fC, 3 us, 900 mV
+8856-8861 3ASIC-CD-g2s2b0-WIB2-cos_00002
+********* Begin 5f-s ********* 14 mV/fC, 2 us, 900 mV
+8862-8867 3ASIC-CD-g2s3b0-WIB2-cos_00008
+********* Begin 5k-b ********* 14 mV/fC, 2 us, 200 mV; Baseline scan
+8868-8873 3ASIC-CD-g2s3b1-WIB2-cos_00002
+********* Begin 5l-s ********* 25 mV/fC, 1 us, 900 ms
+8874-8879 3ASIC-CD-g3s0b0-WIB2-cos_00001  3/21
+********* Begin 5m-s ********* 25 mV/fC, 3 us, 900 ms
+8880-8885 3ASIC-CD-g3s2b0-WIB2-cos_00001  3/21
+********* Begin 5n-s ********* 7.8 mV/fC, 1 us, 900 ms
+8886-8891 3ASIC-CD-g1s0b0-WIB2-cos_00001  3/21
+********* Begin 5o-s ********* 7.8 mV/fC, 3 us, 900 ms
+8892-8897 3ASIC-CD-g1s2b0-WIB2-cos_00002  3/21
+********* 5f-0322 ********* 14 mV/fC, 2 us, 900 ms
+8898-8947 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/21 0149 - 3/22 0900
+********* 5f-test ********* 14 mV/fC, 2 us, 900 ms
+8948-8949 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/22 1900 HV off?
+8950
+********* Begin 5p ********* 14 mV/fC, 2 us, 900 ms, calibrated ADCs
+8951-8954 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/23 lifetime 700 us, ADCs calibrated
+8955
+8956-9047 3ASIC-CD-g2s3b0-WIB2-cos_00008
+********* Begin 5f-0324 ********* 14 mV/fC, 2 us, 900 ms, Back to uncalibrated ADCs
+9048-9049 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/24 test returning to 5f
+********* Back to 5p ********* 14 mV/fC, 2 us, 900 ms
+9050-9051 3ASIC-CD-g2s3b0-WIB2-cos_00008
+********* Begin 5p-pul ********* 14 mV/fC, 2 us, 900 ms, Pulser runs
+9052 3ASIC-CD-g2s3b0-WIB2-cos_p5_00003 86
+9053 3ASIC-CD-g2s3b0-WIB2-cos_p0_00003 88
+9054 3ASIC-CD-g2s3b0-WIB2-cos_p1_00003 89
+9055 3ASIC-CD-g2s3b0-WIB2-cos_p2_00003 61
+9056 3ASIC-CD-g2s3b0-WIB2-cos_p3_00003 61
+9057 3ASIC-CD-g2s3b0-WIB2-cos_p4_00003 89
+9058 3ASIC-CD-g2s3b0-WIB2-cos_p5_00003 89
+9059 3ASIC-CD-g2s3b0-WIB2-cos_p6_00003 69
+9060 3ASIC-CD-g2s3b0-WIB2-cos_p7_00003 68
+9061 3ASIC-CD-g2s3b0-WIB2-cos_p8_00003 84
+9062 3ASIC-CD-g2s3b0-WIB2-cos_p9_00003 85
+9063 3ASIC-CD-g2s3b0-WIB2-cos_p10_00003 85
+9064 3ASIC-CD-g2s3b0-WIB2-cos_p11_00003 63
+9065 3ASIC-CD-g2s3b0-WIB2-cos_p12_00003 86
+9066 3ASIC-CD-g2s3b0-WIB2-cos_p13_00003 84
+9067 3ASIC-CD-g2s3b0-WIB2-cos_p14_00003 83
+9068 3ASIC-CD-g2s3b0-WIB2-cos_p15_00003 88
+9069 3ASIC-CD-g2s3b0-WIB2-cos_p16_00003 69
+9070 3ASIC-CD-g2s3b0-WIB2-cos_p17_00003 83
+9071 3ASIC-CD-g2s3b0-WIB2-cos_p18_00003 84
+9072 3ASIC-CD-g2s3b0-WIB2-cos_p19_00003 86
+9073 3ASIC-CD-g2s3b0-WIB2-cos_p20_00003 92
+********* Begin 5q-pul ********* 14 mV/fC, 1 us, 900 ms, Pulser runs
+9074 3ASIC-CD-g2s0b0-WIB2-cos_p0_00001 84
+9075 3ASIC-CD-g2s0b0-WIB2-cos_p1_00001 85
+9076 3ASIC-CD-g2s0b0-WIB2-cos_p2_00001 87
+9077 3ASIC-CD-g2s0b0-WIB2-cos_p3_00001 88
+9078 3ASIC-CD-g2s0b0-WIB2-cos_p4_00001 85
+9079 3ASIC-CD-g2s0b0-WIB2-cos_p5_00001 87
+9080 3ASIC-CD-g2s0b0-WIB2-cos_p6_00001 88
+9081 3ASIC-CD-g2s0b0-WIB2-cos_p7_00001 85
+9082 3ASIC-CD-g2s0b0-WIB2-cos_p8_00001 86
+9083 3ASIC-CD-g2s0b0-WIB2-cos_p9_00001 85
+9084 3ASIC-CD-g2s0b0-WIB2-cos_p10_00001 86
+********* Begin 5q ********* 14 mV/fC, 1 us, 900 ms, cosmic data
+9085-9104 3ASIC-CD-g2s0b0-WIB2-cos_00004 28
+********* Begin 5p-0325 ********* 14 mV/fC, 2 us, 900 ms, Noise study
+9105-9106 3ASIC-CD-g2s3b0-WIB2-cos_00008 25
+9107      3ASIC-CD-g2s3b0-WIB3-miss_00001 29
+9108      3ASIC-CD-g2s3b0-WIB3-fmiss_00001 23
+9109      3ASIC-CD-g2s3b0-WIB2-cos_00008 TPC off, PM off
+9110      3ASIC-CD-g2s3b0-WIB2-cos_00008 and internal filter off

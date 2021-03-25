@@ -33,7 +33,7 @@ else
     echo 5a
   elif [ $RUN -lt 8416 ]; then
     echo test
-  elif [ $RUN -lt 8431 ]; then
+  elif [ $RUN -lt 8432 ]; then
     echo 5b
   elif [ $RUN -lt 8453 ]; then
     echo 5c
@@ -79,10 +79,46 @@ else
     echo 5e
   elif [ $RUN -lt 8680 ]; then
     echo 5c
-  elif [ $RUN -lt 9000 ]; then
+  elif [ $RUN -lt 8820 ]; then
     echo 5f
+  elif [ $RUN -lt 8826 ]; then
+    echo 5g
+  elif [ $RUN -lt 8832 ]; then
+    echo 5h
+  elif [ $RUN -lt 8838 ]; then
+    echo 5i
+  elif [ $RUN -lt 8844 ]; then
+    echo 5f
+  elif [ $RUN -lt 8850 ]; then
+    echo 5d
+  elif [ $RUN -lt 8856 ]; then
+    echo 5j
+  elif [ $RUN -lt 8862 ]; then
+    echo 5e
+  elif [ $RUN -lt 8868 ]; then
+    echo 5f
+  elif [ $RUN -lt 8874 ]; then
+    echo 5k
+  elif [ $RUN -lt 8880 ]; then
+    echo 5l
+  elif [ $RUN -lt 8886 ]; then
+    echo 5m
+  elif [ $RUN -lt 8892 ]; then
+    echo 5n
+  elif [ $RUN -lt 8898 ]; then
+    echo 5o
+  elif [ $RUN -lt 8951 ]; then
+    echo 5f
+  elif [ $RUN -lt 9048 ]; then
+    echo 5p
+  elif [ $RUN -lt 9050 ]; then
+    echo 5f
+  elif [ $RUN -lt 9074 ]; then
+    echo 5p
+  elif [ $RUN -lt 9105 ]; then
+    echo 5q
   else
-    echo 5x
+    echo 5p
   fi
 fi
 

@@ -1,0 +1,15 @@
+# setIceberg5j.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run 5j: 14 mV/fC, 0.5 us, 900 mV
+
+#include "setIceberg5a.fcl"
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5j
+
+tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.15
+tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 2.0
+tools.ibmet_nsfNoise.MetricMax: 0.15
+tools.ibmet_nsfThresh.MetricMax: 0.5

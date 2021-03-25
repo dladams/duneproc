@@ -1,0 +1,15 @@
+# setIceberg5h.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run 5h.
+
+#include "setIceberg5b.fcl"
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5h
+
+tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.4
+tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 2.0
+tools.ibmet_nsfNoise.MetricMax: 0.4
+tools.ibmet_nsfThresh.MetricMax: 1.5
