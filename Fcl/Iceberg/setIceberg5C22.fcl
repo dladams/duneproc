@@ -1,0 +1,13 @@
+# setIceberg5C22.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run period 5C22: 14 mV/fC, 2 us, 900 mV
+
+#include "setIceberg5c.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5B22_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5C22

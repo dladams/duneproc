@@ -1,0 +1,13 @@
+# setIceberg5C31.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run period 5C31: 25 mV/fC, 1 us, 900 mV
+
+#include "setIceberg5C22.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5B31_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
+
+tools.areaGain_ib5: @local::tools.areaGain_ib5C31

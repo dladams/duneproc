@@ -1,0 +1,8 @@
+# setIceberg5C22l.fcl
+#
+# David Adams
+# March 2021
+#
+# Set configuration for Iceberg run period 5C22l: 14 mV/fC, 2 us, 200 mV
+
+#include "setIceberg5C22.fcl"

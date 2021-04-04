@@ -27,6 +27,8 @@ else
     echo 4a
   elif [ $RUN -lt 6100 ]; then
     echo 4b
+  elif [ $RUN -lt 8002 ]; then
+    echo 4b
   elif [ $RUN -lt 8249 ]; then
     echo test
   elif [ $RUN -lt 8409 ]; then
@@ -117,8 +119,92 @@ else
     echo 5p
   elif [ $RUN -lt 9105 ]; then
     echo 5q
-  else
+  elif [ $RUN -lt 9113 ]; then
     echo 5p
+  elif [ $RUN -lt 9143 ]; then
+    echo test
+  elif [ $RUN -lt 9158 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9168 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9179 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9190 ]; then
+    echo 5C02
+  elif [ $RUN -lt 9201 ]; then
+    echo 5C12
+  elif [ $RUN -lt 9212 ]; then
+    echo 5C32
+  elif [ $RUN -lt 9223 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9234 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9245 ]; then
+    echo 5C20
+  elif [ $RUN -lt 9256 ]; then
+    echo 5C23
+  elif [ $RUN -lt 9267 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9278 ]; then
+    echo 5C22l
+  elif [ $RUN -lt 9289 ]; then
+    echo 5C31
+  elif [ $RUN -lt 9300 ]; then
+    echo 5C33
+  elif [ $RUN -lt 9311 ]; then
+    echo 5C11
+  elif [ $RUN -lt 9322 ]; then
+    echo 5C13
+  elif [ $RUN -lt 9338 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9348 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9431 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9436 ]; then
+    echo 5C01
+  elif [ $RUN -lt 9441 ]; then
+    echo 5C02
+  elif [ $RUN -lt 9446 ]; then
+    echo 5C11
+  elif [ $RUN -lt 9451 ]; then
+    echo 5C11
+  elif [ $RUN -lt 9456 ]; then
+    echo 5C13
+  elif [ $RUN -lt 9461 ]; then
+    echo 5C12
+  elif [ $RUN -lt 9466 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9471 ]; then
+    echo 5C20
+  elif [ $RUN -lt 9476 ]; then
+    echo 5C23
+  elif [ $RUN -lt 9488 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9491 ]; then
+    echo 5C33
+  elif [ $RUN -lt 9518 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9526 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9537 ]; then
+    echo 5C02
+  elif [ $RUN -lt 9548 ]; then
+    echo 5C01
+  elif [ $RUN -lt 9559 ]; then
+    echo 5C12
+  elif [ $RUN -lt 9570 ]; then
+    echo 5C11
+  elif [ $RUN -lt 9580 ]; then
+    echo 5C23
+  elif [ $RUN -lt 9591 ]; then
+    echo 5C20
+  elif [ $RUN -lt 9602 ]; then
+    echo 5C31
+  elif [ $RUN -lt 9613 ]; then
+    echo 5C32
+  else
+    echo 5C22
   fi
 fi
 
