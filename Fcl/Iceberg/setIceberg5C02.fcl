@@ -11,3 +11,5 @@ tools.ib5_adcPedestalFit: @local::tools.ib5B02_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5C02
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5C02TailPedSignalFinder

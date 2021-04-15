@@ -5,7 +5,7 @@
 # David Adams
 # August 2020
 #
-# Return the run period for and Iceberg run numnber.
+# Return the run period for an Iceberg run numnber.
 
 RUN=$1
 SHORT=$2
@@ -13,9 +13,12 @@ SHORT=$2
 if [ -z "$1" ]; then
   echo Usage: $0 RUN >&2
   echo "       $0 RUN short" >&2
-  echo "Latter returns dhortened period, e.g. 4 for 4b" >&2
+  echo "Latter returns shortened period, e.g. 4 for 4b" >&2
   exit 1
 fi
+
+# If a range of runs is provided, use the first.
+RUN=$(echo $RUN | sed 's/-.*//g')
 
 if [ $RUN -lt 5360 ]; then
   echo 3
@@ -164,9 +167,9 @@ else
   elif [ $RUN -lt 9436 ]; then
     echo 5C01
   elif [ $RUN -lt 9441 ]; then
-    echo 5C02
+    echo 5C03
   elif [ $RUN -lt 9446 ]; then
-    echo 5C11
+    echo 5C02
   elif [ $RUN -lt 9451 ]; then
     echo 5C11
   elif [ $RUN -lt 9456 ]; then
@@ -203,6 +206,26 @@ else
     echo 5C31
   elif [ $RUN -lt 9613 ]; then
     echo 5C32
+  elif [ $RUN -lt 9714 ]; then
+    echo 5C22
+  elif [ $RUN -lt 9717 ]; then
+    echo 5C01
+  elif [ $RUN -lt 9719 ]; then
+    echo 5C03
+  elif [ $RUN -lt 9721 ]; then
+    echo 5C02
+  elif [ $RUN -lt 9723 ]; then
+    echo 5C11
+  elif [ $RUN -lt 9725 ]; then
+    echo 5C13
+  elif [ $RUN -lt 9727 ]; then
+    echo 5C12
+  elif [ $RUN -lt 9729 ]; then
+    echo 5C21
+  elif [ $RUN -lt 9731 ]; then
+    echo 5C20
+  elif [ $RUN -lt 9733 ]; then
+    echo 5C23
   else
     echo 5C22
   fi

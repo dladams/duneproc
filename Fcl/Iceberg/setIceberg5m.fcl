@@ -5,6 +5,11 @@
 #
 # Set configuration for Iceberg run 5m.
 
-#include "setIceberg5b.fcl"
+#include "setIceberg5Template.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5m_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5m
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5mTailPedSignalFinder

@@ -5,6 +5,11 @@
 #
 # Set configuration for Iceberg run 5q: 14 mV/fC, 1.0 us, 900 mV
 
-#include "setIceberg5b.fcl"
+#include "setIceberg5Template.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5q_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5q
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5qTailPedSignalFinder

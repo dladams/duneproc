@@ -1,0 +1,30 @@
+# ib5WfTail.fcl
+#
+# David Adams
+# April 2020
+#
+# Produces mitigated waveform plots for ticks (0, 1000) showing +/50 around pedestal.
+#
+# With processData, wfrran can be used to change the signal range and
+# wftick to change the tick range.
+
+#include "run_dataprep_iceberg.fcl"
+#include "setIceberg5a.fcl"
+
+services.RawDigitPrepService.ToolNames: [
+  @sequence::ib5_dataprep_tools_calib_tailped,
+  "adcPlotRaw",
+  "adcPlotPrepared"
+]
+
+tools.adcPlotRaw.PlotSigOpt: pedestal
+tools.adcPlotRaw.PlotSigMin: -70.0
+tools.adcPlotRaw.PlotSigMax:  70.0
+tools.adcPlotRaw.PlotFileName: "wfraw_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
+#tools.adcPlotRaw.RootFileName: "wf.root"
+
+tools.adcPlotPrepared.PlotSigOpt: fixed
+tools.adcPlotPrepared.PlotSigMin: -5.0
+tools.adcPlotPrepared.PlotSigMax:  5.0
+tools.adcPlotPrepared.PlotFileName: "wfmit_run%0RUN%_evt%0EVENT%_chan%0CHAN%.png"
+#tools.adcPlotPrepared.RootFileName: "wf.root"

@@ -13,12 +13,5 @@ tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5b
 
-tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.2
-tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 3.0
-tools.ibmet_nsfNoise.MetricMax: 0.2
-tools.ibmet_nsfThresh.MetricMax: 0.8
-
 tools.ib5TailPedSignalFinder: @local::tools.ib5bTailPedSignalFinder
-#tools.ib5TailPedSignalFinder.Threshold: 0.1
-tools.ib5TailPedSignalFinder.BinsBefore: 30
-tools.ib5TailPedSignalFinder.BinsAfter: 40
+

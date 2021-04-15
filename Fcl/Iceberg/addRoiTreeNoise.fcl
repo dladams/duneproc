@@ -1,0 +1,10 @@
+# addRoiTreeNoise.fcl
+#
+# David Adams
+# April 2021
+#
+# Add ROI tree including noise metadata.
+
+#include "addRoiTree.fcl"
+
+tools.adcRoiTreeMaker.MetadataFields: [samRms, nsgRms, nsgRms50, nsfThreshold, nsfNoise, time, nsfSigFrac, nsfLoopCount]

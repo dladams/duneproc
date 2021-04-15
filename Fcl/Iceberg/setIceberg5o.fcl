@@ -5,9 +5,14 @@
 #
 # Set configuration for Iceberg run 5o.
 
-#include "setIceberg5b.fcl"
+#include "setIceberg5Template.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5o_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5o
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5oTailPedSignalFinder
 
 tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.7
 tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 3.5

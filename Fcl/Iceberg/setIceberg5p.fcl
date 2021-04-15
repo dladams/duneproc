@@ -1,10 +1,15 @@
-# setIceberg5k.fcl
+# setIceberg5p.fcl
 #
 # David Adams
 # March 2021
 #
 # Set configuration for Iceberg run 5k: 14 mV/fC, 2.0 us, 900 mV
 
-#include "setIceberg5b.fcl"
+#include "setIceberg5Template.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5p_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5p
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5pTailPedSignalFinder

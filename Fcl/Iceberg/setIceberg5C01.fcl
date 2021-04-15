@@ -5,9 +5,11 @@
 #
 # Set configuration for Iceberg run period 5C21: 4.7 mV/fC, 2 us, 900 mV
 
-#include "setIceberg5C22.fcl"
+#include "setIceberg5Template.fcl"
 
 tools.ib5_adcPedestalFit: @local::tools.ib5B01_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5C01
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5C01TailPedSignalFinder

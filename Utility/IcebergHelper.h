@@ -24,6 +24,7 @@ public:
     return 0;
   }
 
+  // Odd/even for Iceberg 4.
   static bool isOdd(unsigned int icha) {
     if ( icha >= 400 && icha < 1040 ) return icha%2;
     return (icha + 1)%2;

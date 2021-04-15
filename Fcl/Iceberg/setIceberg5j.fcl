@@ -5,9 +5,14 @@
 #
 # Set configuration for Iceberg run 5j: 14 mV/fC, 0.5 us, 900 mV
 
-#include "setIceberg5a.fcl"
+#include "setIceberg5Template.fcl"
+
+tools.ib5_adcPedestalFit: @local::tools.ib5j_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
 tools.areaGain_ib5: @local::tools.areaGain_ib5j
+
+tools.ib5TailPedSignalFinder: @local::tools.ib5jTailPedSignalFinder
 
 tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.15
 tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 2.0

@@ -28,3 +28,10 @@ tools.channelStatus.IndexVectors: [
 # tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 1.0
 # tools.ibmet_nsfNoise.MetricMax: 0.2
 # tools.ibmet_nsfThresh.MetricMax: 0.8
+
+# For default gain and shaping: C22
+tools.ibmet_adcChannelNotSignalRmsPlotter.MetricMax: 0.2
+tools.ibmet_adcChannelNotSignalRms50Plotter.MetricMax: 3.0
+tools.ibmet_nsfNoise.MetricMax: 0.2
+tools.ibmet_nsfThresh.MetricMax: 0.8
+

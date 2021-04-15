@@ -1,0 +1,8 @@
+# setNoiseSignalFinder.fcl
+#
+# David Adams
+# March 2021
+#
+# Switch to the dynamic signal finder defined in dataprep_tools.fcl.
+
+tools.roiSignalFinder: @local::tools.calibNoiseSignalFinder

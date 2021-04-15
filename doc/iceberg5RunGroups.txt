@@ -534,19 +534,38 @@
 9613-9637 3ASIC-CD-g2s3b0-WIB2-cos_00008
 ********* Begin 5C22-hvoff ********* 14 mV/fC, 2 us, 900 ms
 9638-9665 3ASIC-CD-g2s3b0-WIB2-cos_00008    HV off for cathode and APA.
-********* Begin 5C22-ar39 ********* 14 mV/fC, 2 us, 900 ms
-9666 3ASIC-CD-g2s3b0-WIB2-Ar39_00001 111
-9667 3ASIC-CD-g2s3b0-WIB2-Ar39_00001 113
-9668: ***** Metadata not found *****
-9669: ***** Metadata not found *****
-9670: ***** Metadata not found *****
-9671: ***** Metadata not found *****
-9672: ***** Metadata not found *****
-9673: ***** Metadata not found *****
-9674: ***** Metadata not found *****
-9675: ***** Metadata not found *****
-Runs 9666-9675
-   Run count: 2
- Event count: 224
-       Start: 2021-04-04T15:58:53+00:00
-        Stop: 2021-04-04T16:06:44+00:00
+********* Begin 5C22-ar39coff ********* 14 mV/fC, 2 us, 900 ms, HVC off, APA on, puls trig
+9666-9682 3ASIC-CD-g2s3b0-WIB2-Ar39_00001 About 20% of the <2k events have data.
+********* Bad ********* 14 mV/fC, 2 us, 900 ms, HV cathode off, APA on
+9683-9691
+********* Begin 5C22-ar39 ********* 14 mV/fC, 2 us, 900 ms, HV APA on
+9692-9711 3ASIC-CD-g2s3b0-WIB2-Ar39_00002 162
+********* Begin 5C22-mix2 ********* 14 mV/fC, 2 us, 900 ms
+9712-9713 3ASIC-CD-g2s3b0-WIB2-cos_00008 only 4/700 events have data
+********* Begin 5C01-cos2 ********* 4.7 mV/fC, 1 us, 900 ms
+9714-9716 3ASIC-CD-g0s0b0-WIB2-cos_00001 35
+********* Begin 5C03-cos2 ********* 4.7 mV/fC, 3 us, 900 ms
+9717-9718 3ASIC-CD-g0s2b0-WIB2-cos_00001 27
+********* Begin 5C02-cos3 ********* 4.7 mV/fC, 2 us, 900 ms
+9719-9720 3ASIC-CD-g0s3b0-WIB2-cos_00001 31
+********* Begin 5C11-cos3 ********* 7.8 mV/fC, 1 us, 900 ms
+9721-9722 3ASIC-CD-g1s0b0-WIB2-cos_00001 20
+********* Begin 5C13-cos3 ********* 7.8 mV/fC, 3 us, 900 ms
+9723-9724 3ASIC-CD-g1s2b0-WIB2-cos_00002 25
+********* Begin 5C12-cos3 ********* 7.8 mV/fC, 2 us, 900 ms
+9725-9726 3ASIC-CD-g1s3b0-WIB2-cos_00001 28
+********* Begin 5C21-cos3 ********* 14 mV/fC, 1 us, 900 ms
+9727-9728 3ASIC-CD-g2s0b0-WIB2-cos_00003 26
+********* Begin 5C20-cos3 ********* 14 mV/fC, 0.5 us, 900 ms
+9729-9730 3ASIC-CD-g2s1b0-WIB2-cos_00001 18
+********* Begin 5C23-cos3 ********* 14 mV/fC, 3 us, 900 ms
+9731-9732 3ASIC-CD-g2s2b0-WIB2-cos_00002 31
+********* Begin 5C22-cos7 ********* 14 mV/fC, 2 us, 900 ms
+9733-9737 3ASIC-CD-g2s3b0-WIB2-cos_00008 41
+********* Begin 5C22-test3 ********* 14 mV/fC, 2 us, 900 ms
+9738 3ASIC-CD-g2s3b0-WIB2-cos_00008 29  Normal conditions
+9739 3ASIC-CD-g2s3b0-WIB2-cos_00008 20  Condenser set to not cycle.
+9740 3ASIC-CD-g2s3b0-WIB2-cos_00008 29  Condenser PLC off
+9741 3ASIC-CD-g2s3b0-WIB2-cos_00008 11  Condenser back on
+9742 3ASIC-CD-g2s3b0-WIB2-cos_00008 12  All cryo power off
+9743 3ASIC-CD-g2s3b0-WIB2-cos_00008 13  1st mod to RTD power
