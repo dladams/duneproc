@@ -293,7 +293,16 @@
 9156      3ASIC-CD-g2s3b0-WIB2-cos_p14_00003 57
 9157      3ASIC-CD-g2s3b0-WIB2-cos_p15_00003 60
 ********* Begin 5C21-pul1 ********* 14 mV/fC, 1 us, 900 ms
-9158-9167 3ASIC-CD-g2s0b0-WIB2-cos_p1_00001 57
+9158      3ASIC-CD-g2s0b0-WIB2-cos_p1_00001 57
+9159      3ASIC-CD-g2s0b0-WIB2-cos_p2_00001 58
+9160      3ASIC-CD-g2s0b0-WIB2-cos_p3_00001 60
+9161      3ASIC-CD-g2s0b0-WIB2-cos_p4_00001 58
+9162      3ASIC-CD-g2s0b0-WIB2-cos_p5_00001 56
+9163      3ASIC-CD-g2s0b0-WIB2-cos_p6_00001 58
+9164      3ASIC-CD-g2s0b0-WIB2-cos_p7_00001 58
+9165      3ASIC-CD-g2s0b0-WIB2-cos_p8_00001 57
+9166      3ASIC-CD-g2s0b0-WIB2-cos_p9_00001 56
+9167      3ASIC-CD-g2s0b0-WIB2-cos_p10_00001 57
 ********* Begin 5C22-cos1 ********* 14 mV/fC, 2 us, 900 ms
 9168-9178 3ASIC-CD-g2s3b0-WIB2-cos_00008 3/27 0400, 25 events/file
 ********* Begin 5C02-cos1 ********* 4.7 mV/fC, 2 us, 900 ms
