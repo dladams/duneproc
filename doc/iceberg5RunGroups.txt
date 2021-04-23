@@ -219,7 +219,7 @@
 ********* 5f-test ********* 14 mV/fC, 2 us, 900 ms
 8948-8949 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/22 1900 HV off?
 8950
-********* Begin 5p ********* 14 mV/fC, 2 us, 900 ms, calibrated ADCs
+********* Begin 5p-cos1 ********* 14 mV/fC, 2 us, 900 ms, calibrated ADCs
 8951-8954 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/23 lifetime 700 us, ADCs calibrated
 8955
 8956-9047 3ASIC-CD-g2s3b0-WIB2-cos_00008
