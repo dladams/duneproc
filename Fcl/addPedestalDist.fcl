@@ -1,0 +1,20 @@
+# addWfRaw.fcl
+#
+# David Adams
+# January 2020
+#
+# Produces raw waveform plots for ticks (0, 1000) showing +/50 around pedestal.
+#
+# With processData, wfrran can be used to change the signal range and
+# wftick to change the tick range.
+
+services.RawDigitPrepService.ToolNames: [
+  "digitReader",
+  "pd_adcPedestalFit"
+]
+
+tools.pd_adcPedestalFit.PlotFileName: "ped_run%0RUN%_event%0EVENT%_chan%0CHAN%.png"
+tools.pd_adcPedestalFit.PlotSizeX: 1400
+tools.pd_adcPedestalFit.PlotSizeY: 1000
+tools.pd_adcPedestalFit.PlotSplitX: 4
+tools.pd_adcPedestalFit.PlotSplitY: 4

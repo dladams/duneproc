@@ -5,6 +5,8 @@
 #
 # Set configuration template for Iceberg runs.
 
+services.LArFFT.FFTSize: 4096
+
 physics.producers.dataprep.DecoderTool: "IcebergDecoderFrame14"
 services.IcebergChannelMapService.FELIXFileName: "IcebergChannelMap_FELIX_FRAME14_v1.txt"
 

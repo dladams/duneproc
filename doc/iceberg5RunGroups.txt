@@ -225,7 +225,7 @@
 8956-9047 3ASIC-CD-g2s3b0-WIB2-cos_00008
 ********* Begin 5f-0324 ********* 14 mV/fC, 2 us, 900 ms, Back to uncalibrated ADCs
 9048-9049 3ASIC-CD-g2s3b0-WIB2-cos_00008  3/24 test returning to 5f
-********* Back to 5p ********* 14 mV/fC, 2 us, 900 ms
+********* Begin 5p-cos2 ********* 14 mV/fC, 2 us, 900 ms
 9050-9051 3ASIC-CD-g2s3b0-WIB2-cos_00008
 ********* Begin 5p-pul ********* 14 mV/fC, 2 us, 900 ms, Pulser runs
 9052      3ASIC-CD-g2s3b0-WIB2-cos_p5_00003 86

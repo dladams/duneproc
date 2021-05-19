@@ -55,7 +55,7 @@ services: {
   IFBeam: {}  # Needed for the beamevent producer
   GeometryConfigurationWriter: { }
 }
-services.LArFFT.FFTSize: 4096
+services.LArFFT.FFTSize: 2048
 
 outputs: {
   out1: {

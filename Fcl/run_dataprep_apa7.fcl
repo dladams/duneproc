@@ -17,13 +17,14 @@ services:
   RandomNumberGenerator: {} 
   ExptGeoHelperInterface:       @local::dune_geometry_helper
   Geometry:                     @local::protodune_geo
+  GeometryConfigurationWriter: {}
   DetectorClocksService:        @local::dunefd_detectorclocks
   DetectorPropertiesService:    @local::protodune_detproperties
   LArPropertiesService:         @local::dunefd_properties
   LArFFT:                       @local::dunefd_larfft  
   DatabaseUtil:                 @local::dunefd_database
   SignalShapingServiceDUNE:     @local::protodunesp_signalshapingservice
-  ChannelStatusService:         @local::apa7cold_channel_status
+  ChannelStatusService:         @local::allgood_channel_status
   TFileService: { 
    closeFileFast: true  # default
    fileName:  "/dev/null"
