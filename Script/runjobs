@@ -14,7 +14,12 @@ if [ ! -r local.fcl ]; then
 fi
 
 while true; do
-  if [ -x .runjobsScript ]; then ./.runjobsScript; fi
+  if [ -x .runjobsScript ]; then
+    ./.runjobsScript
+  else
+    echo Please provide .runjobsScript
+    exit 1
+  fi
   if ! mv $RUNFIL $PRCFIL 2>/dev/null; then
     echo `date` `hostname` Waiting for $RUNFIL in `pwd`
     sleep 20

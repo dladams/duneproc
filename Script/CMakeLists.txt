@@ -15,7 +15,7 @@ install(PROGRAMS
   ibFindFiles
   ibGroupRuns
   ibStageFiles
-  ibRunPeriod
+  obsolete-ibRunPeriod
   ibDaqConfig
   ibSaveWfRaw
   ibSavePeds

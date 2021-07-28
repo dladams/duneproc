@@ -2,15 +2,17 @@
 
 RUN=$1
 EVT=$2
+LEV=${3:-0}
+SUF=$4
 if [ -z "$2" -o "$1" = "-h" ]; then
-  echo Usage: $0 RUN EVENT
+  echo Usage: $0 RUN EVENT [LEVEL]
   exit 0
 fi
 SRUN=$RUN
 SEVT=$EVT
 while [ ${#SRUN} -lt 6 ]; do SRUN="0"$SRUN; done
 while [ ${#SEVT} -lt 6 ]; do SEVT="0"$SEVT; done
-SPER=$(ibRunPeriod $RUN)
+SPER=$(ibRunPeriod $RUN $LEV)
 RUNDIR=$(ls -d run_iceberg${SPER}_dqm1/iceberg${SRUN}/event${SEVT})
 if [ ! -n "$RUNDIR" ]; then
   echo Run directory not found for run $RUN event $EVT
@@ -19,6 +21,7 @@ fi
 echo Taking plots from $RUNDIR
 
 OUTBASEDIR=$HOME/wwwdune/protodune/iceberg/data/dqm1
+if [ -n "$SUF" ]; then OUTBASEDIR=$OUTBASEDIR-$SUF; fi
 OUTRUNDIR=$OUTBASEDIR/run$SRUN
 if [ ! -r $OUTRUNDIR ]; then
   echo Creating $OUTRUNDIR

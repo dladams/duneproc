@@ -226,8 +226,10 @@ else
     echo 5C20
   elif [ $RUN -lt 9733 ]; then
     echo 5C23
-  else
+  elif [ $RUN -lt 9744 ]; then
     echo 5C22
+  else
+    echo 6
   fi
 fi
 

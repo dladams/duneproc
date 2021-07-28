@@ -1,5 +1,7 @@
 # duneproc/Utility/CMakeLists.txt
 
+install(FILES IcebergHelper.h TYPE INCLUDE)
+
 # Build a utility library.
 set(PKGLIB ${PROJECT_NAME})
 FILE(GLOB MYSRCS *.cxx)

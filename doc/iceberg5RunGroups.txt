@@ -416,7 +416,7 @@
 9485      3ASIC-CD-g2s3b0-WIB2-cos_00008 22  Purity monitor disconnected.
 9486      3ASIC-CD-g2s3b0-WIB2-cos_00008 22  minimal disconnect we can live with
 9487      3ASIC-CD-g2s3b0-WIB2-cos_00008 19  HV off
-********* Begin 5C33-test2 ********* 14 mV/fC, 3 us, 900 ms
+********* Begin 5C33-test2 ********* 25 mV/fC, 3 us, 900 ms  (gain fixed 7/27/21)
 9488-9490 3ASIC-CD-g3s2b0-WIB2-cos_00002 1   minimal disconnect with high gain and shaping
 ********* Begin 5C22-test3 ********* 14 mV/fC, 2 us, 900 ms
 9491-9493 3ASIC-CD-g2s3b0-WIB2-cos_00008     purity monitor at 10 Hz 
@@ -571,7 +571,7 @@
 9731-9732 3ASIC-CD-g2s2b0-WIB2-cos_00002 31
 ********* Begin 5C22-cos7 ********* 14 mV/fC, 2 us, 900 ms
 9733-9737 3ASIC-CD-g2s3b0-WIB2-cos_00008 41
-********* Begin 5C22-test3 ********* 14 mV/fC, 2 us, 900 ms
+********* Begin 5C22-test4 ********* 14 mV/fC, 2 us, 900 ms
 9738 3ASIC-CD-g2s3b0-WIB2-cos_00008 29  Normal conditions
 9739 3ASIC-CD-g2s3b0-WIB2-cos_00008 20  Condenser set to not cycle.
 9740 3ASIC-CD-g2s3b0-WIB2-cos_00008 29  Condenser PLC off

@@ -18,3 +18,4 @@ tools.pd_adcPedestalFit.PlotSizeX: 1400
 tools.pd_adcPedestalFit.PlotSizeY: 1000
 tools.pd_adcPedestalFit.PlotSplitX: 4
 tools.pd_adcPedestalFit.PlotSplitY: 4
+tools.pd_adcPedestalFit.FitRmsMin: 1.0

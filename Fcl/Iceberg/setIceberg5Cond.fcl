@@ -1,0 +1,21 @@
+# setIceberg5Cond.fcl
+#
+# David Adams
+# July 2021
+#
+# Set conditions-based configuration for any Iceberg 5 run period.
+
+#include "setIceberg5Template.fcl"
+
+# Define the run data tool used to evaluate formulas.
+#include "duneifdh.fcl"
+tools.runDataTool: @local::tools.icebergIfdhRunData
+
+tools.ib5_adcPedestalFit: @local::tools.ib5cond_adcPedestalFit
+tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
+
+# Change this to conditions based.
+tools.areaGain_ib5: @local::tools.areaGain_ib5C22
+
+# Change this to conditions based.
+tools.ib5TailPedSignalFinder: @local::tools.ib5C22TailPedSignalFinder

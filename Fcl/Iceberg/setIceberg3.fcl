@@ -1,4 +1,13 @@
 # setIceberg3.fcl
 
+services.ChannelStatusService.BadChannels: @local::iceberg3_bad_channels
+services.ChannelStatusService.NoisyChannels: @local::iceberg3_noisy_channels
+tools.channelStatus.IndexVectors: [
+  [],
+  @local::iceberg3_bad_channels,
+  @local::iceberg3_noisy_channels,
+  []
+]
+
 tools.ib_adcPedestalFit: @local::tools.ib3_adcPedestalFit
 
