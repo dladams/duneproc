@@ -15,8 +15,9 @@ cd /dune/data/users/$USER/tutorial
 # Set up a release of dunetpc.
 # See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-setup dunetpc v08_41_00 -q e19:prof
-# or to use my private (annd presumably newer and better) build,
+setup dunetpc v09_28_02 -q e20:prof
+# Replace the version and options with current ones.
+# Too use my private (annd presumably newer and better) build,
 source ~dladams/proc/build/dev01/dunesetup.sh 
 dune shell
 
