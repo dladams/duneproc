@@ -22,7 +22,7 @@ tools.channelStatus.IndexVectors: [
   []
 ]
 
-# Run period configurations should indclude this and define the following:
+# Run period configurations should include this and define the following:
 # tools.ib5_adcPedestalFit
 # tools.areaGain_ib5:
 # tools.ib5TailPedSignalFinder

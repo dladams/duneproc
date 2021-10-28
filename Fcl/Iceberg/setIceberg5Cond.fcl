@@ -11,11 +11,9 @@
 #include "duneifdh.fcl"
 tools.runDataTool: @local::tools.icebergIfdhRunData
 
+# Pedestal fitter.
 tools.ib5_adcPedestalFit: @local::tools.ib5cond_adcPedestalFit
 tools.ib_adcPedestalFit: @local::tools.ib5_adcPedestalFit
 
-# Change this to conditions based.
-tools.areaGain_ib5: @local::tools.areaGain_ib5C22
-
-# Change this to conditions based.
-tools.ib5TailPedSignalFinder: @local::tools.ib5C22TailPedSignalFinder
+# Charge calibration.
+tools.ib5SampleCalibration: @local::tools.ib5CondSVSampleCalibration
