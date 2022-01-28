@@ -3,7 +3,7 @@
 # David Adams
 # February 2020
 #
-# This is a tutuorial on using DA's analysis packages.
+# This is a tutuorial on using my analysis packages.
 # For more information on getting started with DUNE computing, see
 # [https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial]
 
@@ -15,7 +15,7 @@ cd /dune/data/users/$USER/tutorial
 # Set up a release of dunetpc.
 # See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-setup dunetpc v09_28_02 -q e20:prof
+setup dunesw v09_42_00_01 -q e20:prof
 # Replace the version and options with current ones.
 # Too use my private (annd presumably newer and better) build,
 source ~dladams/proc/build/dev01/dunesetup.sh 
@@ -23,6 +23,7 @@ dune shell
 
 # Get kerberos and grid certificates.
 # Latter is needed for xrootd file access.
+kinit    # Not needed if you alread have a kerberos ticket
 kx509 --minhours 12
 voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 
