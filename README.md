@@ -12,9 +12,11 @@ For detailed help, use `duneproc -H`. Example:
 
 To gain access to this command, first set up a recent version of dunesw by following the instructions on the
 [DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
-Then fetch, build and set up this package following the
-[myproj instructions](https://github.com/dladams/myproj/blob/master/README.md)
-replacing myproj with duneproc.
+Then fetch, build and set up dunesw, e.g. for cvmfs installation:
+<pre>
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+setup dunesw v09_42_00_1 -q e20:prof
+</pre>
 
 Fcl configuration files are also provided. The top-level `run_dataprep.fcl`
 runs the event and trigger filters and dataprep configured to read
