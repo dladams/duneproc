@@ -10,8 +10,7 @@ specifying the fcl configuration and the second the data to be processed.
 For detailed help, use `duneproc -H`. Example:  
   duneproc wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
 
-To gain access to this command, first set up a recent version of dunetpc or
-protoduneana e.g. by following the instructions on the
+To gain access to this command, first set up a recent version of dunesw by following the instructions on the
 [DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
 Then fetch, build and set up this package following the
 [myproj instructions](https://github.com/dladams/myproj/blob/master/README.md)
