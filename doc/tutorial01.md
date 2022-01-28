@@ -7,25 +7,34 @@ This is a tutuorial on using my analysis packages.
 For more information on getting started with DUNE computing, see
 [https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial]
 
-# Log in and create a new directory.
-ssh -Y -K dunegpv05.fnal.gov
-mkdir /dune/data/users/$USER/tutorial
-cd /dune/data/users/$USER/tutorial
+Log in and create a new directory.
+<pre>
+ssh -Y -K dunegpvm05.fnal.gov
+mkdir /dune/data/users/$USER/proc/tutorial
+cd /dune/data/users/$USER/proc/tutorial
+</pre>
+The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
 
-# Set up a release of dunetpc.
-# See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases
+Set up a release of dunetpc.  
+See [https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases].
+<pre>
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup dunesw v09_42_00_01 -q e20:prof
-# Replace the version and options with current ones.
-# Too use my private (annd presumably newer and better) build,
+</pre>
+Replace the version and options with current ones.
+To use my private (and perhaps newer and better) build:
+<pre>
 source ~dladams/proc/build/dev01/dunesetup.sh 
 dune shell
+</pre>
 
-# Get kerberos and grid certificates.
-# Latter is needed for xrootd file access.
-kinit    # Not needed if you alread have a kerberos ticket
+Get kerberos and grid certificates.  
+The latter is needed for xrootd file access.
+<pre>
+kinit    # Not needed if you already have a kerberos ticket
 kx509 --minhours 12
 voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
+</pre>
 
 # List some of the commands available in dunetpc.
 duneHelp
