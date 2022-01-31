@@ -5,7 +5,9 @@ January 2022
   
 This is a tutuorial on using my analysis packages.  
 For more information on getting started with DUNE computing, see
-[https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial]
+https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial
+
+## Setting up
 
 Log in and create a new directory.
 <pre>
@@ -16,13 +18,20 @@ cd /dune/data/users/$USER/proc/tutorial
 The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
 
 Set up a release of dunetpc.  
-See [https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases].
+See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases.
 <pre>
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup dunesw v09_42_00_01 -q e20:prof
 </pre>
-Replace the version and options with current ones.
-To use my private (and perhaps newer and better) build:
+Replace the version and options with current ones. If using a local build, additionally 
+set up that build area, e.g.
+<pre>
+source /home/dladams/proc/build/dev01/workdir/localProducts_dunesw_v09_42_00_01_e20_prof/setup
+mrbslp
+</pre>
+If the local build has been done with [dune-dev](https://github.com/dladams/dune-dev),
+the the above two blocks can be replaced with the dune shell command. E.g. to use my
+standard private (and perhaps newer and better) dunetpc build on dunegpvm:
 <pre>
 source ~dladams/proc/build/dev01/dunesetup.sh 
 dune shell
@@ -36,20 +45,26 @@ kx509 --minhours 12
 voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 </pre>
 
-# List some of the commands available in dunetpc.
+To check you have set up a release and see some of the available commands:
+<pre>
 duneHelp
+</pre>
 
-# Check out duneproc (and optionally other packages):
+# Installin this package package.
+To install this package, choose and create and installation directory and
+clone in that area:
+<pre>
 mkdir pkgs
 cd pkgs
 git clone https://github.com/dladams/duneproc
-git clone https://github.com/dladams/dunenoise
-git clone https://github.com/dladams/dunececalib
 cd ..
-# If already checked out, pull down any changes with
+</pre>
+Or, if you have already done this and want to update:
+<pre>
 cd pkgs/duneproc
 git pull
 cd ../..
+</pre>
 
 # Fetch, build and set up this package following the 
 [myproj instructions](https://github.com/dladams/myproj/blob/master/README.md) 
