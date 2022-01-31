@@ -50,8 +50,9 @@ To check you have set up a release and see some of the available commands:
 duneHelp
 </pre>
 
-# Installin this package package.
-To install this package, choose and create and installation directory and
+# Installing this package package.
+
+To install this package, choose and create a package directory and
 clone in that area:
 <pre>
 mkdir pkgs
@@ -66,12 +67,39 @@ git pull
 cd ../..
 </pre>
 
-# Fetch, build and set up this package following the 
-[myproj instructions](https://github.com/dladams/myproj/blob/master/README.md) 
-replacing myproj with duneproc.
+This and most of my other analysis packages contain a script build that
+builds and installs the package, i.e. complies and copies files to a
+user-specified installation directory.
+To use this script, the directories for building and installation must
+be specified and some build tools set up. For example:
+<pre>
+export DUNE_BUILD_DIR=$HOME/tmp/build
+export DUNE_INSTALL_DIR=$HOME/proc/install
+setup cmake v3_22_0
+setup studio
+</pre>
+Note this environment is only required for building and installation
+and not for using the installalled software.
 
-# If using any other anaylsis package (dunenoise, dunececalib, ...),
-# fetch, build and check it out and set up in the same way
+After this, execute the build script in the package, e.g.
+<pre>
+./pkgs/duneproc/duneproc/build
+</pre>
+and the package will be installed at $DUNE_INSTALL_DIR/duneproc including
+a bash setup file setup.sh.
+
+Other of my analysis packages (dunenoise, dunececalib, ...) may be installed
+in the same way by replacing dunebuild with that package name in the above.
+
+## Using the installed packge.
+
+to use the installed package, first source the installed setup file, e.e
+<pre>
+source install/duneproc/setup.sh
+</pre>
+If starting from a fresh shell, first perform the dune setup described above. there is
+no need to do the build setup to use an installed package.
+This setup will apprpriately modify the executable, library, python and fcl paths.
 
 # Find the files or files of interest, e.g. for a run:
 samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240"
