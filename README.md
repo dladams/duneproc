@@ -1,9 +1,9 @@
 # duneproc
 
 David Adams  
-March 2020
+February 2022
 
-Package to facilitate the running of DUNE `lar` jobs with `dunetpc`.
+Package to facilitate the running of DUNE `lar` jobs with `dunesw`.
 
 The command `duneproc` runs a `lar` job with the first argument
 specifying the fcl configuration and the second the data to be processed.
