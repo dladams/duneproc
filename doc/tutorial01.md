@@ -50,7 +50,7 @@ To check you have set up a release and see some of the available commands:
 duneHelp
 </pre>
 
-# Installing this package package.
+# Installing this package.
 
 To install this package, choose and create a package directory and
 clone in that area:
