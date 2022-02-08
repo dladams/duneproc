@@ -103,30 +103,55 @@ If starting from a fresh shell, first perform the dune setup described above. Th
 no need to do the build setup to use an installed package.
 This setup will apprpriately modify the executable, library, python and fcl paths.
 
-# Find the files or files of interest, e.g. for a run:
+# Finding files
+
+To list raw datat files from protoDUNE run 5240:
+<pre>
 samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240"
-# or events 1000-1999 in that run:
+</pre>
+
+or the files containing events 1000-1999 from that run:
+<pre>
 samweb list-files "data_tier raw and DUNE_data.is_fake_data 0 and run_number 5240 and last_event>=1000 and first_event<2000"
+</pre>
 
-# To get the full xrootd path(s) to one of these files:
-samweb get-file-access-url np04_raw_run005240_0001_dl1.root --schema=root
-
-# Run dataprep with no tools
+To get the full xrootd path(s) to one of these files:
+<pre>
+MYFILE=$(samweb get-file-access-url np04_raw_run005240_0001_dl1.root --schema=root | grep fnal)
+echo $MYFILE
+</pre>
+There is grep for fnal to avoid the file replica at CERN. Change that or select a file by hand
+if you prefer to use the CERN replica.
+  
+# Running dataprep
+  
+Now we run some dataprep jobs using the above file. First with no tools:
+<pre>
 mkdir job01
 cd job01
-lar -c run_dataprep.fcl -n 1 \
-    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+lar -c run_dataprep.fcl -n 1 -s $MYFILE
 cd ..
+</pre>
+The job may hang for a while at "... Initiating request to open input file..." if the file has to be staged in from tape. Have a coffe, come back tomorrow
+or try a different file if it takes to long. The command limit processing one event and so you should see the first event, number 7, is processed.
+Messages from the dataprep module are prefixed with "DataPrepByApaModule::" and you will see it is configured here to process each APA independently and
+to be noisy and report the number of digits (channel waveforms), clocks and status flags for each APA. The first two should be 2560 and the last one.
+The report for APA3 is a little different because one FEMB runs on an internal clock and has a slightly different number of time samples.
 
-# Run DQM (data quality monitoring) with wide display
+To see something more intersting, run DQM (data quality monitoring) with wide display
+<pre>
 mkdir job02
 cd job02
-lar -c dqmw.fcl -n 1 \
-    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/06/68/39/48/np04_raw_run005240_0001_dl1.root
+lar -c dqmw.fcl -n 1 -s $MYFILE
 cd ..
-
-# Run dataprep with no tools for APA 7
-cd job03
-lar -c run_dataprep_apa7.fcl -n 1 \
-    -s root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune-sp/raw/2019/detector/test/None/00/01/00/79/np04_raw_run010079_0001_dl1.root
-
+</pre>
+Many image files will be produced. On dunegpvm, they can be viewd with
+<pre>
+display adcraw_tpp3z_run005240_evt000007.png
+</pre>
+or if you are running from a jupyter notebook (or local interactive python), view with
+<pre>
+from IPython.display import Image
+dir = '/home/dladams/proc/run01/tutorial/job02/'
+display(Image(filename=dir + 'adcraw_tpp3z_run005240_evt000007.png'))
+</pre>
