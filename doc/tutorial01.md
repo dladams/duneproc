@@ -1,7 +1,7 @@
 # duneproc tutorial01
 
 David Adams   
-January 2022  
+February 2022  
   
 This is a tutuorial on using my analysis packages.  
 For more information on getting started with DUNE computing, see
@@ -17,16 +17,18 @@ cd /dune/data/users/$USER/proc/tutorial
 </pre>
 The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
 
-Set up a release of dunetpc.  
-See https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases.
+Set up a release of dunesw, e.g. if cvmfs is available:
 <pre>
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-setup dunesw v09_42_00_01 -q e20:prof
+setup dunesw v09_42_00_02 -q e20:prof
 </pre>
-Replace the version and options with current ones. If using a local build, additionally 
-set up that build area, e.g.
+Replace the version and options with current ones. To list all:
 <pre>
-source /home/dladams/proc/build/dev01/workdir/localProducts_dunesw_v09_42_00_01_e20_prof/setup
+ups list -aK+ dunesw
+</pre>
+If using a local build, additionally set up that build area, e.g.
+<pre>
+source /home/dladams/proc/build/dev01/workdir/localProducts_dunesw_v09_42_00_02_e20_prof/setup
 mrbslp
 </pre>
 If the local build has been done with [dune-dev](https://github.com/dladams/dune-dev),
@@ -71,7 +73,7 @@ This and most of my other analysis packages contain a script build that
 builds and installs the package, i.e. complies and copies files to a
 user-specified installation directory.
 To use this script, the directories for building and installation must
-be specified and some build tools set up. For example:
+be specified and some build tools set up. For example (after setting up a dunesw release or build):
 <pre>
 export DUNE_BUILD_DIR=$HOME/tmp/build
 export DUNE_INSTALL_DIR=$HOME/proc/install
@@ -93,11 +95,11 @@ in the same way by replacing dunebuild with that package name in the above.
 
 ## Using the installed packge.
 
-to use the installed package, first source the installed setup file, e.e
+To use the installed package source the installed setup file:
 <pre>
 source install/duneproc/setup.sh
 </pre>
-If starting from a fresh shell, first perform the dune setup described above. there is
+If starting from a fresh shell, first perform the dune setup described above. There is
 no need to do the build setup to use an installed package.
 This setup will apprpriately modify the executable, library, python and fcl paths.
 
