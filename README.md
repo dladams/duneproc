@@ -3,20 +3,21 @@
 David Adams  
 February 2022
 
-Package to facilitate the running of DUNE `lar` jobs with `dunesw`.
+Package to facilitate the running of DUNE `lar` jobs with `dunesw` (fomerly `dunetpc`).
 
 The command `duneproc` runs a `lar` job with the first argument
 specifying the fcl configuration and the second the data to be processed.
 For detailed help, use `duneproc -H`. Example:  
   duneproc wfRaw/wfrran500/wftick4000/dpcr\_apa3u/event132560 5777evts132000-133000
 
-To gain access to this command, first set up a recent version of dunesw by following the instructions on the
-[DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
-Then fetch, build and set up dunesw, e.g. for cvmfs installation:
+To gain access to this command, first set up a recent version of dunesw. E.g., if cvmfs is available:
 <pre>
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-setup dunesw v09_42_00_1 -q e20:prof
+setup dunesw v09_42_00_02 -q e20:prof
 </pre>
+If not, instructions for installation may be found on the
+[DUNE LAr SW page](https://wiki.dunescience.org/wiki/DUNE_LAr_Software_Releases#Using_DUNE_releases).
+and elsewhere.
 
 Fcl configuration files are also provided. The top-level `run_dataprep.fcl`
 runs the event and trigger filters and dataprep configured to read
