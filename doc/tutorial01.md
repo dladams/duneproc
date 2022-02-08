@@ -155,3 +155,4 @@ from IPython.display import Image
 dir = '/home/dladams/proc/run01/tutorial/job02/'
 display(Image(filename=dir + 'adcraw_tpp3z_run005240_evt000007.png'))
 </pre>
+Connect to https://analytics-hub.fnal.gov and follow the above setup, installation and running instructions in a terminal to prepare plots to view in this manner.
