@@ -52,7 +52,7 @@ To check you have set up a release and see some of the available commands:
 duneHelp
 </pre>
 
-# Installing this package.
+## Installing this package.
 
 To install this package, choose and create a package directory and
 clone in that area:
@@ -93,7 +93,7 @@ a bash setup file setup.sh.
 Other of my analysis packages (dunenoise, dunececalib, ...) may be installed
 in the same way by replacing dunebuild with that package name in the above.
 
-## Using the installed packge.
+## Using the installed package.
 
 To use the installed package source the installed setup file:
 <pre>
@@ -103,7 +103,7 @@ If starting from a fresh shell, first perform the dune setup described above. Th
 no need to do the build setup to use an installed package.
 This setup will apprpriately modify the executable, library, python and fcl paths.
 
-# Finding files
+## Finding files
 
 To list raw datat files from protoDUNE run 5240:
 <pre>
@@ -123,7 +123,7 @@ echo $MYFILE
 There is grep for fnal to avoid the file replica at CERN. Change that or select a file by hand
 if you prefer to use the CERN replica.
   
-# Running dataprep
+## Running dataprep
   
 Now we run some dataprep jobs using the above file. First with no tools:
 <pre>
