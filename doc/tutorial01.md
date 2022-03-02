@@ -15,9 +15,9 @@ ssh -Y -K dunegpvm05.fnal.gov
 mkdir /dune/data/users/$USER/proc/tutorial
 cd /dune/data/users/$USER/proc/tutorial
 </pre>
-Note that 05 in the node n ame can be replaces with any values in the sequence (00, 01, ..., 15). The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
+Note that 05 in the node name can be replaces with any value in the sequence (00, 01, ..., 15). The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
 
-An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal sessioin.
+An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal session.
 
 Set up a release of dunesw, e.g. if cvmfs is available:
 <pre>
