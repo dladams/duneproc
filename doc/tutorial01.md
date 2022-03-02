@@ -1,9 +1,9 @@
 # duneproc tutorial01
 
 David Adams   
-February 2022  
+March 2022  
   
-This is a tutuorial on using my analysis packages.  
+This is a tutuorial on using duneproc and other analysis packages from David Adams.  
 For more information on getting started with DUNE computing, see
 https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial
 
@@ -15,7 +15,9 @@ ssh -Y -K dunegpvm05.fnal.gov
 mkdir /dune/data/users/$USER/proc/tutorial
 cd /dune/data/users/$USER/proc/tutorial
 </pre>
-The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
+Note that 05 in the node n ame can be replaces with any values in the sequence (00, 01, ..., 15). The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
+
+An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal sessioin.
 
 Set up a release of dunesw, e.g. if cvmfs is available:
 <pre>
