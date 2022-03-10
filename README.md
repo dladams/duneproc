@@ -3,7 +3,7 @@
 David Adams  
 February 2022
 
-Package to facilitate the running of DUNE `lar` jobs with `dunesw` (fomerly `dunetpc`).
+Package to facilitate the running of DUNE `lar` jobs with `dunesw` (formerly `dunetpc`).
 
 The command `duneproc` runs a `lar` job with the first argument
 specifying the fcl configuration and the second the data to be processed.
