@@ -140,7 +140,7 @@ Messages from the dataprep module are prefixed with "DataPrepByApaModule::" and 
 to be noisy and report the number of digits (channel waveforms), clocks and status flags for each APA. The first two should be 2560 and the last one.
 The report for APA3 is a little different because one FEMB runs on an internal clock and has a slightly different number of time samples.
 
-To see something more intersting, run DQM (data quality monitoring) with wide display
+To see something more interesting, run DQM (data quality monitoring) with wide display
 <pre>
 mkdir job02
 cd job02
@@ -158,3 +158,7 @@ dir = '/home/dladams/proc/run01/tutorial/job02/'
 display(Image(filename=dir + 'adcraw_tpp3z_run005240_evt000007.png'))
 </pre>
 Connect to https://analytics-hub.fnal.gov and follow the above setup, installation and running instructions in a terminal to prepare plots to view in this manner.
+
+## Running in a notebook
+
+Using [dunerun](https://github.com/dladams/dunerun), it is also possible to run the lar command directly and view the reulting plots in the same Jupyter notebook. An example generating DQM plots may be found in this package at [dqm.ipynb](../ipynb/dqm.ipynb).
