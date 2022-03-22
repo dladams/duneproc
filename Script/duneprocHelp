@@ -21,7 +21,7 @@ echo
 if [ $OPT = local -a -r README.txt ]; then
   cat README.txt
 elif [ $OPT = general ]; then
-  echo "getGridProxy - Fetches a kerberos-based grid certificate.
+  echo "getGridProxy - Fetches a kerberos-based grid certificate."
 elif [ $OPT = pdsp ]; then
   echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
   echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."
