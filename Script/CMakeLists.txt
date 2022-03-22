@@ -27,6 +27,8 @@ install(PROGRAMS
   pdspDataStream
   pdspStartTime
   pdspWibCount
+  vdbcbFindFiles
+  hdcbFindFiles
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 

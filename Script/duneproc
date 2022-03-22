@@ -109,6 +109,8 @@ fi
 makeFcl() {
   FCLNAME=$1
   FCLFILE=$FCLNAME.fcl
+  DBG=0
+  if  test $DBG -gt 0; then echo makeFcl: FCL file is $FCLFILE; fi
   if [ -r $FCLFILE ]; then
     echo makeFcl: File already exists: $FCLFILE
     return 2
