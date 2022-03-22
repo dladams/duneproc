@@ -6,7 +6,8 @@ OPT=$1
 
 if [ -z "$OPT" ]; then
   echo $0 OPT
-  echo "  OPT = pdsp fpr protoDUNE commands"
+  echo "  OPT = general for general commands"
+  echo "  OPT = pdsp for protoDUNE commands"
   echo "  OPT = ib for Iceberg commands"
   echo "  OPT = ibex fpr Iceberg examples"
   echo "  OPT = ibex fpr Iceberg examples"
@@ -19,6 +20,8 @@ fi
 echo
 if [ $OPT = local -a -r README.txt ]; then
   cat README.txt
+elif [ $OPT = general ]; then
+  echo "getGridProxy - Fetches a kerberos-based grid certificate.
 elif [ $OPT = pdsp ]; then
   echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
   echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."

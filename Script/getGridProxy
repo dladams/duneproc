@@ -1,0 +1,6 @@
+if ! klist 1>/dev/null 2>&1; then
+  echo Fetching kerberos ticket
+  kinit
+fi
+kx509 --minhours 12
+voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
