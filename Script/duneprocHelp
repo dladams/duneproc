@@ -29,10 +29,16 @@ elif [ $OPT = pdsp ]; then
   echo "pdspStartTime - Returns the WIB count for a PDSP file."
   echo "pdspDataStream - Returns the data stream name for a PDSP file."
   echo "pdspWibCount - Returns the WIB count for a PDSP run."
-  echo "ibRunPeriod" - Returns the run period, e.g. 5a, for a run.
 elif [ $OPT = ib ]; then
   echo "showMetadata - Displays metatdata for a file or an Iceberg run"
   echo "ibDaqConfig - Display DAQ config string for Iceberg runs"
+  echo
+  echo "ibFindFiles - Build a dataset (file list) for run."
+  echo "ibGroupRuns - Build a dataset for a series of runs"
+  echo "ibStageFiles - Stage files for a series of runs"
+  echo
+  echo "ibRunPeriod - Display the run period for a run."
+  echo "ibRunPeriodRuns - Display the runs for a run period."
   echo
   echo "savedqmi - Copy iceberg DQM results"
   echo "ibSaveWfRaw - Copy iceberg waveforms to web area"

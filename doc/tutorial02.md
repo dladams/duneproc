@@ -9,7 +9,7 @@ with the top-level file specified on the lar command line.
 We often want want to run many similar jobs with small variations to process different
 datasets (e.g. runs or files), event selection (e.g. by event ID or trigger)
 and different detector regions (e.g. APAs or tick ranges).
-In addition there may be different processing options (calibration, metigation, ...)
+In addition there may be different processing options (calibration, mitigation, ...)
 and output format preferences (histogram/graph ranges, colors and styles).
 It is tedious and error-prone for users to create the top-level fcl files for each job
 and difficult to maintain the lower-level fcl files duplicated across jobs.

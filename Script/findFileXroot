@@ -4,6 +4,14 @@
 
 INPATH=$1
 
+# If the name starts with / or ./ assume it is an ordinary file.
+if [ ${INPATH:0:1} = "/" -o ${INPATH:0:2} = "./" ]; then
+  if [ -r $INPATH ]; then
+    echo $INPATH
+  fi
+  exit
+fi
+
 # If name starts with xroot, assume it is valid.
 if [[ $INPATH =~ "xroot:" ]]; then echo $INPATH; exit; fi
 
