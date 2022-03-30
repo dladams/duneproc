@@ -1,13 +1,10 @@
-# duneproc tutorial01
-
-# ************ This document is under development ***********
+# duneproc tutorial01-old
 
 David Adams   
 March 2022  
   
-This is a tutuorial on using duneproc and other analysis packages from David Adams.  
-For more information on getting started with DUNE computing, see
-https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial
+This document shows how to install and use duneproc without *dunerun*.
+Use with *dunerun* is now recommended and is documented in [tutoria01](./tutorial01.md).
 
 ## Setting up
 
