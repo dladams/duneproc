@@ -5,9 +5,16 @@
 David Adams   
 March 2022  
   
-This is a tutuorial on using duneproc and other analysis packages from David Adams.  
+This is a tutuorial on using *duneproc* and other analysis packages from David Adams.  
 For more information on getting started with DUNE computing, see
-https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial
+https://wiki.dunescience.org/wiki/DUNE_Computing/Getting_Started_Tutorial.
+
+This document assumes use of [*dunerun*](https://github.com/dladams/dunerun).
+To work without *dunerun* (not recommended), see the [old version](tutorial01-old.md)
+of this tutorial. *Dunerun* facilitates using an environment that includes DUNE
+software release along with additional ups and dunerun-compliant packages such
+*duneproc*.
+
 
 ## Setting up
 
