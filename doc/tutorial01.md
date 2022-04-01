@@ -15,6 +15,26 @@ of this tutorial. *Dunerun* facilitates using an environment that includes DUNE
 software release along with additional ups and dunerun-compliant packages such
 *duneproc*.
 
+## Installation
+
+First install [*dunerun*](https://github.com/dladams/dunerun) specifying the dunesw release. Here we denote the base installation directory \<install-dir> and assume package-specific installation. Set up *dunerun* and the clone and install duneproc as follows:
+<pre>
+> cd &lt;pkgdir>
+> source &gt;install-dir>/dunerun/setup.sh
+> git clone https://github.com/dladams/duneproc.git
+> duneproc/build
+</pre>
+Here \<pkgdir> is a source installation dir which can be removed after installation and the set up defines the env needed for the build command.
+
+  Next move to a working directory and use dune-run to open a shell where *dunesw* and *duneproc* are set up:
+<pre>
+> mkdir &lt;workdir>
+> cd &lt;workdir>
+> dune-run -e dunesw,duneproc shell
+...
+</pre>
+
+# *********** More to come *************
 
 ## Setting up
 
