@@ -1,9 +1,7 @@
 # duneproc tutorial01
 
-# ************ This document is under development ***********
-
 David Adams   
-March 2022  
+April 2022  
   
 This is a tutuorial on using *duneproc* and other analysis packages from David Adams.  
 For more information on getting started with DUNE computing, see
@@ -15,124 +13,67 @@ of this tutorial. *Dunerun* facilitates using an environment that includes DUNE
 software release along with additional ups and dunerun-compliant packages such
 *duneproc*.
 
+## Computing environment
+
+The DUNE software is on cvmfs and can be run on any SL7 machine (or SL7 virtual environment) where the DUNE cvmfs directories are mounted or the
+software has been otherwise installed.
+Users with DUNE FNAL accounts can use the dunegpvm machines, e.g.
+<pre>
+ssh -Y -K dunegpvm05.fnal.gov
+</pre>
+where 05 can be replaced with any of {01, 02, ..., 15}.
+
+An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal session.
+The [dunedata notebook](https://github.com/dladams/dunerun/blob/master/ipynb/dunedata.ipynb) runs an equivalent to this tutorial in python.
+
 ## Installation
 
-First install [*dunerun*](https://github.com/dladams/dunerun) specifying the dunesw release. Here we denote the base installation directory \<install-dir> and assume package-specific installation. Set up *dunerun* and the clone and install duneproc as follows:
+First install [*dunerun*](https://github.com/dladams/dunerun) specifying the dunesw release.
+Here we denote the base installation directory \<install-dir> and assume package-specific installation.
+Set up *dunerun* and the clone and install duneproc as follows:
 <pre>
-> cd &lt;pkgdir>
-> source &gt;install-dir>/dunerun/setup.sh
-> git clone https://github.com/dladams/duneproc.git
-> duneproc/build
+cd &lt;pkgdir>
+source &lt;install-dir>/dunerun/setup.sh
+git clone https://github.com/dladams/duneproc.git
+duneproc/build
 </pre>
 Here \<pkgdir> is a source installation dir which can be removed after installation and the set up defines the env needed for the build command.
 
-  Next move to a working directory and use dune-run to open a shell where *dunesw* and *duneproc* are set up:
-<pre>
-> mkdir &lt;workdir>
-> cd &lt;workdir>
-> dune-run -e dunesw,duneproc shell
-...
-</pre>
-
-# *********** More to come *************
+An alternative on dunegpvm is to use my installation area `/home/dladams/proc/install/dev01` but then you are stuck with whatever DUNE version and
+local modifications I am using that day.
+The FNAL Jupyter service does not provide access to this filesystem or those of any other users and you will have to install *dunerun* and *duneproc*
+as discussed above.
+The DUNE software is av available on cvmfs.
 
 ## Setting up
 
-Log in and create a new directory.
+To set up to use *duneproc* in a subsequent session, repeat the *dunerun* set up and then use the *dune-run* command to open a shell in that environment:
 <pre>
-ssh -Y -K dunegpvm05.fnal.gov
-mkdir /dune/data/users/$USER/proc/tutorial
-cd /dune/data/users/$USER/proc/tutorial
+mkdir &lt;workdir>
+cd &lt;workdir>
+source &lt;install-dir>/dunerun/setup.sh
+dune-run -e dunesw,duneproc shell
+...
 </pre>
-Note that 05 in the node name can be replaces with any value in the sequence (00, 01, ..., 15). The directories shown here are the ones I use on dunegpvm. Choose any location you wish.
+It is also to run a command without opening the shell by replacing *shell* with that command. And it is possible to run a command or open the shell
+from the python command line withthe class *dunerun.DuneRun*.
+See the [*dunerun*](https://github.com/dladams/dunerun) documentation for details on those options.
 
-An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal session.
+## Grid certificate
 
-Set up a release of dunesw, e.g. if cvmfs is available:
-<pre>
-source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-setup dunesw v09_42_00_02 -q e20:prof
-</pre>
-Replace the version and options with current ones. To list all:
-<pre>
-ups list -aK+ dunesw
-</pre>
-If using a local build, additionally set up that build area, e.g.
-<pre>
-source /home/dladams/proc/build/dev01/workdir/localProducts_dunesw_v09_42_00_02_e20_prof/setup
-mrbslp
-</pre>
-If the local build has been done with [dune-dev](https://github.com/dladams/dune-dev),
-the the above two blocks can be replaced with the dune shell command. E.g. to use my
-standard private (and perhaps newer and better) dunetpc build on dunegpvm:
-<pre>
-source ~dladams/proc/build/dev01/dunesetup.sh 
-dune shell
-</pre>
-
-Get kerberos and grid certificates.  
-The latter is needed for xrootd file access.
+A grid ceritificate (and authorization) is required to access the DUNE data files and explore their metadata with sam.
+One option (the only available at present?) it to obtain a kerberos-based VOMS proxy as follows:
 <pre>
 kinit    # Not needed if you already have a kerberos ticket
 kx509 --minhours 12
 voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 </pre>
 
-To check you have set up a release and see some of the available commands:
-<pre>
-duneHelp
-</pre>
+The command `voms-proxy-info` can be used to check the proxy exists and is not expired (timeleft > 0).
 
-## Installing this package.
-
-To install this package, choose and create a package directory and
-clone in that area:
-<pre>
-mkdir pkgs
-cd pkgs
-git clone https://github.com/dladams/duneproc
-cd ..
-</pre>
-Or, if you have already done this and want to update:
-<pre>
-cd pkgs/duneproc
-git pull
-cd ../..
-</pre>
-
-This and most of my other analysis packages contain a script build that
-builds and installs the package, i.e. complies and copies files to a
-user-specified installation directory.
-To use this script, the directories for building and installation must
-be specified and some build tools set up. For example (after setting up a dunesw release or build):
-<pre>
-export DUNE_BUILD_DIR=$HOME/tmp/build
-export DUNE_INSTALL_DIR=$HOME/proc/install
-setup cmake v3_22_0
-setup studio
-</pre>
-Note this environment is only required for building and installation
-and not for using the installalled software.
-
-After this, execute the build script in the package, e.g.
-<pre>
-./pkgs/duneproc/duneproc/build
-</pre>
-and the package will be installed at $DUNE_INSTALL_DIR/duneproc including
-a bash setup file setup.sh.
-
-Other of my analysis packages (dunenoise, dunececalib, ...) may be installed
-in the same way by replacing dunebuild with that package name in the above.
-
-## Using the installed package.
-
-To use the installed package source the installed setup file:
-<pre>
-source install/duneproc/setup.sh
-</pre>
-If starting from a fresh shell, first perform the dune setup described above. There is
-no need to do the build setup to use an installed package.
-This setup will apprpriately modify the executable, library, python and fcl paths.
+There is helper class to obtain the proxy in python.
+For information about that and examples showing how to find and access data files, see the
+[dunedata notebook](https://github.com/dladams/dunerun/blob/master/ipynb/dunedata.ipynb).
 
 ## Finding files
 
@@ -180,14 +121,10 @@ Many image files will be produced. On dunegpvm, they can be viewd with
 <pre>
 display adcraw_tpp3z_run005240_evt000007.png
 </pre>
-or if you are running from a jupyter notebook (or local interactive python), view with
+or, if you are running from a Jupyter notebook, view with
 <pre>
 from IPython.display import Image
 dir = '/home/dladams/proc/run01/tutorial/job02/'
 display(Image(filename=dir + 'adcraw_tpp3z_run005240_evt000007.png'))
 </pre>
-Connect to https://analytics-hub.fnal.gov and follow the above setup, installation and running instructions in a terminal to prepare plots to view in this manner.
-
-## Running in a notebook
-
-Using [dunerun](https://github.com/dladams/dunerun), it is also possible to run the lar command directly and view the reulting plots in the same Jupyter notebook. An example generating DQM plots may be found in this package at [dqm.ipynb](../ipynb/dqm.ipynb).
+or use the file browser (left pane) to locate and open the file.
