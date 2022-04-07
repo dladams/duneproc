@@ -58,28 +58,28 @@ DOINSTALL=
 for ARG in $ARGS; do
   if [ "$ARG" = help ]; then
     echo Usage: $0 OPT
-    echo "          cmake - runs cmake to generate build area"
-    echo "           make - runs make in the build area to compile, etc."
-    echo "        install - install from the build area"
-    echo "  all [default] - runs cmake, make and install"
-    echo "   cleaninstall - removes the installation area"
-    echo "      cleanmake - removes the build area"
-    echo "          clean - removes both"
+    echo "                     cmake - runs cmake to generate build area"
+    echo "                      make - runs make in the build area to compile, etc."
+    echo "               installonly - install from the build area"
+    echo "  install or all [default] - runs cmake, make and install"
+    echo "              cleaninstall - removes the installation area"
+    echo "                 cleanmake - removes the build area"
+    echo "           remove or clean - removes both"
     exit 0
   elif [ "$ARG" = cleaninstall ]; then
     DOCLEANINSTALL=true
   elif [ "$ARG" = cleanmake ]; then
     DOCLEANBUILD=true
-  elif [ "$ARG" = clean ]; then
+  elif [ "$ARG" = clean -o "$ARG" = remove ]; then
     DOCLEANBUILD=true
     DOCLEANINSTALL=true
   elif [ $ARG = cmake ]; then
     DOCMAKE=true
   elif [ $ARG = make ]; then
     DOBUILD=true
-  elif [ $ARG = install ]; then
+  elif [ $ARG = installonly ]; then
     DOINSTALL=true
-  elif [ $ARG = all ]; then
+  elif [ $ARG = all -o $ARG = install ]; then
     DOCMAKE=true
     DOBUILD=true
     DOINSTALL=true

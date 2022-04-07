@@ -3,6 +3,7 @@
 # Install shell scripts.
 install(PROGRAMS
   duneprocHelp
+  duneprocVersion
   duneproc
   getGridProxy
   formatInt
