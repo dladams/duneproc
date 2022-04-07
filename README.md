@@ -19,8 +19,10 @@ buid and set up this package.
 This package provides many fcl configuration files including the he top-level
 *run_dataprep.fcl* which runs the event and trigger filters and dataprep configured
 to read protoDUNE (I) data by APA.
-Alone, it does not run any tools but these may be added in the usual fashion, e.g. by adding  
-`services.RawDigitPrepService.AdcChannelToolNames: @local::protodune_dataprep_tools_calib_noiserem`  
+Alone, it does not run any tools but these may be added in the usual fashion, e.g. by adding
+<pre>
+services.RawDigitPrepService.AdcChannelToolNames: @local::protodune_dataprep_tools_calib_noiserem
+</pre>
 to `local.fcl` in the job submission directory.
 This runs the standard processing up to the point where the ROIs and energy calibration
 are dropped in preparation for wirecell processing.
