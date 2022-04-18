@@ -1,7 +1,7 @@
 # duneproc
 
 David Adams  
-March 2022
+April 2022
 
 Package to facilitate the running of DUNE `lar` jobs with `dunesw` (formerly `dunetpc`).
 
