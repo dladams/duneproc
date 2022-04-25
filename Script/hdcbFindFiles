@@ -11,7 +11,7 @@ OUTDIR=$2
 MAXFILE=${3:-0}
 
 DEFDIR=$HOME/data/dune/datasets/hdcb
-if [ -z "$RUNPAT" ]; then
+if [ -z "$RUNPAT" -o "$RUNPAT" = "-h" ]; then
   echo Usage: $0 RUNPAT DIR
   echo "  RUNPAT is run number or RUN_FFFF where FFFF is the file index."
   echo "  DIR is the directory to write the file list."
