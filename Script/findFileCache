@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# findFileCache
+#
+# Find a file in a DUNE file cache, i.e. any directory in
+# $DUNEPROC_CACHE_PATH.
+
+INPATH=$1
+DBG=${2:-0}
+
+# Strip off leading xroot:, etc.
+INPATH=$(echo $INPATH | sed 's/*://g')
+
+# Get file basename.
+FNAM=$(basename $INPATH)
+
+if [ -z "$DUNEPROC_CACHE_PATH" ]; then
+  DUNEPROC_CACHE_PATH=$HOME/data/dune/eventdata
+fi
+
+if [ $DBG -ge 1 ]; then
+  echo Searching for $FNAM on $DUNEPROC_CACHE_PATH >&2
+fi 
+
+# Return the the first instance on the path.
+echo "$DUNEPROC_CACHE_PATH:" | while read -d: DIR; do
+  FPATH=$DIR/$FNAM
+  if [ $DBG -ge 2 ]; then
+    echo Checking $FPATH >&2
+  fi
+  if [ -r $FPATH ]; then
+    echo $FPATH
+    exit 0
+  fi
+done
+
+if [ $DBG -ge 1 ]; then
+  echo Did not find $FNAM on $DUNEPROC_CACHE_PATH >&2
+fi 
+
+exit 1

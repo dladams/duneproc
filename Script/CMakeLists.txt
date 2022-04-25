@@ -14,6 +14,7 @@ install(PROGRAMS
   savedqm3
   findFilePnfs
   findFileXroot
+  findFileCache
   ibFindFiles
   ibGroupRuns
   ibStageFiles
