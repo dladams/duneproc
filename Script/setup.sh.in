@@ -8,5 +8,5 @@ if [ -n "$DUNESW_DIR" ]; then
   LD_LIBRARY_PATH=$INSDIR/lib:$LD_LIBRARY_PATH
   #CET_PLUGIN_PATH=$INSDIR/lib:$CET_PLUGIN_PATH
 else
-  echo First setup dunesw.
+  echo ${PROJECT_NAME} setup: ERROR: dunesw is not set up.
 fi
