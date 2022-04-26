@@ -31,6 +31,9 @@ if [ "$1" = "-H" ]; then
   echo "       FLAG=valout to run with valgrind logged to valgrind.out"
   echo "       FLAG=valgdb to run to memcheck error and then wait for gdb"
   echo "       FLAG=valstop to stop at first memcheck error"
+  echo "       FLAG=cache to check cache for event data files"
+  echo "       FLAG=xrootd to use xrootd if event data file not in cache"
+  echo "       FLAG=noxrootd to use pnfs if event data file not in cache"
   echo
   echo Runs a lar job in a dedicated directory.
   echo
@@ -446,6 +449,7 @@ if [ -n "$4" -a "$4" != "." ]; then
   fi
 fi
 USEXROOTD=true
+USEXCACHE=false
 for ARG in $EXTRAS $5 $6; do
   if   [ $ARG = clean ]; then CLEAN=true
   elif [ $ARG = retry ]; then RETRY=true
@@ -455,6 +459,7 @@ for ARG in $EXTRAS $5 $6; do
   elif [ $ARG = valgdb ]; then VALOPT=valgdb
   elif [ $ARG = valstop ]; then VALOPT=valstop
   elif [ $ARG = xrootd ]; then USEXROOTD=true
+  elif [ $ARG = cache ]; then USECACHE=true
   elif [ $ARG = noxrootd ]; then USEXROOTD=
   else
     echo "Invalid flag: $ARG"
@@ -553,10 +558,16 @@ touch $INFILELIST
 if [ -r "$RAWINFILELIST" ]; then
   echo Taking input files from $RAWINFILELIST
   for BASE in `cat $RAWINFILELIST`; do
-    if [ -n "$USEXROOTD" ]; then
+    INFILE=
+    if [ -n "$USECACHE" ]; then
       INFILE=$(findFileXroot $BASE)
-    else
-      INFILE=$(findFilePnfs $BASE)
+    fi
+    if [ -z "$INFILE" ]; then
+      if [ -n "$USEXROOTD" ]; then
+        INFILE=$(findFileXroot $BASE)
+      else
+        INFILE=$(findFilePnfs $BASE)
+      fi
     fi
     if [ -n "$INFILE" ]; then
       echo $INFILE >>$INFILELIST
