@@ -1,4 +1,4 @@
-# duneproc tutorial01
+# duneproc tutorial01: Running DQM for one event
 
 David Adams   
 April 2022  
@@ -24,9 +24,8 @@ ssh -Y -K dunegpvm05.fnal.gov
 where 05 can be replaced with any of {01, 02, ..., 15}.
 
 An alternative to dunegpvm is to connect to a Jupyter service at FNAL (<https://analytics-hub.fnal.gov>) or elsewhere and open a terminal session.
-The [dunedata notebook](https://github.com/dladams/dunerun/blob/master/ipynb/dunedata.ipynb) runs an equivalent to this tutorial in python.
-
-## Installation
+The [dqm](https://github.com/dladams/duneproc/blob/master/ipynb/dqm.ipynb) and
+[dqmw](https://github.com/dladams/duneproc/blob/master/ipynb/dqmw.ipynb) notebooks provide python equivalents to this tutorial.
 
 First install [*dunerun*](https://github.com/dladams/dunerun) specifying the dunesw release.
 Here we denote the base installation directory \<install-dir> and assume package-specific installation.
