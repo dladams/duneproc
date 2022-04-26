@@ -6,6 +6,7 @@ install(PROGRAMS
   duneprocVersion
   duneproc
   getGridProxy
+  stageDuneDataset
   formatInt
   runjobs
   savedqmapa7

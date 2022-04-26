@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Stage a duneproc dataset.
+
+DSTNAM=$1
+
+if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" ]; then
+  echo Usage: $0 DSTNAM
+  echo "  where DSTNAM is a DUNE dataset, i.e. DSTNAM.txt is"
+  echo "  found somewhere below $HOME/data/dune/datasets"
+  exit 0
+fi
+
+# Find the dataset definition file.
+DSTDIR=$HOME/data/dune/datasets
+DSTFIL=$(find $DSTDIR -name $DSTNAM.txt)
+if [ -z "$DSTFIL" ]; then
+  echo Dataset not found: $DSTNAM
+  exit 1
+fi
+
+# Define log for the staging job.
+if [ ! -d $DSTDIR/logs ]; then mkdir $DSTDIR/logs; fi
+LOG=$DSTDIR/logs/stage_$DSTNAM.log
+if [ -r $LOG ]; then
+  echo It appears dataset is being or has been staged.
+  echo Remove $LOG to stage again.
+  exit 0
+fi
+
+# Make sure we have a proxy.
+dunerun-check-proxy
+echo
+
+# Create the sam query.
+FIRST=true
+QUERY="file_name in ("
+SEP=
+for FNAM in $(cat $DSTFIL); do
+  echo $FNAM
+  QUERY=${QUERY}${SEP}${FNAM}
+  SEP=", "
+done
+QUERY="${QUERY})"
+#echo $QUERY
+#samweb list-files $QUERY
+
+# Create sam dataset
+SDSNAM=${USER}_$DSTNAM
+samweb create-definition $SDSNAM "$QUERY"
+
+# Stage dataset
+echo "Staging dataset $SDSNAM" >>$LOG
+date >>$LOG
+echo >>$LOG
+nohup sh -c "samweb prestage-dataset --defname=$SDSNAM; echo; date; echo Done">>$LOG 2>&1 &
+sleep 2
+echo
+echo Log is $LOG
