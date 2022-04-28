@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Cache duneproc dataset.
+
+DSTNAM=$1
+CCHPATH=${DUNEPROC_CACHE_PATH:-$HOME/data/dune/eventdata}
+CCHDIR=$(echo $CCHPATH | sed 's/:*//g')
+DSTDIR=$HOME/data/dune/datasets
+
+if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" ]; then
+  echo Usage: $0 DSTNAM
+  echo "  Copies the files in duneproc dataset DSTNAM to $CCHDIR"
+  exit 0
+fi
+
+# Find the dataset definition file.
+DSTFIL=$(find $DSTDIR -name $DSTNAM.txt)
+if [ -z "$DSTFIL" ]; then
+  echo Dataset not found: $DSTNAM
+  exit 1
+fi
+
+# Make sure we have a proxy.
+dunerun-check-proxy
+echo
+
+# Create directory to hold files.
+CCFDIR=$CCHDIR/$DSTNAM
+if [ ! -d $CCFDIR ]; then
+  echo Creating directory $CCFDIR
+  if ! mkdir $CCFDIR; then exit 1; fi
+fi
+
+# Loop over files.
+for FNAM in $(cat $DSTFIL); do
+  FPTH=$CCFDIR/$FNAM
+  FPTHOLD=$(find $CCHDIR/. -name $FNAM 2>/dev/null)
+  if [ -r $FPTH ]; then
+    echo Touching $FPTH
+    touch $FPTH
+  elif [ -n "$FPTHOLD" ]; then
+    echo Linking $FPTH
+    link $FPTHOLD $FPTH
+  else
+    FNAMX=$(findFileXroot $FNAM)
+    if [ -n "$FNAMX" ]; then
+      echo Copying $FPTH
+      xrdcp $FNAMX $FPTH
+    else
+      echo "Unable to find $FNAM."
+    fi
+  fi
+done

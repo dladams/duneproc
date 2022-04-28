@@ -5,8 +5,16 @@
 # Find a file in a DUNE file cache, i.e. any directory in
 # $DUNEPROC_CACHE_PATH.
 
-INPATH=$1
+INPATH=${1:--h}
 DBG=${2:-0}
+CCHPATH=${DUNEPROC_CACHE_PATH:-$HOME/data/dune/eventdata}
+
+if [ $INPATH = -h ]; then
+  echo Usage: $0: INPATH [DBG]
+  echo "  Searches for the base of INPATH in"
+  echo "    $CCHPATH"
+  exit 0
+fi
 
 # Strip off leading xroot:, etc.
 INPATH=$(echo $INPATH | sed 's/*://g')
@@ -14,28 +22,24 @@ INPATH=$(echo $INPATH | sed 's/*://g')
 # Get file basename.
 FNAM=$(basename $INPATH)
 
-if [ -z "$DUNEPROC_CACHE_PATH" ]; then
-  DUNEPROC_CACHE_PATH=$HOME/data/dune/eventdata
-fi
-
 if [ $DBG -ge 1 ]; then
-  echo Searching for $FNAM on $DUNEPROC_CACHE_PATH >&2
+  echo Searching for $FNAM on $CCHPATH >&2
 fi 
 
 # Return the the first instance on the path.
-echo "$DUNEPROC_CACHE_PATH:" | while read -d: DIR; do
-  FPATH=$DIR/$FNAM
+echo "$CCHPATH:" | while read -d: DIR; do
   if [ $DBG -ge 2 ]; then
-    echo Checking $FPATH >&2
+    echo Checking $DIR >&2
   fi
-  if [ -r $FPATH ]; then
+  FPATH= $(find $DIR -name $FNAM 2>/dev/null)
+  if [ -n "$FPATH" ]; then
     echo $FPATH
     exit 0
   fi
 done
 
 if [ $DBG -ge 1 ]; then
-  echo Did not find $FNAM on $DUNEPROC_CACHE_PATH >&2
+  echo Did not find $FNAM on $CCHPATH >&2
 fi 
 
 exit 1

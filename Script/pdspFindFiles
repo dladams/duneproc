@@ -1,0 +1,110 @@
+#!/bin/bash
+#
+# pdspFindFiles
+#
+# David Adams
+# April 2022
+#
+# Build a duneproc raw dataset for an event range [EV1, EV2) in protoDUNE run RUN.
+
+RUN=$1
+EV1=$2
+EV2=$3
+NEV=${4:-0}
+MAXFILE=0
+
+if [ -z "$EV2" -o "$RUN" = "-h" ]; then
+  echo Usage: $0 RUN EV1 EV2
+  echo "Generates the list of files containing events in range [EV1, EV2) for run RUN"
+  exit 0
+fi
+
+if [ $NEV -gt 0 ]; then
+  echo "Building multiple file lists for run $RUN with event count $NEV for [$EV1, $EV2)"
+  EVA=$EV1
+  COUNT=0
+  LINE="----------------------------------------------------------------------------"
+  echo
+  echo $LINE
+  echo
+  while true; do
+    EVB=$(( $EVA + $NEV ))
+    if [ $EV2 -gt 0 -a $EVB -gt $EV2 ]; then break; fi
+    $0 $RUN $EVA $EVB 0 $MAXFILE
+    EVA=$EVB
+    COUNT=$(( $COUNT + 1 ))
+    echo
+    echo $LINE
+    echo
+  done
+  echo
+  echo File list count for run $RUN is $COUNT
+  exit 0
+fi
+
+echo "Building file list for run $RUN events [$EV1, $EV2)"
+
+if ! type samweb 2>&1 >/dev/null; then
+  echo Cannot find samweb. Set up dunetpc.
+  exit 1
+fi
+
+# Pad numbers with zeros.
+FRUN=$RUN
+while [ ${#FRUN} -lt 6 ]; do FRUN=0$FRUN; done
+FEV1=$EV1
+while [ ${#FEV1} -lt 6 ]; do FEV1=0$FEV1; done
+FEV2=$EV2
+while [ ${#FEV2} -lt 6 ]; do FEV2=0$FEV2; done
+
+# Find sorted list of matching files in sam.
+QUERY="data_tier raw and DUNE_data.is_fake_data 0 and run_number $RUN and last_event >= $EV1"
+if [ $EV2 -gt 0 ]; then
+  QUERY="$QUERY and first_event < $EV2"
+fi
+echo Making file query: $QUERY
+NAMES=`samweb list-files "$QUERY" | sed 's/_dl/|/g' | sort | sort -t'|' -k1,1 -k2,2n | sed 's/|/_dl/g'`
+RAWCOUNT=0
+for NAME in $NAMES; do
+  ((++RAWCOUNT))
+done
+if [ $RAWCOUNT -eq 0 ]; then
+  echo No files found.
+  exit 2
+fi
+echo Raw file count: $RAWCOUNT
+
+DSTDIR=$HOME/data/dune/datasets/pdsp
+if [ ! -d $DSTDIR ]; then
+  echo Dataset base directory not found: $DSTDIR
+  exit 1
+fi
+DSTDIR=$DSTDIR/run$FRUN
+if [ ! -r $DSTDIR ]; then mkdir $DSTDIR; fi
+DSTNAM=pdsp_run${FRUN}_evts${FEV1}-${FEV2}
+DSTFIL=$DSTDIR/$DSTNAM.txt
+if [ -r $DSTFIL ]; then
+  echo Dataset file list already exists.
+else
+  rm -f $DSTFIL
+  touch $DSTFIL
+  COUNT=0
+  for NAME in $NAMES; do
+    echo "  $NAME"
+    COUNT=$(($COUNT+1))
+    if [ $MAXFILE -gt 0 -a $COUNT -ge $MAXFILE ]; then
+      echo Stopping at $COUNT files
+      break
+    fi
+    echo $NAME >>$DSTFIL
+  done
+fi
+   
+echo
+echo "Dataset name: $DSTNAM"
+echo "Dataset file: $DSTFIL"
+NFILE=`wc -l $DSTFIL | sed 's/ .*//g'`
+echo
+echo "   Raw file count: $RAWCOUNT"
+echo "   # files listed: $NFILE"
+echo

@@ -7,6 +7,7 @@ install(PROGRAMS
   duneproc
   getGridProxy
   stageDuneDataset
+  cacheDuneDataset
   formatInt
   runjobs
   savedqmapa7
@@ -31,6 +32,8 @@ install(PROGRAMS
   pdspDataStream
   pdspStartTime
   pdspWibCount
+  pdspFindFiles
+  pdspEventFileList
   vdbcbFindFiles
   hdcbFindFiles
 DESTINATION bin)
