@@ -26,7 +26,8 @@ elif [ $OPT = general ]; then
   echo "findFileXroot - Find an event data file in xrootd."
   echo "findFilePnfs - Find an event data file in dcache."
   echo "findFileCache - Find a file in local file cache DUNEPROC_CACHE_PATH."
-  echo "stageDuneDataset - Stage a dataset (copy files to disk)."
+  echo "stageDuneDataset - Stage a dataset (copy files to dcache disk)."
+  echo "cacheDuneDataset - Cache a dataset (copy files to local disk)."
 elif [ $OPT = pdsp ]; then
   echo "pdspRunFileCount - Returns the # raw data files for PDSP run."
   echo "pdspRunLfn - Returns one raw data LFN for a PDSP run."
