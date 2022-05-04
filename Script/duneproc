@@ -560,7 +560,7 @@ if [ -r "$RAWINFILELIST" ]; then
   for BASE in `cat $RAWINFILELIST`; do
     INFILE=
     if [ -n "$USECACHE" ]; then
-      INFILE=$(findFileXroot $BASE)
+      INFILE=$(findFileCache $BASE)
     fi
     if [ -z "$INFILE" ]; then
       if [ -n "$USEXROOTD" ]; then

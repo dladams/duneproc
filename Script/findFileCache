@@ -31,7 +31,7 @@ echo "$CCHPATH:" | while read -d: DIR; do
   if [ $DBG -ge 2 ]; then
     echo Checking $DIR >&2
   fi
-  FPATH= $(find $DIR -name $FNAM 2>/dev/null)
+  FPATH=$(find ${DIR}/ -name $FNAM 2>/dev/null)
   if [ -n "$FPATH" ]; then
     echo $FPATH
     exit 0
