@@ -1,9 +1,11 @@
 # duneproc
 
 David Adams  
-April 2022
+May 2022
 
 Package to facilitate the running of DUNE `lar` jobs with `dunesw` (formerly `dunetpc`).
+
+This package follows the [dunerun build convention](./build_convention.md).
 
 ## Installation
 To install this package, first install [*dunerun*](https://github.com/dladams/dunerun) specifying the dunesw release.
