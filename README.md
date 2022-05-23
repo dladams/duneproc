@@ -13,7 +13,7 @@ Then set up *dunerun* and the clone and install duneproc as follows:
 cd &lt;pkgdir>
 source &lt;install-dir>/dunerun/setup.sh
 git clone https://github.com/dladams/duneproc.git
-dune-run -e dunebuild ./build
+dune-run -e dunebuild duneproc/build
 </pre>
 Here \<pkgdir> is a source installation dir which can be removed after installation and the set up defines the env needed for the build command.
 
