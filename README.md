@@ -32,7 +32,7 @@ duneproc>
 After set up, use the help command to check for success and see what commans are available:
 <pre>
 duneproc> duneprocHelp
-/home/dladams/proc/install/v09_46_00_00/duneproc/bin/duneprocHelp OPT
+Usage: /home/dladams/proc/install/v09_46_00_00/duneproc/bin/duneprocHelp OPT
   OPT = general for general commands
   OPT = pdsp for protoDUNE commands
   OPT = ib for Iceberg commands
