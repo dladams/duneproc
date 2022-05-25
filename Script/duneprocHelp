@@ -12,6 +12,7 @@ if [ -z "$OPT" ]; then
   echo "  OPT = ibex fpr Iceberg examples"
   echo "  OPT = ibex fpr Iceberg examples"
   echo "  OPT = hdcb fpr 2021 HD coldbox commands"
+  echo "  OPT = vdcb fpr 2021-22 VD coldbox commands"
   if [ -r README.txt ]; then
     echo "  OPT = local for local help (README.txt)"
   fi
@@ -76,7 +77,10 @@ elif [ $OPT = ibex ]; then
   echo "  root> drawSigstren(adcrois, \"channel>=800&&status==0&&hmax>1.3\")"
 elif [ $OPT = hdcb ]; then
   echo "2021 CERN HD coldbox commands:"
-  echo "  hdcbFindFiles - Find event data files for the run"
+  echo "  hdcbFindFiles - Find event data files for a run"
+elif [ $OPT = vdcb ]; then
+  echo "2021-22 CERN VD coldbox commands:"
+  echo "  vdbcbFindFiles - Find event data files for a run"
 else
   echo Invalid option: $OPT
 fi
