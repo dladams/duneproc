@@ -10,7 +10,6 @@ if [ -z "$OPT" ]; then
   echo "  OPT = pdsp for protoDUNE commands"
   echo "  OPT = ib for Iceberg commands"
   echo "  OPT = ibex fpr Iceberg examples"
-  echo "  OPT = ibex fpr Iceberg examples"
   echo "  OPT = hdcb fpr 2021 HD coldbox commands"
   echo "  OPT = vdcb fpr 2021-22 VD coldbox commands"
   if [ -r README.txt ]; then
