@@ -193,7 +193,7 @@ over the events.
 
 #### Reco
 
-9. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+9. ***NOT WORKING June 2022*** Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
 <pre>
 > duneproc reco_dataprep mydst 1  
 > display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
@@ -209,7 +209,7 @@ ADC counts (instead of ke) and bad channels zeroed.
 
 #### Dataprep
 
-11. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
+11. ***NOT WORKING June 2022*** Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 <pre>
 > duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
@@ -226,7 +226,7 @@ Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.
 
 The results with the wirecell option should be the same as for reco above.
 
-12. Produce ROI plots for the same dataprep for FEMB 302u using an ROI finder with threshold 0.5 ke.
+12. ***NOT WORKING June 2022*** Produce ROI plots for the same dataprep for FEMB 302u using an ROI finder with threshold 0.5 ke.
 <pre>
 > duneproc run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer mydst 5
 > display run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer/mydst_proc000005/roi_chan000459_000.png
