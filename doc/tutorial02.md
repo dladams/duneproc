@@ -201,11 +201,12 @@ over the events.
 Note the output here is that expected for wirecell processing: scaled to be in approximate
 ADC counts (instead of ke) and bad channels zeroed.
 
-10. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
+10. ***NOT WORKING June 2022*** Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 <pre>
 > duneproc reco_dataprep_sim mysimdst 1  
 > display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
 </pre>
+Before running this, create dataset [mysimdst](mysimdst.txt) as was done above for mydst.
 
 #### Dataprep
 
