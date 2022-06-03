@@ -19,7 +19,7 @@ script that builds the top-level fcl and processes all files in a provided list 
 The syntax is:
 
 <pre>
-> duneproc FCL DST NPROC NSKIP OPTS
+duneproc FCL DST NPROC NSKIP OPTS
 </pre>
 
 * FCL - Slash (/) separated list of fcl names
@@ -28,41 +28,54 @@ The syntax is:
 * NSKIP - Number of events to skip. Default of 0 means none.
 * OPTS - Other options. See help. Non-integer NPROC or NSKIP are added to OPTS.
 
-The value "." can be used for for NPROC or NSKIP to force use of the default.
+The job is run is subdirectory FCL/DST of the submission directory.
+Any referenced fcl files (\*.fcl) that are present in the submission
+directory are copied to the run directory.
 
-The first argument is a sequence of fclnames and the top-level fcl
-file includes each of these extended with the fcl extension:
-E.g. for FCL = fcl1/fcl2/fcl3:
+The first argument is a slash-separated sequence of fcl names and the top-level fcl
+constructed to run the job includes each of these with the .fcl extension.
+E.g. for command
 
 <pre>
-> #include "fcl1.fcl"  
-> #include "fcl2.fcl"  
-> #include "fcl3.fcl" 
+duneproc fcl0/fcl1/fcl2 mydst
 </pre>
 
-In addition, the files extra.fcl, local.fcl and dbg.fcl are also included if
-present in the submission directory.
-The first is inserted in the second position so it can provide parameters
-to the following files.
-The other two appear at the end where they can can override earlier definitions.
-E.g., if all three were present
+the run subdirectory is fcl0/fcl1/fcl2/mydst and the top-level fcl (run.fcl in the run directory) is:
 
 <pre>
-> #include "fcl1.fcl"  
-> #include "extra.fcl"  
-> #include "fcl2.fcl"  
-> #include "fcl3.fcl"  
-> #include "local.fcl"  
-> #include "dbg.fcl"
+#include "fcl0.fcl"  
+#include "fcl1.fcl"  
+#include "fcl2.fcl" 
+</pre>
+
+Additional fcl names appended to the dataset specifier are included in the same way
+but appear after the dataset name in the directory name.
+I addition, the files local.fcl and dbg.fcl are appended if present in the submission directory.
+E.g. for command
+
+<pre>
+duneproc fcl0/fcl1/fcl2 mydst/fcld
+</pre>
+
+with local.fcl and dbg.fcl existing, the run subdirectory is fcl0/fcl1/fcl2/mydst/fcld
+and the top-level fcl is
+
+<pre>
+#include "fcl0.fcl"
+#include "fcl1.fcl"
+#include "fcl2.fcl"
+#include "fcld.fcl"
+#include "local.fcl"
+#include "dbg.fcl"
 </pre>
 
 If present, the fcl files are taken from the usual fcl search path including
 directories from this package, dunetpc and larsoft.
-If the file is not on the path, duneproc will construct the fcl if it corresponds
+If the file is not found, duneproc will construct the fcl if it corresponds
 to a known pattern as described in the extended help:
 
 <pre>
-> duneproc -H
+duneproc -H
 </pre>
 
 Assumptions about the presence and naming of modules and tools are made in the construction
@@ -82,8 +95,9 @@ The file lists are expected to be one file name per line and the name may be
 just the base name (LFN) or may include a full pnfs path or xrootd URL.
 In the latter cases, a call to samweb may be avoided at job startup.
 
-The job directory is constructed from the first two options: ./FCL/DST with
-additional subdirectories if NPROC or NSKIP are set.
+The run directory is constructed from the first two options as described above.
+If NPROC or NSKIP are set, additional subdirectories are created.
+Other options do not change the directory name.
 
 ### Examples
 
@@ -91,14 +105,14 @@ Some examples demonstrating use of duneproc fcl files and patterns follow.
 Either copy the example [here](mydst.txt):
 
 <pre>
-> cp $DUNEPROC_DIR/doc/mydst.txt ~/data/dune/datasets
+cp $DUNEPROC_DIR/doc/mydst.txt ~/data/dune/datasets
 </pre>
 
 or create your own file list at that location.
 
 0. Stage the dataset, i.e. make sure copies of of the files reside on disk:
 <pre>
-> stageDuneDataset mydst
+stageDuneDataset mydst
 </pre>
 This will submit a job to stage the files and return the name of a log file that
 you can follow (e.g. tail -f) to monitor progress.
@@ -113,7 +127,7 @@ In the lattter case, you may be prompted for a password.
 
 1. To run dataprep (no tools) for the first event (not event number 1) in the dataset:
 <pre>
-> duneproc run_dataprep mydst 1
+duneproc run_dataprep mydst 1
 </pre>
 You will find the name of the run directory (here run_dataprep/mydst_proc000001)
 near the end of the output on the screen.
@@ -122,19 +136,19 @@ and the second is the name of the dataset.
 
 2. The same using pnfs instead of xrootd to access the input files:
 <pre>
-> duneproc run_dataprep mydst 1 clean  
-> duneproc run_dataprep mydst 1 noxrootd
+duneproc run_dataprep mydst 1 clean  
+duneproc run_dataprep mydst 1 noxrootd
 </pre>
 Thie first command removes the old run directory.
 The second will fail if /pnfs is not mounted as is the case anywhere but dunegpvm.
 
 3. Dataprep with no tools for event number 1 (not the first in the dataset):
 <pre>
-> duneproc run_dataprep/event000001 mydst
+duneproc run_dataprep/event000001 mydst
 </pre>
 or
 <pre>
-> duneproc run_dataprep mydst/event000001
+duneproc run_dataprep mydst/event000001
 </pre>
 The results should be the same in either case but the directory naming is different.
 We see that a fcl base name (event000001) may be appended with a slash (/) to either the first or
@@ -148,9 +162,10 @@ duneproc -H
 
 4. Dataprep with no tools for events 1-5, APA 3 only:
 <pre>
-> duneproc run_dataprep/dpcr_apa3 mydst/event000001-000006
+duneproc run_dataprep/dpcr_apa3 mydst/event000001-000006
 </pre>
 This shows how to select both an APA (more generally a named detector region) and a range of events.
+For some of the available region names, see the command *pdChannelRange*.
 I follow my usual convention of appending all but event selection to the first argument.
 
 #### Data quality plots
@@ -158,8 +173,8 @@ I follow my usual convention of appending all but event selection to the first a
 5. DQM with wide display for event 1. This includes a channel-tick
 display for each plane and many metric vs. channel plots:
 <pre>
-> duneproc dqmw mydst/event000001  
-> display dqmw/mydst/event000001/adcraw_tpp0v_run008564_evt000001.png
+duneproc dqmw mydst/event000001  
+display dqmw/mydst/event000001/adcraw_tpp0v_run008564_evt000001.png
 </pre>
 The latter command works on dunegpvm. On a Jupyter servers, use the file browser to select
 and display that or any of the image files.
@@ -167,54 +182,54 @@ and display that or any of the image files.
 6. DQM3 for events 1-5. These produces metric vs. channel plots averages
 over the events.
 <pre>
-> duneproc dqm3 mydst/event000001-000005  
-> display dqm3/mydst/event000001-000005/chmet_pednoise_tps0_run008564.png
+duneproc dqm3 mydst/event000001-000005  
+display dqm3/mydst/event000001-000005/chmet_pednoise_tps0_run008564.png
 </pre>
 
 #### Waveforms
 
 7. Raw waveforms for ticks 3000-4000 in event 1 for the v-wires in FEMB 302.
 <pre>
-> duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
+duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst  
 > display wfRaw/event000001/dpcr_femb302v/wftick3000/runmydst/wfraw_run008564_evt000001_chan01536.png
 </pre>
 
 8. Mitigated waveforms for the same.
 <pre>
-> duneproc wfMit/event000001/dpcr_femb302v/wftick3000 mydst  
-> display wfMit/event000001/dpcr_femb302v/wftick3000/runmydst/wfprep_run008564_evt000001_chan01536.png
+duneproc wfMit/event000001/dpcr_femb302v/wftick3000 mydst  
+display wfMit/event000001/dpcr_femb302v/wftick3000/runmydst/wfprep_run008564_evt000001_chan01536.png
 </pre>
 
 8. Same with expanded ADC scale so we can see the full signal.
 <pre>
-> duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
-> display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png
+duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
+display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png
 </pre>
 
 #### Reco
 
-9. ***NOT WORKING June 2022*** Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+9. [***NOT WORKING June 2022***] Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
 <pre>
-> duneproc reco_dataprep mydst 1  
-> display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
+duneproc reco_dataprep mydst 1  
+display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
 </pre>
 Note the output here is that expected for wirecell processing: scaled to be in approximate
 ADC counts (instead of ke) and bad channels zeroed.
 
-10. ***NOT WORKING June 2022*** Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
+10. [***NOT WORKING June 2022***] Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 <pre>
-> duneproc reco_dataprep_sim mysimdst 1  
-> display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
+duneproc reco_dataprep_sim mysimdst 1  
+display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
 </pre>
 Before running this, create dataset [mysimdst](mysimdst.txt) as was done above for mydst.
 
 #### Dataprep
 
-11. ***NOT WORKING June 2022*** Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
+11. [***NOT WORKING June 2022***] Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 <pre>
-> duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
-> display run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/adcprp_tpp0z_run008564_evt000001.png
+duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
+display run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/adcprp_tpp0z_run008564_evt000001.png
 </pre>
 
 Note that "calib_tail" in the FCL field can be swapped out for different stages in stages in reco including
@@ -227,11 +242,8 @@ Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.
 
 The results with the wirecell option should be the same as for reco above.
 
-12. ***NOT WORKING June 2022*** Produce ROI plots for the same dataprep for FEMB 302u using an ROI finder with threshold 0.5 ke.
+12. [***NOT WORKING June 2022***] Produce ROI plots for the same dataprep for FEMB 302u using an ROI finder with threshold 0.5 ke.
 <pre>
-> duneproc run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer mydst 5
-> display run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer/mydst_proc000005/roi_chan000459_000.png
+duneproc run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer mydst 5
+display run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer/mydst_proc000005/roi_chan000459_000.png
 </pre>
-
-
-
