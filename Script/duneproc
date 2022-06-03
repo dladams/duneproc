@@ -596,6 +596,7 @@ else
 fi
 
 # Insert EXTRAFCL 2nd in the fcl list so it can be overwritten.
+FCLFILE=run.fcl
 FIRST=true
 for NAME in `echo $FCLPATH | sed 's#/# #g'`; do
   if [ -r $SUBDIR/$NAME.fcl ]; then
@@ -607,10 +608,9 @@ for NAME in `echo $FCLPATH | sed 's#/# #g'`; do
     FIRST=
     if ! fcldump $NAME.fcl 2>&1 1>/dev/null; then 
       echo Primary FCL not found: $NAME.fcl
-      fclpath
       exit 2
     fi
-    echo "#include \"$NAME.fcl\"" >run.fcl
+    echo "#include \"$NAME.fcl\"" >$FCLFILE
     # If there is extra fcl, add it here so it can be overwritten.
     if [ -z "$EXTRAFCL" ]; then continue; fi
     NAME=$EXTRAFCL
@@ -621,7 +621,7 @@ for NAME in `echo $FCLPATH | sed 's#/# #g'`; do
       exit 2
     fi
   fi
-  echo "#include \"$NAME.fcl\"" >>run.fcl
+  echo "#include \"$NAME.fcl\"" >>$FCLFILE
 done
 # If the submit dir includes local.fcl or dbg.fcl, append
 # copy it to the run area. In the case of local.fcl, add
@@ -631,14 +631,11 @@ for FFILE in local dbg; do
   if [ -r $SUBFCL ]; then
     echo Copying $SUBFCL
     cp $SUBFCL .
-    if [ $FFILE = local ]; then
-      echo "#include \"local.fcl\"" >>run.fcl
-    fi
+    echo "#include \"$FFILE.fcl\"" >>$FCLFILE
   else
     echo Not found: $SUBFCL
   fi
 done
-FCLFILE=run.fcl
 
 FW_SEARCH_PATH="..:$FW_SEARCH_PATH"
 FHICL_FILE_PATH=".:$SUBDIR:$FHICL_FILE_PATH"

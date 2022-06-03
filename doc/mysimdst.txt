@@ -1,2 +1,2 @@
-/pnfs/dune/tape_backed/dunepro/physics/detector-simulated/2019/mc/out1/PDSPProd2/22/60/37/10/PDSPProd2_protoDUNE_sp_detsim_p1GeV_35ms_sce_datadriven_22603710_127_373eda75-9c10-48f7-bf6c-83cabc4d64b9.root
+PDSPProd2_protoDUNE_sp_detsim_p1GeV_35ms_sce_datadriven_22603710_127_373eda75-9c10-48f7-bf6c-83cabc4d64b9.root
 
