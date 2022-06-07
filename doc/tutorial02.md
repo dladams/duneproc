@@ -337,4 +337,5 @@ some variants of these are also created in the run directory and may be executed
 #### June 2022
 The examples above were run with dunesw v09_53_00d00, dunerun 1.17.0 and duneproc 2.3.6 and
 1-8 succeeded.
-A fcl fix was submitted to dunedataprep to fix example 9.
+
+A fcl fix was submitted to dunedataprep to fix example 9. See [dunedataprep issue 1](https://github.com/DUNE/dunedataprep/issues/1).
