@@ -211,7 +211,7 @@ display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run
 
 #### Reco
 
-9. [***NOT WORKING June 2022***] Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+9. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
 <pre>
 duneproc reco_dataprep mydst 1  
 display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
@@ -221,7 +221,7 @@ ADC counts (instead of ke) and bad channels zeroed.
 
 10. [***NOT WORKING June 2022***] Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 <pre>
-duneproc reco_dataprep_sim mysimdst 1  
+[duneproc reco_dataprep_sim mysimdst 1 ](https://github.com/DUNE/dunesw/wiki) 
 display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
 </pre>
 Before running this, create dataset [mysimdst](mysimdst.txt) as was done above for mydst.
