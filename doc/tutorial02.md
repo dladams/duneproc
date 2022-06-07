@@ -332,3 +332,9 @@ A dump of the fcl configuration (from *fcldump run.fcl 5*) is written to run.fcl
 To aid in memory and CPU time profiling, scripts *runval* and *runcallgrind*, respectively, and
 some variants of these are also created in the run directory and may be executed there.
 
+### Validation
+
+#### June 2022
+The examples above were run with dunesw v09_53_00d00, dunerun 1.17.0 and duneproc 2.3.6 and
+1-8 succeeded.
+A fcl fix was submitted to dunedataprep to fix example 9.
