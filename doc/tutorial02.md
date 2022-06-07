@@ -280,15 +280,18 @@ total 199
   
 #### Log files
   
-The log (stdout and stderr output) of the job appears on the screen and is recorded run.log for later analysis.
-Any warning or error statements repectively copied to warnings.log and errors.log.
-These are identified assuming the datprep convention of including the text "WARNING" or "ERROR".
+The log (stdout and stderr output) of the job appears on the screen and is recorded in run.log for later analysis.
+This is the first place to look where there are problems.
+Most dataprep tools include "ERROR" in error messages and "WARNING" in warning messages.
+Search for those to find problems.
+These statemnts are also repectively copied to errors.log and warnings.log.
   
- #### Re-runnning and debugging
+#### Re-runnning and debugging
   
 The script that runs the job is *run* in the run directory.
 To re-run, cd to the run directory and execute that script:
 <pre>
+cd &lt;<run-directory>
 duneproc> ./run
 </pre>
   
@@ -321,7 +324,11 @@ Note that we also issue the command "catch throw" so gdb will stop whereever an 
 
 #### Configuration
 The top-level fcl file (created by *duneproc*) is run.fcl in the run directory.
-Fcl files in the submission directory and any created autmatically (e.g. for event selection)
-may aslo be found in the run directory.
+Fcl files in the submission directory and any created auotmatically (e.g. for event selection)
+may also be found in the run directory.
 A dump of the fcl configuration (from *fcldump run.fcl 5*)is written to run.fcldump.
+
+#### Profiling
+To aid in memory and CPU time profiling, scripts *runval* and *runcallgrind*, respectively, and
+some variants of these are also created in the run directory and may be executed there.
 
