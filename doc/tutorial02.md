@@ -326,7 +326,7 @@ Note that we also issue the command "catch throw" so gdb will stop whereever an 
 The top-level fcl file (created by *duneproc*) is run.fcl in the run directory.
 Fcl files in the submission directory and any created auotmatically (e.g. for event selection)
 may also be found in the run directory.
-A dump of the fcl configuration (from *fcldump run.fcl 5*)is written to run.fcldump.
+A dump of the fcl configuration (from *fcldump run.fcl 5*) is written to run.fcldump.
 
 #### Profiling
 To aid in memory and CPU time profiling, scripts *runval* and *runcallgrind*, respectively, and
