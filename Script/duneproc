@@ -110,9 +110,9 @@ if [ "$1" = "-H" ]; then
 fi
 
 makeFcl() {
-  FCLNAME=$1
-  FCLFILE=$FCLNAME.fcl
-  DBG=0
+  local FCLNAME=$1
+  local FCLFILE=$FCLNAME.fcl
+  local DBG=0
   if  test $DBG -gt 0; then echo makeFcl: FCL file is $FCLFILE; fi
   if [ -r $FCLFILE ]; then
     echo makeFcl: File already exists: $FCLFILE
