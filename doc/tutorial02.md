@@ -14,9 +14,12 @@ and output format preferences (histogram/graph ranges, colors and styles).
 It is tedious and error-prone for users to create the top-level fcl files for each job
 and difficult to maintain the lower-level fcl files duplicated across jobs.
 
-In addition to providing some standard fcl configurations, this package provides the *duneproc*
+For this reason (in addition to providing some standard fcl configurations) this package provides the *duneproc*
 script that builds the top-level fcl and processes all files in a provided list of files.
-The syntax is:
+
+### Usage
+
+The syntax for teh *duneproc* command is:
 
 <pre>
 duneproc FCL DST NPROC NSKIP OPTS
@@ -208,7 +211,7 @@ display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run
 
 #### Reco
 
-9. [***NOT WORKING June 2022***] Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
+9. Run standard PDSP data reco, stop after dataprep, and create channel-tick displays.
 <pre>
 duneproc reco_dataprep mydst 1  
 display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
@@ -218,7 +221,7 @@ ADC counts (instead of ke) and bad channels zeroed.
 
 10. [***NOT WORKING June 2022***] Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 <pre>
-duneproc reco_dataprep_sim mysimdst 1  
+duneproc reco_dataprep_sim mysimdst 1
 display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
 </pre>
 Before running this, create dataset [mysimdst](mysimdst.txt) as was done above for mydst.
@@ -247,3 +250,92 @@ The results with the wirecell option should be the same as for reco above.
 duneproc run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer mydst 5
 display run_dataprep/dptools_calib_tail/dpcr_femb302u/roithresh0.5/addRoiViewer/mydst_proc000005/roi_chan000459_000.png
 </pre>
+
+### Debugging and performance analysis
+
+Considerable support is provide to help users debug and problems and analyze the performance for a job.
+Here is a listing of the directory produced by the reco example when it was not working:
+<pre>
+duneproc> l reco_dataprep/mydst_proc000001
+total 199
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 dbg.fcl
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 debugprod.log
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 errors.log
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 fcldumperr.txt
+  1 -rw-r--r--. 1 dladams fnalgrid    647 Jun  6 13:02 infiles.txt
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 local.fcl
+ 28 -rw-r--r--. 1 dladams fnalgrid  28672 Jun  6 13:02 mem.db
+  1 -rwxr-xr-x. 1 dladams fnalgrid     57 Jun  6 13:02 run
+  1 -rwxr-xr-x. 1 dladams fnalgrid    216 Jun  6 13:02 runcallgrind
+  1 -rwxr-xr-x. 1 dladams fnalgrid    256 Jun  6 13:02 runcallgrindToggled
+  1 -rw-r--r--. 1 dladams fnalgrid     69 Jun  6 13:02 run.fcl
+142 -rw-r--r--. 1 dladams fnalgrid 144880 Jun  6 13:02 run.fcldump
+ 24 -rw-r--r--. 1 dladams fnalgrid  24374 Jun  6 13:02 run.log
+  1 -rwxr-xr-x. 1 dladams fnalgrid    284 Jun  6 13:02 runval
+  1 -rwxr-xr-x. 1 dladams fnalgrid    299 Jun  6 13:02 runvalgdb
+  1 -rwxr-xr-x. 1 dladams fnalgrid    308 Jun  6 13:02 runvalout
+  1 -rwxr-xr-x. 1 dladams fnalgrid    329 Jun  6 13:02 runvalstop
+  0 -rw-r--r--. 1 dladams fnalgrid      0 Jun  6 13:02 warnings.log
+  </pre>
+  
+#### Log files
+  
+The log (stdout and stderr output) of the job appears on the screen and is recorded in run.log for later analysis.
+This is the first place to look where there are problems.
+Most dataprep tools include "ERROR" in error messages and "WARNING" in warning messages.
+Search for those to find problems.
+These statemnts are also repectively copied to errors.log and warnings.log.
+  
+#### Re-runnning and debugging
+  
+The script that runs the job is *run* in the run directory.
+To re-run, cd to the run directory and execute that script:
+<pre>
+cd &lt;<run-directory>
+duneproc> ./run
+</pre>
+  
+To rerun with the gdb debugger, display the run script and include arguments in the gdb run command; e.g.
+<pre>
+duneproc> cat ./run
+lar -c run.fcl -S infiles.txt -n 1 --nskip 0 --no-output  
+duneproc> gdb lar
+GNU gdb (GDB) 10.1
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from lar...
+(gdb) catch throw
+Catchpoint 1 (throw)
+(gdb) run -c run.fcl -S infiles.txt -n 1 --nskip 0 --no-output
+</pre>
+Note that we also issue the command "catch throw" so gdb will stop whereever an exception is raised.
+
+#### Configuration
+The top-level fcl file (created by *duneproc*) is run.fcl in the run directory.
+Fcl files in the submission directory and any created auotmatically (e.g. for event selection)
+may also be found in the run directory.
+A dump of the fcl configuration (from *fcldump run.fcl 5*) is written to run.fcldump.
+
+#### Profiling
+To aid in memory and CPU time profiling, scripts *runval* and *runcallgrind*, respectively, and
+some variants of these are also created in the run directory and may be executed there.
+
+### Validation
+
+#### June 2022
+The examples above were run with dunesw v09_53_00d00, dunerun 1.17.0 and duneproc 2.3.6 and
+1-8 succeeded.
+
+A fcl fix was submitted to dunedataprep to fix example 9. See [dunedataprep issue 1](https://github.com/DUNE/dunedataprep/issues/1).
