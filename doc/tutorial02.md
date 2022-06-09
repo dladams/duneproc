@@ -228,20 +228,25 @@ Before running this, create dataset [mysimdst](mysimdst.txt) as was done above f
 
 #### Dataprep
 
-11. [***NOT WORKING June 2022***] Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
+11. Run PDSP (protoDUNE single phase) dataprep through tail removal for event 1 plane 3z and create wide channel-tick displays
 using the high level-job configuration is specified in this package in [run_dataprep.fcl](../fcl/run_dataprep.fcl).
 <pre>
-duneproc run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep mydst  
-display run_dataprep/event000001/dptools_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/adcprp_tpp0z_run008564_evt000001.png
+duneproc run_dataprep/dpseq_pdsp_calib_tail/dpcr_apa3z/addChannelTickPrep mydst/event000001
+display run_dataprep/dpseq_pdsp_calib_tail/dpcr_apa3z/addChannelTickPrep/mydst/event000001/adcprp_tpp0z_run008564_evt000001.png 
 </pre>
 
-Note that "calib_tail" in the FCL field can be swapped out for different stages in stages in reco including
+The fcl sequence is straightforward:
+* dpseq_pdsp_calib_tail - Adds the pdsp calib_tail dataprep tool sequence
+* dpcr_apa3z - Selects only those channels belonging to the z-plane of APA 3
+* addChannelTickPrep - Add the tool that creates the event display
+
+Note that "calib_tail" in the tool sequence swapped out for different stages in stages in reco including
 * calib_only - Calibration but no mitigation, tail removal or noise removal.
 * calib_mit - Calibration and mitigation but no tail removal or noise removal.
 * calib_tail - Calibration, mitigation and tail removal but no noise removal.
 * calib_noiserem - Calibration, mitigation, tail removal and noise removal.
 * wirecell - Above plus switch back to approximate ADC scale and zeroing of bad channels.
-Add pdchtzmax50 or pdchtamax50 to put the plots on ADC scale.  
+Add pdchtzmax50 or pdchtamax50 to put the event display on ADC scale.  
 
 The results with the wirecell option should be the same as for reco above.
 
@@ -338,4 +343,4 @@ some variants of these are also created in the run directory and may be executed
 The examples above were run with dunesw v09_53_00d00, dunerun 1.17.0 and duneproc 2.3.6 and
 1-8 succeeded.
 
-A fcl fix was submitted to dunedataprep to fix example 9. See [dunedataprep issue 1](https://github.com/DUNE/dunedataprep/issues/1).
+Work is in progress to fix the other examples. See [duneproc issue 3](https://github.com/dladams/duneproc/issues/3).
