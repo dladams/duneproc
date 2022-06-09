@@ -4,8 +4,9 @@
 #include "dataprep_dune.fcl"
 #include "RawDecoder.fcl"
 
-# This must come after all prologs.
+# These must come after all prologs.
 #include "protodune_tools_dune.fcl"
+#include "pdsp_dataprep_sequences.fcl"
 
 services:
 {

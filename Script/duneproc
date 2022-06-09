@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # David Adams
 # June 2018
@@ -79,7 +79,7 @@ if [ "$1" = "-H" ]; then
   echo "  usctdecTTTT - Set USC TDecayConst to 0.TTTT"
   echo "  uscfsubFFFF - Set USC FSubConst to 0.FFFF"
   echo "  exptdecTTTT - Set ExpTailRemover decay tiome to TTTT ticks"
-  echo "  dptools_SSS - Set dataprep tool sequence to @local::data._dataprep_tools.SSS."
+  echo "  dpseq_DDD_SSS - Use dataprep sequence SSS for protptype DET, i.e use data.DDD_dataprep_tools.SSS."
   echo "Some of the primary fcl files provided here:"
   echo "  run_dataprep - Run dataprep with no tools or list provided later."
   echo "  dqm - Make standard dqm plots."
@@ -113,6 +113,10 @@ makeFcl() {
   local FCLNAME=$1
   local FCLFILE=$FCLNAME.fcl
   local DBG=0
+  local REM=
+  local DET=
+  local POS=
+  local SEQ=
   if  test $DBG -gt 0; then echo makeFcl: FCL file is $FCLFILE; fi
   if [ -r $FCLFILE ]; then
     echo makeFcl: File already exists: $FCLFILE
@@ -392,9 +396,13 @@ makeFcl() {
     VAL=${FCLNAME:7}
     echo "tools.adcTailRemovalAdc.DecayTime: $VAL" >$FCLFILE
     echo "tools.adcTailRemovalKe.DecayTime: $VAL" >>$FCLFILE
-  elif [ ${FCLNAME:0:8} = "dptools_" ]; then
-    VAL=${FCLNAME:8}
-    echo "services.RawDigitPrepService.ToolNames: @local::data.dataprep_seqs.$VAL" >$FCLFILE
+  elif [ ${FCLNAME:0:6} = "dpseq_" ]; then
+    REM=${FCLNAME:6}
+    DET=${REM%%_*}
+    POS=${#DET}
+    SEQ=${REM:$POS}
+    SEQ=${SEQ:1}
+    echo "services.RawDigitPrepService.ToolNames: @local::data.${DET}_dataprep_seqs.$SEQ" >$FCLFILE
   fi
   if [ ! -r $FCLFILE ]; then
     echo makeFcl: Unable to create $FCLFILE
