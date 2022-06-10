@@ -197,13 +197,13 @@ duneproc wfRaw/event000001/dpcr_femb302v/wftick3000 mydst
 > display wfRaw/event000001/dpcr_femb302v/wftick3000/runmydst/wfraw_run008564_evt000001_chan01536.png
 </pre>
 
-8. Mitigated waveforms for the same.
+8a. Mitigated waveforms for the same.
 <pre>
 duneproc wfMit/event000001/dpcr_femb302v/wftick3000 mydst  
 display wfMit/event000001/dpcr_femb302v/wftick3000/runmydst/wfprep_run008564_evt000001_chan01536.png
 </pre>
 
-8. Same with expanded ADC scale so we can see the full signal.
+8b. Same with expanded ADC scale so we can see the full signal.
 <pre>
 duneproc wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150 mydst  
 display wfMit/event000001/dpcr_femb302v/wftick3000/wfpran150/runmydst/wfprep_run008564_evt000001_chan01536.png
