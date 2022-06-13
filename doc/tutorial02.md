@@ -19,7 +19,7 @@ script that builds the top-level fcl and processes all files in a provided list 
 
 ### Usage
 
-The syntax for teh *duneproc* command is:
+The syntax for the *duneproc* command is:
 
 <pre>
 duneproc FCL DST NPROC NSKIP OPTS
