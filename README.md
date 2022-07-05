@@ -30,7 +30,7 @@ duneproc>
 If you want to stream hdf5 files (used for raw data starting in late 2021), then add the xrdhdf5 environment,
 i.e. replace the above *dune-run* command with
 <pre>
-dune-run dunesw,xrdhdf5,duneproc shell
+dune-run -e dunesw,xrdhdf5,duneproc shell
 </pre>
 
 ## Usage
