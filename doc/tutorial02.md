@@ -339,6 +339,6 @@ some variants of these are also created in the run directory and may be executed
 
 ### Validation
 
-#### June 10, 2022
-The examples above were run successfully with dunesw develop, dunerun 1.17.0 and duneproc 2.4.1.
+#### July 7, 2022
+The examples above were run successfully with dunesw v09_5, dunerun 1.21.0 and duneproc 2.4.1.
 See [duneproc issue 3](https://github.com/dladams/duneproc/issues/3).
