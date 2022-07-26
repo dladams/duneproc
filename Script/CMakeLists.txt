@@ -36,6 +36,7 @@ install(PROGRAMS
   pdspEventFileList
   vdbcbFindFiles
   hdcbFindFiles
+  hdcbRunTime
 DESTINATION bin)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 

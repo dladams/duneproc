@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# hdcbRunTime
+#
+# Display the time for an HD coldbox run.
+#
+# Time used is the creation time for the first file.
+
+RUN1=$1
+RUN2=${2:-$RUN1}
+DBG=${3:-0}
+
+if [ -z "$RUN1" -o "$RUN1" = "-h" ]; then
+  echo Usage: $0: RUN1 [RUN2 [DBG]]
+  exit 0
+fi
+
+RUN=$RUN1
+while [ $RUN -le $RUN2 ]; do
+
+  LFN=$(hdcbFindFiles $RUN | sort | head -1)
+  DAT=
+  if [ -z "$LFN" -o ${LFN:0:3} = DIR -o "${LFN:0:2}" = No ]; then
+    if [ $DBG -gt 0 ]; then echo No files found for run $RUN; fi
+  else
+    if [ $DBG -gt 1 ]; then echo Run $RUN LFN is $LFN; fi
+    DAT=$(pdspShowMetadata $LFN | grep Date | sed 's/.* //g')
+  fi
+  echo $RUN $DAT
+  RUN=$(($RUN + 1))
+done

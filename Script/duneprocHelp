@@ -75,8 +75,9 @@ elif [ $OPT = ibex ]; then
   echo "  root> drawRois(adcrois, \"status==0&&(hmin<-1.5||hmax>1.5)\", "uv")"
   echo "  root> drawSigstren(adcrois, \"channel>=800&&status==0&&hmax>1.3\")"
 elif [ $OPT = hdcb ]; then
-  echo "2021 CERN HD coldbox commands:"
+  echo "2021, 2022 CERN HD coldbox commands:"
   echo "  hdcbFindFiles - Find event data files for a run"
+  echo "  hdcbRunTime - Find the date and time for a run
 elif [ $OPT = vdcb ]; then
   echo "2021-22 CERN VD coldbox commands:"
   echo "  vdbcbFindFiles - Find event data files for a run"
