@@ -19,7 +19,7 @@ script that builds the top-level fcl and processes all files in a provided list 
 
 ### Usage
 
-The syntax for teh *duneproc* command is:
+The syntax for the *duneproc* command is:
 
 <pre>
 duneproc FCL DST NPROC NSKIP OPTS
@@ -219,10 +219,10 @@ display reco_dataprep/mydst_proc000001/adcprp_tpp0z_run008564_evt000008.png
 Note the output here is that expected for wirecell processing: scaled to be in approximate
 ADC counts (instead of ke) and bad channels zeroed.
 
-10. [***NOT WORKING June 2022***] Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
+10. Run standard PDSP simulation reco, stop after dataprep, and create channel-tick displays.
 <pre>
-duneproc reco_dataprep_sim mysimdst 1
-display reco_dataprep_sim/mysimdst_proc000001/adcprp_tpp0z_run22603710_evt001271.png
+duneproc> duneproc reco_dataprep_sim/addChannelTickPrep mysimdst 1
+display reco_dataprep_sim/addChannelTickPrep/mysimdst_proc000001/adcprp_tpp0z_run18800650_evt000321.png
 </pre>
 Before running this, create dataset [mysimdst](mysimdst.txt) as was done above for mydst.
 
@@ -339,8 +339,6 @@ some variants of these are also created in the run directory and may be executed
 
 ### Validation
 
-#### June 2022
-The examples above were run with dunesw v09_53_00d00, dunerun 1.17.0 and duneproc 2.3.6 and
-1-8 succeeded.
-
-Work is in progress to fix the other examples. See [duneproc issue 3](https://github.com/dladams/duneproc/issues/3).
+#### July 7, 2022
+The examples above were run successfully with dunesw v09_5, dunerun 1.21.0 and duneproc 2.4.1.
+See [duneproc issue 3](https://github.com/dladams/duneproc/issues/3).
