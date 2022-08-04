@@ -77,7 +77,7 @@ elif [ $OPT = ibex ]; then
 elif [ $OPT = hdcb ]; then
   echo "2021, 2022 CERN HD coldbox commands:"
   echo "  hdcbFindFiles - Find event data files for a run"
-  echo "  hdcbRunTime - Find the date and time for a run
+  echo "  hdcbRunTime - Find the date and time for a run"
 elif [ $OPT = vdcb ]; then
   echo "2021-22 CERN VD coldbox commands:"
   echo "  vdbcbFindFiles - Find event data files for a run"

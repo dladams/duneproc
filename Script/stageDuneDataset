@@ -2,6 +2,14 @@
 
 # Stage a duneproc dataset.
 
+tail_log() {
+  LOG=$1
+  echo
+  echo Displaying log at $LOG.
+  echo Interrupt at any time with ^C.
+  tail -f $LOG
+}
+
 DSTNAM=$1
 
 if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" ]; then
@@ -25,6 +33,7 @@ LOG=$DSTDIR/logs/stage_$DSTNAM.log
 if [ -r $LOG ]; then
   echo It appears dataset is being or has been staged.
   echo Remove $LOG to stage again.
+  tail_log $LOG
   exit 0
 fi
 
@@ -57,3 +66,4 @@ nohup sh -c "samweb prestage-dataset --defname=$SDSNAM; echo; date; echo Done">>
 sleep 2
 echo
 echo Log is $LOG
+tail_log $LOG
