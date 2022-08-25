@@ -35,6 +35,7 @@ install(PROGRAMS
   pdspFindFiles
   pdspEventFileList
   vdbcbFindFiles
+  vdtcbFindFiles
   hdcbFindFiles
   hdcbRunTime
 DESTINATION bin)

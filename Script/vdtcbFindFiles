@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# David Adams
+# April 2020
+#
+# Find the list of raw data files for a vertical drift top plane.
+
+RUNPAT=$1
+FIL=
+OUTDIR=$2
+MAXFILE=${3:-0}
+
+DEFDIR=$HOME/data/dune/datasets/vdct
+if [ -z "$RUNPAT" -o "$RUNPAT" = "-h" ]; then
+  echo Usage: $0 RUNPAT DIR
+  echo "  RUNPAT is run number or RUN_FFFF where FFFF is the file index."
+  echo "  DIR is the directory to write the file list."
+  echo "  If DIR=\"-\", $DEFDIR is used."
+  exit 0
+fi
+
+RUN=$(echo $RUNPAT | sed 's/_.*//g')
+
+OUTFILE=
+if [ -n "$OUTDIR" ]; then
+  if [ $OUTDIR = "-" ]; then
+    OUTDIR=$DEFDIR
+  fi
+  if [ -d $OUTDIR ]; then
+    SRUN=$RUN
+    SRUNPAT=$RUNPAT
+    while [ ${#SRUN} -lt 6 ]; do
+      SRUN=0$SRUN
+      SRUNPAT=0$SRUNPAT
+    done
+    OUTFILE=$OUTDIR/vdtcb$SRUNPAT.txt
+    if [ -r $OUTFILE ]; then
+      echo Output file already exists: $OUTFILE
+      exit 2
+    fi
+  else
+    echo Output directory not found: $OUTDIR
+    exit 3
+  fi
+fi
+
+RAWFILES=$(samweb list-files "run_type=vd-coldbox-top and run_number=$RUN" | grep $RUNPAT | sort)
+if [ -z "$RAWFILES" ]; then
+  echo No files found for run $RUN pattern $RUNPAT.
+  exit 1
+fi
+COUNT=0
+for RAWFILE in $RAWFILES; do
+  if [ $MAXFILE -gt 0 -a $COUNT -ge $MAXFILE ]; then break; fi
+  echo $RAWFILE
+  if [ -n "$OUTFILE" ]; then
+    echo $RAWFILE >> $OUTFILE
+  fi
+  COUNT=$((COUNT + 1))
+done
+if [ -n "$OUTFILE" ]; then
+  echo Dataset written to $OUTFILE
+fi

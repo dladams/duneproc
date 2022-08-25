@@ -80,7 +80,8 @@ elif [ $OPT = hdcb ]; then
   echo "  hdcbRunTime - Find the date and time for a run"
 elif [ $OPT = vdcb ]; then
   echo "2021-22 CERN VD coldbox commands:"
-  echo "  vdbcbFindFiles - Find event data files for a run"
+  echo "  vdbcbFindFiles - Find event data files for a CRP bottom run"
+  echo "  vdtcbFindFiles - Find event data files for a CRP top run"
 else
   echo Invalid option: $OPT
 fi
