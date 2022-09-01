@@ -4,6 +4,9 @@
 # April 2020
 #
 # Find the list of raw data files for a vertical drift top plane.
+#
+# Output file name is constructed from the run pattern. If that pattern
+# is just the run number, the file name is padded with zeroes.
 
 RUNPAT=$1
 FIL=
@@ -27,12 +30,14 @@ if [ -n "$OUTDIR" ]; then
     OUTDIR=$DEFDIR
   fi
   if [ -d $OUTDIR ]; then
-    SRUN=$RUN
-    SRUNPAT=$RUNPAT
-    while [ ${#SRUN} -lt 6 ]; do
-      SRUN=0$SRUN
-      SRUNPAT=0$SRUNPAT
-    done
+    if $RUN = $RUNPAT; then
+      SRUNPAT=$RUN
+      while [ ${#SRUNPAT} -lt 6 ]; do
+        SRUNPAT=0$SRUNPAT
+      done
+    else
+      SRUNPAT=$RUNPAT
+    fi
     OUTFILE=$OUTDIR/vdtcb$SRUNPAT.txt
     if [ -r $OUTFILE ]; then
       echo Output file already exists: $OUTFILE
