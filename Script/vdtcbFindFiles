@@ -30,7 +30,7 @@ if [ -n "$OUTDIR" ]; then
     OUTDIR=$DEFDIR
   fi
   if [ -d $OUTDIR ]; then
-    if $RUN = $RUNPAT; then
+    if [ $RUN = $RUNPAT ]; then
       SRUNPAT=$RUN
       while [ ${#SRUNPAT} -lt 6 ]; do
         SRUNPAT=0$SRUNPAT
@@ -49,7 +49,9 @@ if [ -n "$OUTDIR" ]; then
   fi
 fi
 
-RAWFILES=$(samweb list-files "run_type=vd-coldbox-top and run_number=$RUN" | grep $RUNPAT | sort)
+# 06sep2022: Make sure pattern is followed by '_' or '.' so we don't match undired numbers, e.g. 12 match 123.
+# Also select only files with the .test suffix, i.e. not .root.
+RAWFILES=$(samweb list-files "run_type=vd-coldbox-top and run_number=$RUN" | grep $RUNPAT[_,.].*\.test | sort)
 if [ -z "$RAWFILES" ]; then
   echo No files found for run $RUN pattern $RUNPAT.
   exit 1
