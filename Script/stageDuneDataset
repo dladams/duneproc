@@ -22,18 +22,30 @@ fi
 # Find the dataset definition file.
 DSTDIR=$HOME/data/dune/datasets
 DSTFIL=$(find $DSTDIR -name $DSTNAM.txt)
+FNAM=
 if [ -z "$DSTFIL" ]; then
-  echo Dataset not found: $DSTNAM
-  exit 1
+  ARGS=($(echo $DSTNAM | sed s'/-/ /g'))
+  if [ ${#ARGS[*]} = 3 ]; then
+    FNAM=$(findRunFiles ${ARGS[*]} | sed 's/ .*//g')
+  fi
+  if [ -z "$FNAM" ]; then
+    echo Dataset not found: $DSTNAM
+    exit 1
+  fi
 fi
 
 # Define log for the staging job.
 if [ ! -d $DSTDIR/logs ]; then mkdir $DSTDIR/logs; fi
 LOG=$DSTDIR/logs/stage_$DSTNAM.log
 if [ -r $LOG ]; then
-  echo It appears dataset is being or has been staged.
+  echo It appears dataset is being or has been staged:
+  echo '-----------------------------'
+  echo '.'
+  echo '.'
+  echo '.'
+  tail $LOG
+  echo '-----------------------------'
   echo Remove $LOG to stage again.
-  tail_log $LOG
   exit 0
 fi
 
@@ -42,16 +54,20 @@ dunerun-check-proxy
 echo
 
 # Create the sam query.
-FIRST=true
-QUERY="file_name in ("
-SEP=
-for FNAM in $(cat $DSTFIL); do
-  echo $FNAM
-  QUERY=${QUERY}${SEP}${FNAM}
-  SEP=", "
-done
-QUERY="${QUERY})"
-#echo $QUERY
+if [ -n "$FNAM" ]; then
+  QUERY="file_name = $FNAM"
+else
+  FIRST=true
+  QUERY="file_name in ("
+  SEP=
+  for FNAM in $(cat $DSTFIL); do
+    echo $FNAM
+    QUERY=${QUERY}${SEP}${FNAM}
+    SEP=", "
+  done
+  QUERY="${QUERY})"
+fi
+echo QUERY: $QUERY
 #samweb list-files $QUERY
 
 # Create sam dataset

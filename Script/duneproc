@@ -94,18 +94,20 @@ if [ "$1" = "-H" ]; then
   echo "  addDetdispPrep - Add prepared detector display to the end of dataprep."
   echo "  alltick - Set tick range to all ticks for channel-tick and detector displays."
   echo
+  echo "DSTPAT is DST, DST/DSTFCL, DST_SEL or DST_SEL/DSTFCL"
+  echo "The list of input files is taken from DST.txt in the directory tree"
+  echo "  $DSTDIR."
+  echo "Change or set DUNEPROC_DSTDIR to specify the search directory."
+  echo "If that file is not present and DST has the form DDD-RRR-EEE, then only event EEE"
+  echo "from raw data run RRR with run type alias DDD will be processed."
+  echo "To see the mapping of run types to aliases:"
+  echo "> findRunFiles runtypes"
   if [ $DSTOPT -eq 1 ]; then
-    echo "DSTPAT is DST, DST/DSTFCL, DST_PAT or DST_PAT/DSTFCL"
-    echo "DST is a data set name used to locate a file containing an input file list: one of"
-    echo "  $HOME/data/dune/datasets/DST.txt"
-    echo "  if DST matches SSS_runRRR_evtsEE1-EE2, $HOME/data/dune/SSS/run_slices/files/runRRRRRR_evtsEEEEE1-EEEEE2_files.txt"
-    echo "If PAT is not blank, only files containing the pattern are processed."
-    echo "If DSTFCL is provided, it is appended to the FCLPATH."
-  else
-    echo "The list of input files is taken from DSTPAT.txt in the directory tree"
-    echo "  $DSTDIR."
-    echo "Change or set DUNEPROC_DSTDIR to specify the search directory."
+    echo "After that, if DST matches SSS_runRRR_evtsEE1-EE2, the file list is retrieved from:"
+    echo "  $HOME/data/dune/SSS/run_slices/files/runRRRRRR_evtsEEEEE1-EEEEE2_files.txt"
+    echo "If SEL is provided, only files containing the pattern SEL are processed."
   fi
+  echo "If DSTFCL is provided, it is appended to the FCLPATH."
   exit 0
 fi
 
