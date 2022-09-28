@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Stage a duneproc dataset.
+# Stage a duneproc dataset in FNAM dcache.
 
 tail_log() {
   LOG=$1
@@ -74,11 +74,22 @@ echo QUERY: $QUERY
 SDSNAM=${USER}_$DSTNAM
 samweb create-definition $SDSNAM "$QUERY"
 
+# Make sure node name ends in .fnal.gov.
+NODE=$(hostname)
+if [ -z "$NODE" ]; then
+  NODE=unknown
+fi
+if [ ${NODE: -9} != .fnal.gov ]; then
+  NODE=$NODE.fnal.gov
+fi
+
 # Stage dataset
 echo "Staging dataset $SDSNAM" >>$LOG
+COM="samweb prestage-dataset --node=$NODE --defname=$SDSNAM"
+echo Staging command: $COM
 date >>$LOG
 echo >>$LOG
-nohup sh -c "samweb prestage-dataset --defname=$SDSNAM; echo; date; echo Done">>$LOG 2>&1 &
+nohup sh -c "$COM; echo; date; echo Done">>$LOG 2>&1 &
 sleep 2
 echo
 echo Log is $LOG
