@@ -10,7 +10,7 @@ FIL=
 OUTDIR=$2
 MAXFILE=${3:-0}
 
-DEFDIR=$HOME/data/dune/datasets/vdcb
+DEFDIR=$HOME/data/dune/datasets/vdbcb
 if [ -z "$RUNPAT" -o "$RUNPAT" = "-h" ]; then
   echo Usage: $0 RUNPAT DIR
   echo "  RUNPAT is run number or RUN_FFFF where FFFF is the file index."
@@ -26,6 +26,10 @@ if [ -n "$OUTDIR" ]; then
   if [ $OUTDIR = "-" ]; then
     OUTDIR=$DEFDIR
   fi
+  if [ ! -d $OUTDIR ]; then
+    echo Creating dataset directory $OUTDIR
+    if ! mkdir $OUTDIR; then exit $?; fi
+  fi
   if [ -d $OUTDIR ]; then
     SRUN=$RUN
     SRUNPAT=$RUNPAT
@@ -33,7 +37,7 @@ if [ -n "$OUTDIR" ]; then
       SRUN=0$SRUN
       SRUNPAT=0$SRUNPAT
     done
-    OUTFILE=$OUTDIR/vdcb$SRUNPAT.txt
+    OUTFILE=$OUTDIR/vdbcb$SRUNPAT.txt
     if [ -r $OUTFILE ]; then
       echo Output file already exists: $OUTFILE
       exit 2
