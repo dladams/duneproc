@@ -10,16 +10,38 @@ tail_log() {
   tail -f $LOG
 }
 
+# Parse arguments.
+FORCE=false
+while true; do
+  if [ $1 = '-f' ]; then
+    FORCE=true
+  elif [ ${1:0:1} = '-' ]; then
+    echo Invalid option: $1
+    exit 1
+  else
+    break
+  fi
+  shift
+done
 DSTNAM=$1
 
-if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" ]; then
-  echo Usage: $0 DSTNAM
-  echo "  where DSTNAM is a DUNE dataset, i.e. DSTNAM.txt is"
-  echo "  found somewhere below $HOME/data/dune/datasets"
+COM=$(basename $0)
+if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" -o -n "$2" ]; then
+  echo "Usage: $COM [-f] PAT"
+  echo "  where PAT is one of the following:"DSTNAME
+  echo "        DSTNAM - stage the list of files in DUNE dataset DSTNAME, i.e."
+  echo "                 from DSTNAME.txt in the tree $HOME/data/dune/datasets."
+  echo "      NAME.SUF -  stage the file NAME.SUF"
+  echo "  RTYP-RUN-EVT - Stage the single file holding the raw data for the"
+  echo "                 given run and event in run type or alias RTYP e.g."
+  echo "                 pdsp, iceberg, hdcb, vdbcb, vdtcb."
+  echo "File are staged at FNAL."
+  echo "Options:"
+  echo "  -f - Stage even if an old staging log is found"
   exit 0
 fi
 
-# Find the dataset definition file.
+# Find the dataset definition file of single file name.
 DSTDIR=$HOME/data/dune/datasets
 DSTFIL=$(find $DSTDIR -name $DSTNAM.txt)
 FNAM=
@@ -27,6 +49,9 @@ if [ -z "$DSTFIL" ]; then
   ARGS=($(echo $DSTNAM | sed s'/-/ /g'))
   if [ ${#ARGS[*]} = 3 ]; then
     FNAM=$(findRunFiles ${ARGS[*]} | sed 's/ .*//g')
+  else
+    SUF=$(echo $DSTNAM | grep '\.')
+    FNAM=$DSTNAM
   fi
   if [ -z "$FNAM" ]; then
     echo Dataset not found: $DSTNAM
@@ -38,14 +63,21 @@ fi
 if [ ! -d $DSTDIR/logs ]; then mkdir $DSTDIR/logs; fi
 LOG=$DSTDIR/logs/stage_$DSTNAM.log
 if [ -r $LOG ]; then
-  echo It appears dataset is being or has been staged:
-  echo '-----------------------------'
-  echo '.'
-  echo '.'
-  echo '.'
-  tail $LOG
-  echo '-----------------------------'
-  echo Remove $LOG to stage again.
+  if [ $FORCE = true ]; then
+    echo Removing Old staging log:
+    ls -ls $LOG
+    tail $LOG
+    rm $LOG
+  else
+    echo It appears dataset is being or has been staged:
+    echo '-----------------------------'
+    echo '.'
+    echo '.'
+    echo '.'
+    tail $LOG
+    echo '-----------------------------'
+    echo Remove $LOG or rerun with -f to stage again.
+  fi
   exit 0
 fi
 
