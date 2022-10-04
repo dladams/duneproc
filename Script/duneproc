@@ -501,7 +501,7 @@ elif [ ${#DREARR[*]} = 3 ]; then
     echo Single event request $IDST failed: $ERRMSG
     exit 1
   else
-    echo Processing file $DREFIL offset $DREOFF
+    echo Processing $DREDET event $DREEVT in file $DREFIL using offset $DREOFF
     NSKP=$DREOFF
     NEVT=1
   fi

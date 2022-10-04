@@ -50,8 +50,7 @@ if [ -z "$DSTFIL" ]; then
   if [ ${#ARGS[*]} = 3 ]; then
     FNAM=$(findRunFiles ${ARGS[*]} | sed 's/ .*//g')
   else
-    SUF=$(echo $DSTNAM | grep '\.')
-    FNAM=$DSTNAM
+    FNAM=$(echo $DSTNAM | grep '\.')
   fi
   if [ -z "$FNAM" ]; then
     echo Dataset not found: $DSTNAM
