@@ -23,17 +23,19 @@ if [ -z "$DSTDIR" ]; then
 fi
 
 if [ "$1" = "-H" ]; then
-  echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG]
-  echo "       FLAG=clean to remove existing run directory and exit"
-  echo "       FLAG=retry to remove existing run directory before running"
-  echo "       FLAG=output to save event output"
-  echo "       FLAG=val to run with valgrind log mixed with process log"
-  echo "       FLAG=valout to run with valgrind logged to valgrind.out"
-  echo "       FLAG=valgdb to run to memcheck error and then wait for gdb"
-  echo "       FLAG=valstop to stop at first memcheck error"
-  echo "       FLAG=cache to check cache for event data files"
-  echo "       FLAG=xrootd to use xrootd if event data file not in cache"
-  echo "       FLAG=noxrootd to use pnfs if event data file not in cache"
+  echo Usage: $0 FCL DSTPAT [NEVT] [NSKIP] [FLAG1 [FLAG2 ...]]
+  echo "  FLAGi can be any of the following:"
+  echo "       clean: Remove existing run directory and exit"
+  echo "       retry: Remove existing run directory before running"
+  echo "      output: Save event output"
+  echo "         val: Run with valgrind log mixed with process log"
+  echo "      valout: Run with valgrind logged to valgrind.out"
+  echo "      valgdb: Run to memcheck error and then wait for gdb"
+  echo "     valstop: Stop at first memcheck error"
+  echo "       cache: Check cache for event data files"
+  echo "      xrootd: Use xrootd if event data file not in cache"
+  echo "    noxrootd: Use pnfs if event data file not in cache"
+  echo "     pre-COM: Run script COM before starting job."
   echo
   echo Runs a lar job in a dedicated directory.
   echo
@@ -423,6 +425,7 @@ VALOPT=
 CLEAN=
 RETRY=
 EXTRAS=
+PRECOMS=()
 if [ -n "$1" -a -n "$2" ]; then
   FCLPATH=$1
   RUNDIR=$1/$2
@@ -471,6 +474,7 @@ for ARG in $EXTRAS $5 $6; do
   elif [ $ARG = xrootd ]; then USEXROOTD=true
   elif [ $ARG = cache ]; then USECACHE=true
   elif [ $ARG = noxrootd ]; then USEXROOTD=
+  elif [ ${ARG:0:4} = pre- ]; then PRECOMS+=($(pwd)/${ARG:4})
   else
     echo "Invalid flag: $ARG"
     exit 1
@@ -669,6 +673,11 @@ for FFILE in local dbg; do
   else
     echo Not found: $SUBFCL
   fi
+done
+
+for PRECOM in ${PRECOMS[@]}; do
+  echo "Executing $PRECOM"
+  $PRECOM $(pwd)
 done
 
 FW_SEARCH_PATH="..:$FW_SEARCH_PATH"

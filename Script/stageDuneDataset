@@ -12,8 +12,11 @@ tail_log() {
 
 # Parse arguments.
 FORCE=false
+HELP=false
 while true; do
-  if [ $1 = '-f' ]; then
+  if [ $1 = '-h' ]; then
+    HELP=true
+  elif [ $1 = '-f' ]; then
     FORCE=true
   elif [ ${1:0:1} = '-' ]; then
     echo Invalid option: $1
@@ -26,7 +29,7 @@ done
 DSTNAM=$1
 
 COM=$(basename $0)
-if [ -z "$DSTNAM" -o "$DSTNAM" = "-h" -o -n "$2" ]; then
+if [ $HELP = true -o -z "$DSTNAM" -o -n "$2" ]; then
   echo "Usage: $COM [-f] PAT"
   echo "  where PAT is one of the following:"DSTNAME
   echo "        DSTNAM - stage the list of files in DUNE dataset DSTNAME, i.e."
