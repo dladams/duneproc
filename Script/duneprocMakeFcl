@@ -8,7 +8,7 @@
 MYNAME=$(basename $0)
 FCL=$1
 
-if [ "$1" = "-H" ]; then
+if [ "$1" = "-h" ]; then
   echo Usage: $0 FCL
   echo FCL is the base name for  a fcl file and can be any of the following:"
   echo "  fembFFF - Module dataprep only processes FEMB number FFF"
