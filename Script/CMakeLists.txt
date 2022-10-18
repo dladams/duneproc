@@ -4,6 +4,7 @@
 install(PROGRAMS
   duneprocHelp
   duneprocVersion
+  duneprocMakeFcl
   duneproc
   getGridProxy
   stageDuneDataset
