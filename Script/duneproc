@@ -165,6 +165,9 @@ elif [ ${#DREARR[*]} = 3 ]; then
   if [ -n "$ERRMSG" ]; then
     echo Single event request $IDST failed: $ERRMSG
     exit 1
+  elif [ -z "$DREOFF" ]; then
+    echo Detector $DREDET run $DRERUN does not contain event $DREEVT
+    exit 1
   else
     echo Processing $DREDET event $DREEVT in file $DREFIL using offset $DREOFF
     NSKP=$DREOFF
