@@ -13,6 +13,22 @@
 ARGS="$*"
 PROJECT=duneproc
 
+# Check for dune-run.
+if ! dune-run -v 2>/dev/null; then
+  echo Please set up dunerun before building $PROJECT.
+  exit 1
+fi
+
+# If cmake is not present use the dunebuild env.
+if ! cmake --version 2>/dev/null; then
+  COM="dune-run -e dunebuild $0 $ARGS"
+  echo Running $COM
+  $COM
+  RSTAT=$?
+  if [ $RSTAT != 0 ]; then exit $RSTAT; fi
+  exit
+fi
+
 # Assign source directory.
 SRCDIR=$(dirname $0)
 SRCDIR=$(readlink -f $SRCDIR)
