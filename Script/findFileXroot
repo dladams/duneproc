@@ -1,8 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 # findFileXroot
 
 INPATH=$1
+LOC=${2:-any}
+
+if [ -z "$INPATH" -o "$INPATH" = -h ]; then
+  echo Usage: $(basename $0) FILENAME LOC
+  echo "  FILENAME is the logical file name or a path to such"
+  echo "  LOC = fnal, cern or any"
+  exit 0
+fi
 
 # If the name starts with / or ./ assume it is an ordinary file.
 if [ ${INPATH:0:1} = "/" -o ${INPATH:0:2} = "./" ]; then
@@ -15,6 +23,31 @@ fi
 # If name starts with xroot, assume it is valid.
 if [[ $INPATH =~ "xroot:" ]]; then echo $INPATH; exit; fi
 
-PFILE=$(findFilePnfs $INPATH)
-XFILE=$(echo $PFILE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g')
-echo $XFILE
+#PFILE=$(findFilePnfs $INPATH)
+#XFILE=$(echo $PFILE | sed 's#/pnfs/#xroot://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/#g')
+#echo $XFILE
+
+LFILE=$(basename $INPATH)
+CHECK=
+if [ $LOC = fnal -o $LOC = any ]; then
+  XFILE=$(samweb get-file-access-url --schema root $LFILE 2>/dev/null | grep fnal.gov)
+  if [ -n "$XFILE" ]; then
+    echo $XFILE
+    exit 0
+  fi
+  CHECK=true
+fi
+if [ $LOC = cern -o $LOC = any ]; then
+  XFILE=$(samweb get-file-access-url --schema root $LFILE 2>/dev/null | grep cern.ch)
+  if [ -n "$XFILE" ]; then
+    echo $XFILE
+    exit 0
+  fi
+  CHECK=true
+fi
+if [ -z "$CHECK" ]; then
+  echo Invalid location: $LOC
+  exit 1
+fi
+echo File not found at $LOC: $LFILE >&2
+exit 1
