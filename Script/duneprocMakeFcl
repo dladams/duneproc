@@ -272,7 +272,7 @@ if [ -n "$FCL" ]; then
     NUM2=${VALS##*-}
     echo "tools.pdsp_timingMitigate.SamplingRatio: $NUM1" >$FCLFILE
     echo "tools.pdsp_timingMitigate.SamplingOffset: $NUM2" >>$FCLFILE
-  elif [ ${FCLNAME:0:5} = "pdcht" -a ${FCLNAME:6:3} = "max" ]; then
+  elif [ ${FCLNAME:0:5} = "pdcht" -a "${FCLNAME:6:3}" = "max" ]; then
     IPL=${FCLNAME:5:1}
     NUM=${FCLNAME:9}
     while [ ${NUM:0:1} = 0 -a ${#NUM} -gt 1 ]; do NUM=${NUM:1}; done
